@@ -1,0 +1,107 @@
+---
+site:
+  title: Tezyns
+---
+
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ site.title }}</title>
+    <link rel="icon" type="image/png" href="/_assets/favicon.png" />
+    <link rel="stylesheet" href="/_assets/fonts.css" />
+    <link rel="stylesheet" href="/_assets/main.css" />
+  </head>
+  <body class="fixed top-0 right-0 bottom-0 left-0 flex flex-col bg-[var(--bg-1)] color-[var(--fg-1)]">
+    <section class="flex-[0_0_48px] min-h-0 w-full overflow-hidden bg-[var(--bg-2)]">
+      <div class="h-full w-full max-w-[960px] mx-auto px-[8px]">
+        <header class="h-full w-full flex items-center justify-left gap-x-[20px] flex-wrap">
+            <div><span id="site-title">{{ site.title }}</span>::</div>
+            <div><a href="/">Home</a></div>
+              {% for menu in menus %}
+                <div><a href="{{ menu.pathname }}">{{ menu.title }}</a></div>
+              {% endfor %}
+            <label id="switch-theme" class="relative h-[24px] w-[24px] ml-auto overflow-hidden cursor-pointer">
+              <input type="checkbox" class="h-0 w-0 opacity-0 [&:checked+div]-top-[-24px]" />
+              <div class="absolute top-0 left-0 h-[24px] w-[24px] transition-top-400">
+                <div class="h-[24px] w-[24px] flex items-center justify-center font-size-[20px]">🌞</div>
+                <div class="h-[24px] w-[24px] flex items-center justify-center font-size-[20px]">🌚</div>
+              </div>
+            </label>
+          </div>
+        </header>
+      </div>
+    </section>
+    <section id="scroller" class="flex-[1_0_0] min-h-0 w-full overflow-y-scroll">
+      <div class="max-w-[960px] w-full mx-auto px-[8px]">
+        <main class="w-full"><!-- fetched page goes here --></main>
+      </div>
+      <div class="sticky top-[100vh] bg-[var(--bg-2)]">
+        <div class="h-[48px] max-w-[960px] w-full mx-auto px-[8px]">
+          <footer class="h-full w-full flex items-center justify-center flex-wrap gap-x-[8px]">
+            <div>This blog is designed by Tez,</div>
+            <div>and Deployed on Github Pages.</div>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      $root = document.querySelector('html')
+      $switch_theme_input = document.querySelector('#switch-theme input')
+
+      function set_theme(theme) {
+        $root.dataset.theme = theme
+        window.sessionStorage.setItem('theme', theme)
+      }
+    
+      let cur_theme = window.sessionStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches  ? 'dark' : 'light')
+      if (cur_theme === 'dark') {
+        $switch_theme_input.checked = true
+        set_theme('dark')
+      }
+      $switch_theme_input.onclick = function(e) {
+        set_theme((e.target.checked) ? 'dark' : 'light')
+      }
+    </script>
+
+    <script>
+      const $scroller = document.querySelector('#scroller')
+      const $main = document.querySelector('main')
+
+      async function fill_content() {
+        const cur_pathname = window.location.pathname
+        const tar_pathname = '/_pages/' + cur_pathname.slice(1) + (cur_pathname === '/' ? 'index.json' : '.json')
+        let response = ''
+        try {
+          response = await (await fetch(tar_pathname)).json()
+        } catch (err) {
+          response = await (await fetch('/_pages/404.json')).json()
+        }
+        $main.innerHTML = response.content
+        document.title = response.title + `::{{ site.title }}`
+      }
+
+      // 주소 직접 입력
+      fill_content()
+      
+      // <a> 태그 클릭
+      document.body.onclick = async e => {
+        if (e.target.matches('a') && e.target.href.startsWith(window.location.origin) && !e.target.getAttribute('href').match(/[.#]/)) {
+          e.preventDefault()
+          if (e.target.href !== window.location.href) {
+            history.pushState(null, null, e.target.href)
+            await fill_content()
+            $scroller.scrollTo({ top: 0 })
+          }
+        }
+      }
+
+      // 전,후 이동 버튼 클릭
+      window.onpopstate = e => {
+        fill_content()
+      }
+    </script>
+  </body>
+</html>

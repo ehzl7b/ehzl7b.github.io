@@ -1,0 +1,29 @@
+---
+---
+
+<nav>
+  <div id="categories">
+    <ul>
+      {% for cat in cats %}
+        <li><a href="#{{ cat.id }}">{{ cat.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div id="posts">
+    {% for cat in cats %}
+      {% if cat.order == "desc" %}
+        {% assign pages_ = pages | reverse %}
+      {% else %}
+        {% assign pages_ = pages %}
+      {% endif %}
+      <div id="{{ cat.id }}">{{ cat.title }}</div>
+      <ul>
+        {% for page in pages_ %}
+          {% if page.cat contains cat.id %}
+            <li><a href="{{ page.pathname }}">{{ page.title }}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  </div>
+</nav>
