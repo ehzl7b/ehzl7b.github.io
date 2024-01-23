@@ -74,17 +74,17 @@ a, a:link, a:visited, a:hover, a:active {
 
 article {
   #page-title {
-    @apply font-size-[32px] mt-[48px] mb-[32px] before:content-['📝_'];
+    @apply font-size-[32px] mt-[48px] mb-[32px] before:content-['📝_'] before:text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000];
   }
   #page-description {
-    @apply before:content-['🏷️_'];
+    @apply before:content-['🏷️_'] before:text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000];
   }
   #page-updated {
-    @apply before:content-['📆_'];
+    @apply before:content-['📆_'] before:text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000];
   }
   #page-main {
     h2 {
-      @apply font-size-[24px] mt-[48px] mb-[24px] before:content-['📌_'];
+      @apply font-size-[24px] mt-[48px] mb-[24px] before:content-['📌_'] before:text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000];
     }
     >div, >blockquote, >p, >pre, >ul {
       @apply w-full my-[24px];
@@ -112,7 +112,7 @@ article {
     >ul {
       @apply block mb-[-24px];
       >li {
-        @apply block bg-[var(--bg-2)] max-w-full overflow-hidden w-fit px-[16px] py-[4px] font-size-[14px] whitespace-nowrap text-ellipsis border-b-solid border-b-[var(--fg-2)] border-b-1 rounded-t-[4px] before:content-['🏷️_'];
+        @apply block bg-[var(--bg-2)] max-w-full overflow-hidden w-fit px-[16px] py-[4px] font-size-[14px] whitespace-nowrap text-ellipsis border-b-solid border-b-[var(--fg-2)] border-b-1 rounded-t-[4px] before:content-['🏷️_'] before:text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000];
       }
     }
     img {
