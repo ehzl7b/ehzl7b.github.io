@@ -51,9 +51,11 @@
 :root {
   --fg-1: var(--color-neutral-900); --fg-2: var(--color-neutral-400); --fg-a: var(--color-blue-600);
   --bg-1: var(--color-neutral-100); --bg-2: var(--color-neutral-200);
+  --shadow-1: 0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000;
   &[data-theme="dark"] {
     --fg-1: var(--color-neutral-100); --fg-2: var(--color-neutral-500); --fg-a: var(--color-blue-400);
     --bg-1: var(--color-neutral-800); --bg-2: var(--color-neutral-700);
+    --shadow-1: 0px_-1px_#fff,0px_1px_#fff,1px_0px_#fff,-1px_0px_#fff;
   }
 }
 body, div, header, main, footer, section {
@@ -74,17 +76,17 @@ a, a:link, a:visited, a:hover, a:active {
 
 article {
   #page-title {
-    @apply font-size-[32px] mt-[48px] mb-[32px] before:content-['📝_'] before:text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000];
+    @apply font-size-[32px] mt-[48px] mb-[32px] before:content-['📝_'] before:text-shadow-[var(--shadow-1)];
   }
   #page-description {
-    @apply before:content-['🏷️_'] before:text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000];
+    @apply before:content-['🏷️_'] before:text-shadow-[var(--shadow-1)];
   }
   #page-updated {
-    @apply before:content-['📆_'] before:text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000];
+    @apply before:content-['📆_'] before:text-shadow-[var(--shadow-1)];
   }
   #page-main {
     h2 {
-      @apply font-size-[24px] mt-[48px] mb-[24px] before:content-['📌_'] before:text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000];
+      @apply font-size-[24px] mt-[48px] mb-[24px] before:content-['📌_'] before:text-shadow-[var(--shadow-1)];
     }
     >div, >blockquote, >p, >pre, >ul {
       @apply w-full my-[24px];
@@ -112,7 +114,7 @@ article {
     >ul {
       @apply block mb-[-24px];
       >li {
-        @apply block bg-[var(--bg-2)] max-w-full overflow-hidden w-fit px-[16px] py-[4px] font-size-[14px] whitespace-nowrap text-ellipsis border-b-solid border-b-[var(--fg-2)] border-b-1 rounded-t-[4px] before:content-['🏷️_'] before:text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000];
+        @apply block bg-[var(--bg-2)] max-w-full overflow-hidden w-fit px-[16px] py-[4px] font-size-[14px] whitespace-nowrap text-ellipsis border-b-solid border-b-[var(--fg-2)] border-b-1 rounded-t-[4px] before:content-['🏷️_'] before:text-shadow-[var(--shadow-1)];
       }
     }
     img {
