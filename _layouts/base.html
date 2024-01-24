@@ -1,6 +1,7 @@
 ---
 site:
   title: Tezyns
+  author: Tezyns
 ---
 
 <!doctype html>
@@ -25,8 +26,8 @@ site:
             <label id="switch-theme" class="relative h-[24px] w-[24px] ml-auto overflow-hidden cursor-pointer">
               <input type="checkbox" class="h-0 w-0 opacity-0 [&:checked+div]-top-[-24px]" />
               <div class="absolute top-0 left-0 h-[24px] w-[24px] transition-top-400">
-                <div class="h-[24px] w-[24px] flex items-center justify-center font-size-[20px] text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000]">🌞</div>
-                <div class="h-[24px] w-[24px] flex items-center justify-center font-size-[20px] text-shadow-[0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000]">🌚</div>
+                <div class="h-[24px] w-[24px] flex items-center justify-center font-size-[20px] text-shadow-[var(--shadow-1)]">🌞</div>
+                <div class="h-[24px] w-[24px] flex items-center justify-center font-size-[20px] text-shadow-[var(--shadow-1)]">🌚</div>
               </div>
             </label>
           </div>
@@ -40,7 +41,7 @@ site:
       <div class="sticky top-[100vh] bg-[var(--bg-2)]">
         <div class="h-[48px] max-w-[960px] w-full mx-auto px-[8px]">
           <footer class="h-full w-full flex items-center justify-center flex-wrap gap-x-[8px]">
-            <div>This blog is designed by Tez,</div>
+            <div>This blog is designed by {{ site.author }},</div>
             <div>and Deployed on Github Pages.</div>
           </footer>
         </div>

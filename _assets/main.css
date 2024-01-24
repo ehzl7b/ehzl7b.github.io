@@ -51,11 +51,11 @@
 :root {
   --fg-1: var(--color-neutral-900); --fg-2: var(--color-neutral-400); --fg-a: var(--color-blue-600);
   --bg-1: var(--color-neutral-100); --bg-2: var(--color-neutral-200);
-  --shadow-1: 0px_-1px_#000,0px_1px_#000,1px_0px_#000,-1px_0px_#000;
+  --shadow-1: 0px -1px var(--fg-1), 0px 1px var(--fg-1), 1px 0px var(--fg-1), -1px 0px var(--fg-1);
   &[data-theme="dark"] {
     --fg-1: var(--color-neutral-100); --fg-2: var(--color-neutral-500); --fg-a: var(--color-blue-400);
     --bg-1: var(--color-neutral-800); --bg-2: var(--color-neutral-700);
-    --shadow-1: 0px_-1px_#fff,0px_1px_#fff,1px_0px_#fff,-1px_0px_#fff;
+    --shadow-1: 0px -1px var(--fg-1), 0px 1px var(--fg-1), 1px 0px var(--fg-1), -1px 0px var(--fg-1);
   }
 }
 body, div, header, main, footer, section {
