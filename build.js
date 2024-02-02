@@ -82,7 +82,7 @@ async function build_pages() {
   // old page 목록 로딩
   const pageinfos = (() => {
     try {
-      return fs.readJSONSync($root + '/_site/pageinfos.json')
+      return fs.readJSONSync($root + '/docs/pageinfos.json')
     } catch(e) {
       return []
     }
@@ -103,7 +103,7 @@ async function build_pages() {
       // created or updated 된 경우만,
       if (!pageinfos_old.has(name) || pageinfos_old.get(name).ver !== ver) {
         const cat = parsed.dir.split('/_pages')[1]
-        const jsonfile = $root + ((cat === '' || cat === '/') ? '/_site/pages/' : '/_site/pages/post/') + name + '.json'
+        const jsonfile = $root + ((cat === '' || cat === '/') ? '/docs/pages/' : '/docs/pages/post/') + name + '.json'
         const pathname = (((cat === '' || cat === '/') ? '/' : '/post/') + name).replace('/index', '/')
         
         // json 빌드
@@ -139,12 +139,12 @@ async function build_pages() {
   for (let [sup, sub] of Object.entries(navmenu)) {
     const render = pug.compileFile($root + '/_layouts/nav.pug')
     const pathname = '/' + sup.toLocaleLowerCase()
-    const jsonfile = $root + '/_site/pages' + pathname + '.json'
+    const jsonfile = $root + '/docs/pages' + pathname + '.json'
     fs.outputJSONSync(jsonfile, {pathname, title: sup.toLocaleLowerCase() + ' 카테고리', content: render({pages: [...pageinfos_new.values()], cats: sub})}, 'utf-8')
   }
 
   // new page 목록 저장
-  fs.outputJsonSync($root + '/_site/pageinfos.json', [...pageinfos_new.values()])
+  fs.outputJsonSync($root + '/docs/pageinfos.json', [...pageinfos_new.values()])
 }
 
 
@@ -156,7 +156,7 @@ async function build_assets() {
 
   // global.scss -> global.css
   const css = await sass.compileAsync($root + '/_assets/global.scss', {style: 'compressed'})
-  fs.outputFileSync($root + '/_site/assets/global.css', css.css, 'utf-8')
+  fs.outputFileSync($root + '/docs/assets/global.css', css.css, 'utf-8')
 
   // base.pug -> index.html & 404.html
   const yamlfile = fg.globSync($root + '/_pages/**/*.{yaml,yml}')[0]
@@ -165,19 +165,19 @@ async function build_assets() {
     return { pathname: '/' + sup.toLocaleLowerCase(), title: sup }
   })
   const render = pug.compileFile($root + '/_layouts/base.pug')
-  fs.outputFileSync($root + '/_site/index.html', render({menus}), 'utf-8')
-  fs.copyFileSync($root + '/_site/index.html', $root + '/_site/404.html')
+  fs.outputFileSync($root + '/docs/index.html', render({menus}), 'utf-8')
+  fs.copyFileSync($root + '/docs/index.html', $root + '/docs/404.html')
 
   // render atomic.css
   stylify.bundle([
     {
-      outputFile: $root + '/_site/assets/atomic.css',
-      files: [$root + '/_site/index.html']
+      outputFile: $root + '/docs/assets/atomic.css',
+      files: [$root + '/docs/index.html']
     },
   ]);
   
   // copy static assets
-  fs.copySync($root + '/_assets', $root + '/_site/assets', {
+  fs.copySync($root + '/_assets', $root + '/docs/assets', {
     filter: (from, to) => {
       return !from.includes('global.scss')
     }
@@ -196,7 +196,7 @@ switch (process.argv[2]) {
     build_assets()
     break
   case 'all':
-    fs.removeSync($root + '/_site')
+    fs.removeSync($root + '/docs')
     build_pages()
     build_assets()
     break
