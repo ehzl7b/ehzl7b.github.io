@@ -31,14 +31,14 @@ jobs:
       - name: Check if there are any changes
         id: verify_diff
         run: git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
-      - name: Upload artifact
-        if: steps.verify_diff.outputs.changed == 'true'
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: './_site'
-      - name: Deploy to GitHub Pages
-        if: steps.verify_diff.outputs.changed == 'true'
-        uses: actions/deploy-pages@v2
+      # - name: Upload artifact
+      #   if: steps.verify_diff.outputs.changed == 'true'
+      #   uses: actions/upload-pages-artifact@v2
+      #   with:
+      #     path: './_site'
+      # - name: Deploy to GitHub Pages
+      #   if: steps.verify_diff.outputs.changed == 'true'
+      #   uses: actions/deploy-pages@v2
       - name: Update Repo
         if: steps.verify_diff.outputs.changed == 'true'
         run: |
