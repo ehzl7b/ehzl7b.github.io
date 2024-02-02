@@ -62,12 +62,12 @@ html(lang="ko", data-theme="light")
       const $main = document.querySelector('main')
       async function fetch_content() {
         const cur_pathname = window.location.pathname
-        const tar_pathname = '/_pages/' + cur_pathname.slice(1) + (cur_pathname === '/' ? 'index.json' : '.json')
+        const tar_pathname = '/pages/' + cur_pathname.slice(1) + (cur_pathname === '/' ? 'index.json' : '.json')
         let response = ''
         try {
           response = await (await fetch(tar_pathname)).json()
         } catch (err) {
-          response = await (await fetch('/_pages/404.json')).json()
+          response = await (await fetch('/pages/404.json')).json()
         }
         $main.innerHTML = response.content
         document.title = response.title + `::{{ site.title }}`
