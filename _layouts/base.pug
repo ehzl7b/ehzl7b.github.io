@@ -28,18 +28,18 @@ html(lang="ko", data-theme="light")
               a(href=menu.pathname) #{menu.title}
           label#switch-theme(class='position:relative height:24px width:24px margin-left:auto overflow:hidden cursor:pointer')
             input(type='checkbox', class='height:0 width:0 opacity:0 [&:checked+div]{left:-24px}')
-            div(class='position:absolute top:0 left:0 height:24px width:24px transition:left_0.4s')
+            div(class='position:absolute top:0 left:0 height:24px width:24px transition:top_0.4s')
               div(class='position:absolute top:0 left:0 height:24px width:24px display:flex align-items:center justify-content:center font-size:20px text-shadow:var(--shadow-1)') 🌞
-              div(class='position:absolute top:0 left:24px height:24px width:24px display:flex align-items:center justify-content:center font-size:20px text-shadow:var(--shadow-1)') 🌚
+              div(class='position:absolute top:24px left:0 height:24px width:24px display:flex align-items:center justify-content:center font-size:20px text-shadow:var(--shadow-1)') 🌚
     section#scroller(class='flex:1_0_0 min-height:0 width:100% overflow-y:scroll')
       div(class='max-width:960px width:100% margin:0_auto padding:0_8px')
-          main(class='width:100%')
-            // fetched page goes here
-          div(class='position:sticky top:100vh background:var(--bg-2)')
-            div(class='height:48px max-width:960px width:100% margin:0_auto padding:0_8px')
-              footer(class='height:100% width:100% display:flex align-items:center justify-content:center flex-wrap:wrap gap:0_8px')
-                div This blog is designed by #{site.author},
-                div and Deployed on Github Pages.
+        main(class='width:100%')
+          // fetched page goes here
+      div(class='position:sticky top:100vh background:var(--bg-2)')
+        div(class='height:48px max-width:960px width:100% margin:0_auto padding:0_8px')
+          footer(class='height:100% width:100% display:flex align-items:center justify-content:center flex-wrap:wrap gap:0_8px')
+            div This blog is designed by #{site.author},
+            div and Deployed on Github Pages.
     script.
       $root = document.querySelector('html')
       $switch_theme_input = document.querySelector('#switch-theme input')

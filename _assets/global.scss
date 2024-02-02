@@ -72,3 +72,101 @@ body, pre, code, kbd, samp {
     }
   }
 }
+
+// article
+article {
+  #page-title {
+    margin: 48px 0 32px 0; font-size: 32px;
+    &:before {
+      content: "📝 "; text-shadow: var(--shadow-1);
+    }
+  }
+  #page-description {
+    &:before {
+      content: "🏷️ "; text-shadow: var(--shadow-1);
+    }
+  }
+  #page-updated {
+    &:before {
+      content: "📆 "; text-shadow: var(--shadow-1);
+    }
+  }
+  #page-main {
+    h2 {
+      margin: 48px 0 24px 0; font-size: 24px;
+      &:before {
+        content: "📌 "; text-shadow: var(--shadow-1);
+      }
+    }
+    >div, >blockquote, >p, >pre, >ul {
+      width: 100%; margin: 24px 0;
+    }
+    >div, >blockquote, >p, >ul {
+      >code {
+        background: var(--bg-2); border-radius: 4px;
+      }
+    }
+    >blockquote {
+      padding: 8px 16px; font-size: 14px; background: var(--bg-2); border-radius: 4px;
+      ul li {
+        margin-left: 16px;
+        &:before {
+          content: "-"; width: 16px; margin-left: -16px; display: inline-block; text-align: left;
+        }
+      }
+    }
+    >pre {
+      padding: 8px 16px 0 16px; font-size: 14px; background: var(--bg-2); border-radius: 4px; overflow-x: auto;
+      >code {
+        width: 100%; min-width: -moz-fit-content; min-width: fit-content; padding-bottom: 8px; display: block; font-size: 14px;
+      }
+    }
+    >ul {
+      margin-bottom: -24px; display: block;
+      >li {
+        padding: 4px 16px; max-width: 100%; width: -moz-fit-content; width: fit-content; display: block; font-size: 14px; white-space: nowrap; text-overflow: ellipsis; border: 1px solid var(--fg-2); border-top-left-radius: 4px; border-top-right-radius: 4px;
+        &:before {
+          content: "🏷️ "; text-shadow: var(--shadow-1);
+        }
+      }
+    }
+    img {
+      max-width: 100%; margin: 0 auto; display: block; vertical-align: bottom;
+      &+em {
+        display: block; font-size: 14px; text-align: center; color: var(--fg-b);
+      }
+    }
+    b, strong {
+      border-bottom: 1px solid;
+    }
+  }
+}
+
+// nav
+nav {
+  #categories {
+    ul {
+      margin: 48px 0; display: flex; gap: 16px; flex-wrap: wrap;
+      li a {
+        padding: 8px; text-decoration: none; color: var(--fg-1); border: 1px solid; border-top-left-radius: 8px; border-top-right-radius: 8px;
+        &:hover {
+          color: var(--bg-1); background: var(--fg-1);
+        }
+      }
+    }
+  }
+  #posts {
+    >div {
+      margin: 48px 0 24px 0; font-size: 24px;
+    }
+    >ul {
+      margin-bottom: 24px;
+      li {
+        margin-left: 16px;
+        &:before {
+          content: "-"; width: 16px; margin-left: -16px; display: inline-block; text-align: left;
+        }
+      }
+    }
+  }
+}
