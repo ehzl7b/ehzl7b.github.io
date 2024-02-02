@@ -107,11 +107,11 @@ async function build_pages() {
         const pathname = (((cat === '' || cat === '/') ? '/' : '/post/') + name).replace('/index', '/')
         
         // json 빌드
-        const { content, data } = matter.read(mdfile, {
+        const {content, data} = matter.read(mdfile, {
           engines: { yaml: s => yaml.load(s, { schema: yaml.JSON_SCHEMA }) }
         })
         const render = pug.compileFile($root + '/_layouts/page.pug')
-        fs.outputJSONSync(jsonfile, {name, ver, cat, pathname, ...data, content: render({content, ...data})}, 'utf-8')
+        fs.outputJSONSync(jsonfile, {name, ver, cat, pathname, ...data, content: render({content: parse_md.render(content), ...data})}, 'utf-8')
         build_count += 1
         pageinfos_new.set(name, {name, ver, cat, pathname, mdfile, jsonfile})
       } else {
