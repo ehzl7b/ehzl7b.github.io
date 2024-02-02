@@ -154,6 +154,9 @@ async function build_pages() {
 async function build_assets() {
   console.log('===> execute build_assets')
 
+  // disable jekyll
+  fs.outputFileSync($root + '/docs/.nojekyll', ' ', 'utf-8')
+
   // global.scss -> global.css
   const css = await sass.compileAsync($root + '/_assets/global.scss', {style: 'compressed'})
   fs.outputFileSync($root + '/docs/assets/global.css', css.css, 'utf-8')
