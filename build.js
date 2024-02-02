@@ -113,7 +113,7 @@ async function build_pages() {
         const render = pug.compileFile($root + '/_layouts/page.pug')
         fs.outputJSONSync(jsonfile, {name, ver, cat, pathname, ...data, content: render({content: parse_md.render(content), ...data})}, 'utf-8')
         build_count += 1
-        pageinfos_new.set(name, {name, ver, cat, pathname, mdfile, jsonfile})
+        pageinfos_new.set(name, {name, ver, cat, pathname, ...data, mdfile, jsonfile})
       } else {
         pageinfos_new.set(name, pageinfos_old.get(name))
       }

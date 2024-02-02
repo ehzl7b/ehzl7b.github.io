@@ -12,7 +12,7 @@ body, pre, code, kbd, samp {
   font: 400 16px Hack,NanumSquareNeo,monospace; line-height: 1.5;
 }
 a, a:link, a:visited, a:hover, a:active {
-  text-decoration: none; color: var(--fg-a); border: 1px solid;
+  text-decoration: none; color: var(--fg-a); border-bottom: 1px solid;
 }
 
 // vars
@@ -151,7 +151,7 @@ nav {
     ul {
       margin: 48px 0; display: flex; gap: 16px; flex-wrap: wrap;
       li a {
-        padding: 8px; text-decoration: none; color: var(--fg-1); border: 1px solid; border-top-left-radius: 8px; border-top-right-radius: 8px;
+        padding: 8px; text-decoration: none; color: var(--fg-1); border: 1px solid; border-top-left-radius: 8px; border-bottom-right-radius: 8px;
         &:hover {
           color: var(--bg-1); background: var(--fg-1);
         }
