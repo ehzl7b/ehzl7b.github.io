@@ -1,6 +1,7 @@
 name: Tezyns Deployment Pages
 on:
-  push: ["main"]
+  push:
+    branches: ["main"]
 permissions:
   contents: write
   pages: write
