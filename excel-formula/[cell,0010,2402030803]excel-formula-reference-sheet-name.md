@@ -1,7 +1,7 @@
 ---
 title: "CELL: Sheet 이름을 가져오는 함수식"
 description: 특정 셀을 참조하면, 해당 셀이 담겨있는 Sheet 이름을 반환하는 함수식
-updated: 2024-02-02
+updated: 2021-08-05
 ---
 
 ## Sheet 이름 동적으로 가져오는 함수식
