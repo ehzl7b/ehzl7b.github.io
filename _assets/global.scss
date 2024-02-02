@@ -9,7 +9,10 @@ body, div, header, main, footer, section {
   }
 }
 body, pre, code, kbd, samp {
-  font: 400 16px Hack,NanumSquareNeo,monospace;
+  font: 400 16px Hack,NanumSquareNeo,monospace; line-height: 1.5;
+}
+a, a:link, a:visited, a:hover, a:active {
+  text-decoration: none; color: var(--fg-a); border: 1px solid;
 }
 
 // vars
@@ -124,7 +127,7 @@ article {
     >ul {
       margin-bottom: -24px; display: block;
       >li {
-        padding: 4px 16px; max-width: 100%; width: -moz-fit-content; width: fit-content; display: block; font-size: 14px; white-space: nowrap; text-overflow: ellipsis; background: var(--fg-2); border-top-left-radius: 4px; border-top-right-radius: 4px;
+        padding: 4px 16px; max-width: 100%; width: -moz-fit-content; width: fit-content; display: block; font-size: 14px; white-space: nowrap; text-overflow: ellipsis; background: var(--bg-2); border-bottom: 1px solid var(--fg-2); border-top-left-radius: 4px; border-top-right-radius: 4px;
         &:before {
           content: "🏷️ "; text-shadow: var(--shadow-1);
         }
