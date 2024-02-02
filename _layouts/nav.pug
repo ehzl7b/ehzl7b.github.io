@@ -1,0 +1,18 @@
+nav 
+  #categories 
+    ul 
+      each cat in cats
+        li
+          a(href='#'+cat.id) #{cat.title}
+  #posts
+    each cat in cats 
+      if cat === 'desc'
+        - var pages_ = pages.reverse()
+      else
+        - var pages_ = pages 
+      div(id=cat.id) #{cat.title}
+      ul 
+        each page in pages_
+          if page.cat.includes(cat.id)
+            li 
+              a(href=page.pathname) #{page.title}

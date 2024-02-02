@@ -1,7 +1,9 @@
 {
-  "editor.tabSize": 2,
+  "editor.fontFamily": "consolas,monospace",
+  "editor.fontSize": 14,
   "editor.unicodeHighlight.nonBasicASCII": false,
-  "editor.fontFamily": "ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
   "liveServer.settings.root": "_site",
   "liveServer.settings.file": "404.html"
 }
