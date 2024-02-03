@@ -3,3 +3,10 @@ MS-Office:
   title: 유용한 엑셀 함수식
 - id: msoffice-template
   title: 양식 파일
+Development:
+- id: dev
+  title: 개발 노트
+  order: desc
+- id: code-snippet
+  title: 코드 조각
+  order: desc
