@@ -16,7 +16,7 @@ updated: 2021-08-16
 현시점의 엑셀이나 파워포인트는 이 차트를 그리는 기능이 없다. 다만 차트의 X 축을 날짜축으로, Y 축을 100% 기준 누적 영역형으로 설정하여 차트를 그리면 마리메꼬를 흉내낼 수는 있다.
 
 - file
-> [marimekko-chart.pptx](files/marimekko-chart.pptx)
+> [marimekko-chart.pptx](https://github.com/tezyns/tezyns.github.io/raw/main/files/marimekko-chart.pptx)
 
 ## 사용 방법
 
