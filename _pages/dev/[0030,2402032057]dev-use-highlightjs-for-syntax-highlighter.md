@@ -96,7 +96,7 @@ hljs.registerLanguage("pseudo", function(hljs) {
 });
 ```
 
-아주 간단한 것만 적용했다. 랭귀지 이름으로 우선 "pseudo" 라고 명명했다. 나중에 포스팅할 때 마크다운에서는 \<code\>```pseudo\</code\>로 시작하면 적용된다.
+아주 간단한 것만 적용했다. 랭귀지 이름으로 우선 "pseudo" 라고 명명했다. 나중에 포스팅할 때 마크다운에서는 `<code>```pseudo</code>`로 시작하면 적용된다.
 
 크게 strong, number, leadline, comment 를 판단하여 스타일링 하도록 했다. begin, end 속성에 정규식을 사용했는데 그 의미는 쉽게 이해할 거라 생각한다.
 
@@ -127,16 +127,16 @@ leadline 은 원래 Highlight.js 에서 디폴트로 적용되는 클래스명�
 
 - pseudo
 ```pseudo
-# 연결리스트 예시
-head
-|  +--▶ # 가장 첫 NODE 를 참조하는 변수
-|    
-▼
-NODE      +---▶ NODE      +---▶ NODE
-+ val=1   |     + val=2   |     + val=3
-+ next ---+     + next ---+     + next ---▶ None
+  # 연결리스트 예시
+  head
+  |  +--▶ # 가장 첫 NODE 를 참조하는 변수
+  |    
+  ▼
+  NODE      +---▶ NODE      +---▶ NODE
+  + val=1   |     + val=2   |     + val=3
+  + next ---+     + next ---+     + next ---▶ None
 
-# Fibonacci 수열
-초기값: f(0) = 0, f(1) = 1
-일반항: f(i) = f(i - 2) + f(i - 1)
+  # Fibonacci 수열
+  초기값: f(0) = 0, f(1) = 1
+  일반항: f(i) = f(i - 2) + f(i - 1)
 ```
