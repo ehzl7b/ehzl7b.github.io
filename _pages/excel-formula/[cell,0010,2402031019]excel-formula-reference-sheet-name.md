@@ -43,6 +43,7 @@ Function SheetName(rCell As Range) As String
 End Function
 ```
 
+- excel
 ```excel
 = SheetName( 셀 )
 ```
