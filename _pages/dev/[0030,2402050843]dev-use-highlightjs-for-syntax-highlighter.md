@@ -4,6 +4,11 @@ description: 깃허브 페이지의 기본 SSG 인 Jekyll 의 하이라이터 Ro
 updated: 2023-11-25
 ---
 
+## 2024-02-05 Update
+
+전에는 Highlight.js 를 CDN 을 통해 받아와서 브라우저에서 직접 적용하는 방식을 택했다면, 지금은 Node.JS 에서 마크다운 형식으로 되어있는 포스팅을 HTML 로 변환할 때 적용하는 식으로 바꿨다.
+
+
 ## 2023-11-25 Update
 
 아래 `pseudo.js` 부분을 새롭게 업데이트 했다.
@@ -89,7 +94,7 @@ hljs.registerLanguage("pseudo", function(hljs) {
       },
       {
         className: 'leadline',
-        begin: /[\/|\\▲▶▼◀+-]+/,
+        begin: /[\/|\\▲▶▼◀+-Ʌ>Ṿ<]+/,
       },
     ],
   };
@@ -101,6 +106,8 @@ hljs.registerLanguage("pseudo", function(hljs) {
 크게 strong, number, leadline, comment 를 판단하여 스타일링 하도록 했다. begin, end 속성에 정규식을 사용했는데 그 의미는 쉽게 이해할 거라 생각한다.
 
 leadline 은 원래 Highlight.js 에서 디폴트로 적용되는 클래스명이 아니지만 이렇게 별도로 지정할 수 있다. css 파일에 `.hljs-leadline{ ... }` 와 같은 식으로 추가하면 된다.
+
+또한 leadline 에 포함되어 있는 문자들을 보면, 삼각형의 경우 웹폰트의 차이에 따라 전각문자로 표현되는 경우도 많아 사용에 불편함이 있을 수 있다. 따라서 `Ʌ>Ṿ<` 문자를 사용하는 것이 좋다. (특히 Ṿ 는 영문 대문자 V 아래에 점이 찍힌 문자로, 일반 V 와 구별하기 위해 사용했다.)
 
 위 코드를 pseudo.js 파일로 저장했다.
 
@@ -127,16 +134,16 @@ leadline 은 원래 Highlight.js 에서 디폴트로 적용되는 클래스명�
 
 - pseudo
 ```pseudo
-  # 연결리스트 예시
-  head
-  |  +--▶ # 가장 첫 NODE 를 참조하는 변수
-  |    
-  ▼
-  NODE      +---▶ NODE      +---▶ NODE
-  + val=1   |     + val=2   |     + val=3
-  + next ---+     + next ---+     + next ---▶ None
+# 연결리스트 예시
+head
+|  |
+|  +--> # 가장 첫 NODE 를 참조하는 변수  
+Ṿ
+NODE      +---> NODE      +---> NODE
++ val=1   |     + val=2   |     + val=3
++ next ---+     + next ---+     + next ---> None
 
-  # Fibonacci 수열
-  초기값: f(0) = 0, f(1) = 1
-  일반항: f(i) = f(i - 2) + f(i - 1)
+# Fibonacci 수열
+초기값: f(0) = 0, f(1) = 1
+일반항: f(i) = f(i - 2) + f(i - 1)
 ```
