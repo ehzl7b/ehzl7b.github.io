@@ -34,7 +34,7 @@ hljs.registerLanguage('pseudo', function(hljs) {
       },
       {
         className: 'leadline',
-        begin: /[\/|\\▲▶▼◀+-]+/,
+        begin: /[\/|\\▲▶▼◀+-Ʌ>Ṿ<]+/,
       },
     ],
   }
@@ -48,9 +48,14 @@ const parse_md = markdownIt({
     let lines = code.trim().split('\n')
     let tar_line = new Map()
     let code_modified = lines.map((x, i) => {
-      if (x[0] === '-' || x[0] === '+' || x[0] === ']') {
-        tar_line.set(i, x[0])
-        x = x.slice(1)
+      // 라인하이라이트 트리거 단문자 보다는 복잡한 문자 사용
+      // if (x[0] === '-' || x[0] === '+' || x[0] === ']') {
+      //   tar_line.set(i, x[0])
+      //   x = x.slice(1)
+      // }
+      if (x.startsWith('/-') || x.startsWith('/+') || x.startsWith('/=')) {
+        tar_line.set(i, x[1])
+        x = x.slice(2)
       }
       return x
     }).join('\n')

@@ -39,7 +39,7 @@ a, a:link, a:visited, a:hover, a:active {
   }
   .codeline {
     position: relative; margin-left: -24px; margin-right: -8px; padding-left: 24px; 
-    &.\] {
+    &.\= {
       background: var(--color-indigo-100);
     }
     &.\+ {
@@ -58,7 +58,7 @@ a, a:link, a:visited, a:hover, a:active {
     }
   }
   &[data-theme="dark"] .codeline {
-    &.\] {
+    &.\= {
       background: var(--color-indigo-950);
     }
     &.\+ {
