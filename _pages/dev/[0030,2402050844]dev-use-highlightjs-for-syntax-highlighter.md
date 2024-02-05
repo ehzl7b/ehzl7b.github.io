@@ -1,13 +1,12 @@
 ---
 title: "깃허브 페이지 하이라이터, Highlight.js 사용하고, 약간의 커스터마이징"
 description: 깃허브 페이지의 기본 SSG 인 Jekyll 의 하이라이터 Rouge 대신 Highlight.js 사용 및 커스터마이징
-updated: 2023-11-25
+updated: 2024-02-05
 ---
 
 ## 2024-02-05 Update
 
-전에는 Highlight.js 를 CDN 을 통해 받아와서 브라우저에서 직접 적용하는 방식을 택했다면, 지금은 Node.JS 에서 마크다운 형식으로 되어있는 포스팅을 HTML 로 변환할 때 적용하는 식으로 바꿨다.
-
+전에는 Highlight.js 를 CDN 을 통해 받아와서 브라우저에서 직접 적용하는 방식을 택했다면, 지금 블로그는 Node.JS 에서 마크다운 형식으로 되어있는 포스팅을 HTML 로 변환할 때 적용하는 식으로 바꿨다.
 
 ## 2023-11-25 Update
 
