@@ -1,6 +1,6 @@
 {
   "name": "tezyns_ssg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "tezyns static site generator",
   "main": "build.js",
   "type": "module",
