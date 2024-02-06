@@ -1,7 +1,7 @@
 ---
 title: "Tezyns 블로그 빌더 구축"
-description: Node.JS 사용하여 SPA 형태의 Tezyns 블로그를 구축한 경험을 기록
-updated: 2024-02-05
+description: Node.JS 사용하여 SPA 형태의 Tezyns 블로그를 구축해주는 빌더의 주요 내용 소개
+updated: 2024-02-06
 ---
 
 ## 블로그 빌더 콘셉트
@@ -11,12 +11,12 @@ updated: 2024-02-05
 어떤 방식으로 빌드가 되도록 할까 하다가 아래와 같이 정했다.
 
 > - Historical SPA (Single Page Application) 방식으로 작동 (메뉴 또는 포스팅을 클릭거나 주소를 입력하면 Json 형식의 콘텐츠를 불러오도록 함)
-> - 포스팅은 마크다운으로 작성하되, Github 에 올리면 자동으로 빌드(마크다운 -> Html -> Json 으로 저장) 되도록 함
+> - 포스팅은 마크다운으로 작성하되, Github 에 올리면 자동으로 빌드(마크다운 -> html -> json 으로 저장) 되도록 함
 > - 마크다운 파일을 `[ver]pathname.md` 형태로 저장하고, `ver` 가 변경된 파일만 빌드, `ver` 에 따라 포스팅 정렬, `pathname` 은 포스팅 주소가 되도록 함
 
 약 두달간의 삽질 끝에 허접하게나마 만들 수 있었다. 빌드에 필요한 모든 내용을 build.js 이라는 단일 파일에 담았다.
 
-모든 과정을 기록하기보다는 중요한 것만 추려서 아래부터 기록하였다. 실제 결과물을 모두 보고 싶다면 [깃허브 레포지토리](https://github.com/tezyns/tezyns.github.io/tree/tezyns-blog-builder-v1.0.0)를 직접 탐색해보기 바란다.
+모든 과정을 기록하기보다는 중요한 것만 추려서 아래부터 기록하였다. 실제 결과물을 모두 보고 싶다면 [깃허브 레포지토리](https://github.com/tezyns/tezyns.github.io/tree/tezyns-blog-builder-v1.0.1)를 직접 탐색해보기 바란다.
 
 ## markdown-it 커스터마이징
 
@@ -62,6 +62,19 @@ const parse_md = markdownIt({
 markdown-it 설정을 보면, 하이라이팅이 필요한 구문을 줄 단위로 끊은 뒤, 줄 단위로 순회하면서 만일 `/-`, `/+`, `/=`로 시작하는 줄이 있다면 이를 따로 기록하고 해당 문자를 삭제해 둔다.
 
 그리고, highlight.js 로 하이라이팅 한 뒤, 다시 각 줄을 `<div class="codeline ..."></div>` 구문으로 감싼다. 앞서서 따로 기록했던 문자가 속한 줄이라면 class 에 포함시켜 나중에 라인 하이라이팅이 되도록 하면 된다.
+
+아래는 라인 하이라이팅이 적용된 예시다. [Leetcode 1번 문제](https://leetcode.com/problems/two-sum/description/) 풀이를 가져와서 표현해봤다.
+
+- python
+```python
+def twoSum(self, nums: List[int], target: int) -> List[int]:
+/-  for i, x in enumerate(nums):
+/+  for i, x in enumerate(nums[:-1]):
+/-    for j, y in enumerate(nums):
+/+    for j, y in enumerate(nums[i+1:], i+1):
+      if x+y == target:
+        return i, j
+```
 
 ## SPA 구현 코드
 
@@ -135,8 +148,79 @@ $switch_theme_input.onclick = function(e) {
 }
 ```
 
-먼저 `cur_theme` 변수를 통해 사용자가 임의로 선택한 
+먼저 `cur_theme` 변수를 통해, 사용자가 임의로 선택한 테마를 먼저 가져오고, 없다면 시스템의 테마를 가져온다.
 
-id 가 `switch-theme` 인 태그 아래에 있는 `<input>` 태그를 클릭할 때마다 테마가 전환되도록 하는 것이 기본이다. 전환이 되면 스타일이 모두 바껴야한다. css 파일에 다크 테마 용도의 스타일을 미리 설정해두고, 테마가 전환되면 해당 스타일을 사용토록 하는 방식으로 하기로 했다.
+id 가 `switch-theme` 인 태그 안에 있는 `<input>` 태그를 클릭할 때마다 `set_theme` 함수를 거쳐 테마가 전환되도록 하였다. 선택한 테마는 최상위 `<html>` 태그에 `data-theme` 어트리뷰트에 반영된다.
 
-클릭 이벤트 발생할 때마다 테마를 전환하는 `set_theme` 함수를 호출하도록 했다. `set_theme` 함수를 보면 다크 테마로 변경될 경우, `<html>` 최상위 태그를 가리키는 `$root` 함수를 통해 `dark` class 를 붙이도록 했다. 즉, `dark` 라고 명명될 경우 다크 테마 css 를 적용토록 하면 된다.
+아래와 같이 변수를 사용하여 css 설정을 하면, 테마에 따른 색상 적용도 편리하게 할 수 있다.
+
+- css
+```css
+:root {
+  --fg: #000; --bg: #fff;
+}
+:root[data-theme="dark"] {
+  --fg: #fff; --bg: #000;
+}
+
+/* ... */
+
+body {
+  color: var(--fg); background-color: var(--bg);
+}
+```
+
+테마에 따라 색상을 조정하고 싶으면 `:root` 안의 내용만 수정하면 된다.
+
+## Github Actions 이용하여 자동 빌드
+
+블로그가 배포될 레포지토리의 `main` 브랜치에는 마크다운을, `gh-pages` 브랜치에는 빌드와 관련된 코드를 두었다. 그리고 Github Pages 설정에서 `gh-pages` 브랜치의 `docs` 디렉토리 내용대로 배포되도록 했다.
+
+`main` 브랜치에 아래와 같은 Github Actions 를 설정하여, `main` 브랜치에 뭔가의 내용이 푸시가 되면, 빌드가 되도록 하였다.
+
+- ./.github/workflows/deploy_pages.yml
+```yaml
+ame: Tezyns Deployment Pages
+on:
+  push:
+    branches: ["main"]
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout build library in main branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: '.'
+      - name: delete old pages
+        run: rm -rf _pages
+      - name: checkout build library in main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: './_pages'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+      - run: npm ci
+      - run: node build pages
+      - name: Check if there are any changes
+        id: verify_diff
+        run: git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+      - name: Update Repo
+        if: steps.verify_diff.outputs.changed == 'true'
+        run: |
+          git config --global user.name "tezyns"
+          git config --global user.email "tezyns@outlook.com"
+          git add .
+          git commit -m "deployment"
+          git push
+```
+
+Github Actions 는 워낙 많이 사용되기에 구글링에서 조금만 검색해도 원하는 기능을 구현하려면 어떻게 코딩해야하는지 쉽게 찾을 수 있었다.
