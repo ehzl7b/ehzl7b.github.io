@@ -15,33 +15,33 @@ updated: 2021-08-16
 - vba
 ```vb
 Function RegexExecute(r As Range, p As String, Optional g As Boolean = False) As Variant
-    On Error GoTo ErrHandler
-    
-    Dim str As String, ptn As String
-    str = CStr(r.Cells(1, 1).Value)
-    ptn = CStr(p)
-    
-    Set regex = CreateObject("VBScript.RegExp")
-    With regex
-        .IgnoreCase = False
-        .MultiLine = False
-        .Global = g
-        .Pattern = ptn
-    End With
-    
-    If regex.Test(str) Then
-        Set matches = regex.Execute(str)
-        Dim temp As String
-        temp = ""
-        For Each Match In matches
-            temp = temp & Match
-        Next
-        RegexExecute = temp
-        Exit Function
-    End If
+  On Error GoTo ErrHandler
+
+  Dim str As String, ptn As String
+  str = CStr(r.Cells(1, 1).Value)
+  ptn = CStr(p)
+
+  Set regex = CreateObject("VBScript.RegExp")
+  With regex
+    .IgnoreCase = False
+    .MultiLine = False
+    .Global = g
+    .Pattern = ptn
+  End With
+
+  If regex.Test(str) Then
+    Set matches = regex.Execute(str)
+    Dim temp As String
+    temp = ""
+    For Each Match In matches
+        temp = temp & Match
+    Next
+    RegexExecute = temp
+    Exit Function
+  End If
     
 ErrHandler:
-    RegexExecute = CVErr(xlErrNA)
+  RegexExecute = CVErr(xlErrNA)
 End Function
 ```
 
