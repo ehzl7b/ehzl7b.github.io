@@ -174,6 +174,14 @@ body {
 
 테마에 따라 색상을 조정하고 싶으면 `:root` 안의 내용만 수정하면 된다.
 
+## Atomic CSS 사용
+
+[TailwindCSS](https://tailwindcss.com/) 와 같은 Atomic CSS 를 적용해보기로 했다.
+
+html 파일이 너저분해진다는 단점이 있지만, html 구조를 짤 때마다 class 이름 붙여야하고, html 파일과 css 파일을 왔다갔다하면서 코딩할 필요가 없다는 것이 너무 큰 장점이었다.
+
+어떤 프레임워크를 쓸까 고민하다가 CSS 언어를 그대로 사용하는 (따라서 별도의 언어를 배울 필요가 없는) [StylifyCSS](https://stylifycss.com/) 를 사용하였다.
+
 ## Github Actions 이용하여 자동 빌드
 
 블로그가 배포될 레포지토리의 `main` 브랜치에는 마크다운을, `gh-pages` 브랜치에는 빌드와 관련된 코드를 두었다. 그리고 Github Pages 설정에서 `gh-pages` 브랜치의 `docs` 디렉토리 내용대로 배포되도록 했다.
