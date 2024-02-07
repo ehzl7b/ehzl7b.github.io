@@ -7,7 +7,7 @@ nav
   #posts
     each cat in cats 
       if cat.order === 'desc'
-        - var pages_ = pages.reverse()
+        - var pages_ = [...pages].reverse()
       else
         - var pages_ = pages 
       div(id=cat.id) #{cat.title}
