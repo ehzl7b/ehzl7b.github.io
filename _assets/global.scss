@@ -79,7 +79,7 @@ a, a:link, a:visited, a:hover, a:active {
 // article
 article {
   #page-title {
-    margin: 48px 0 32px 0; font-size: 32px;
+    margin: 48px 0 32px 0; font-size: 32px; word-wrap: break-word;
     &:before {
       content: " "; background: no-repeat center / 100%; background-image: var(--emoji-memo);
       display: inline-block; height: 32px; width: 32px; margin-right: 16px; vertical-align: middle;
@@ -102,7 +102,7 @@ article {
   }
   #page-main {
     h2 {
-      margin: 48px 0 24px 0; font-size: 24px;
+      margin: 48px 0 24px 0; font-size: 24px; word-wrap: break-word;
       &:before {
         content: " "; background: no-repeat center / 100%; background-image: var(--emoji-black-nib);
         display: inline-block; height: 24px; width: 24px; margin-right: 12px; vertical-align: middle;
