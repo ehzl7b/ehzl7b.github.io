@@ -1,5 +1,6 @@
 ---
 title: "CLEAN,SUBSTITUTE,TRIM: 데이터 클렌징이 필요할 때 사용하는 함수식"
+description: "외부 데이터베이스 등에서 받아온 엑셀 Raw 파일에서 VLOOKUP 함수 등을 사용할 때 발생하는 문제점들과 문제점 해결 (데이터 클렌징) 하는 방법"
 updated: 2021-08-06
 ---
 
