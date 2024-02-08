@@ -14,23 +14,31 @@ jobs:
         with:
           ref: gh-pages
           path: '.'
+      # - name: delete old pages
+      #   run: rm -rf _pages
+      # - name: checkout build library in main branch
+      #   uses: actions/checkout@v4
+      #   with:
+      #     ref: main
+      #     path: './_pages'
       - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: npm
       - run: npm ci
-      - run: node build assets
+      # - run: node build pages
+      -run: node build assets
       - name: Check if there are any changes
         id: verify_diff
         run: git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
-      - name: Upload artifact
-        if: steps.verify_diff.outputs.changed == 'true'
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: './_site'
-      - name: Deploy to GitHub Pages
-        if: steps.verify_diff.outputs.changed == 'true'
-        uses: actions/deploy-pages@v2
+      # - name: Upload artifact
+      #   if: steps.verify_diff.outputs.changed == 'true'
+      #   uses: actions/upload-pages-artifact@v2
+      #   with:
+      #     path: './_site'
+      # - name: Deploy to GitHub Pages
+      #   if: steps.verify_diff.outputs.changed == 'true'
+      #   uses: actions/deploy-pages@v2
       - name: Update Repo
         if: steps.verify_diff.outputs.changed == 'true'
         run: |
@@ -39,4 +47,3 @@ jobs:
           git add .
           git commit -m "deployment"
           git push
-        
