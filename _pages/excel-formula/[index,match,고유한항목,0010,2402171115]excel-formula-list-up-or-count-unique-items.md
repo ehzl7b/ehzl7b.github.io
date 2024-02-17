@@ -1,5 +1,5 @@
 ---
-title: "INDEX,MATCH,SUMPRODUCT: 고유한 항목 개수를 알려주거나 재나열하는 함수식"
+title: "INDEX,MATCH: 고유한 항목 개수를 알려주거나 재나열하는 함수식"
 description: "데이터 목록에서 중복된 항목들을 제외한 고유한 항목만의 개수를 세거나, 추출하여 재나열해주는 함수식"
 updated: 2021-08-16
 ---
