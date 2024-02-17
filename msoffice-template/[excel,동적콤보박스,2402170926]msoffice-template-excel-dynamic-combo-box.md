@@ -89,14 +89,14 @@ updated: 2021-08-16
 
 I4 셀에는 아래 수식을...
 
-- Excel
+- excel
 ```excel
 = MIN( H4, ROWS( INDIRECT( INDEX( 자치구, H2 ))))
 ```
 
 H11 셀에는 아래 수식을 입력하였다.
 
-- Excel
+- excel
 ```excel
 = INDEX( 자치구, H2 ) & " " & INDEX( INDIRECT( INDEX( 자치구, H2 )), I4 )
 ```
