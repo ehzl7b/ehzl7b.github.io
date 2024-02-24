@@ -59,4 +59,4 @@ pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
 
 while 구문으로 `i < j` 일 때만 순회한다.
 
-중간위치 `m` 을 계산하고, 중간위치에 있는 중간값 `nums[m]`과 `target`을 비교하여, match 구문으로 언급한 바와 같이 탐색범위를 조정한다.
+중간위치 `m` 을 계산하고, 중간위치에 있는 중간값 `nums[m]`과 `target`을 비교한 뒤, 언급한 바와 같이 탐색범위를 조정한다.
