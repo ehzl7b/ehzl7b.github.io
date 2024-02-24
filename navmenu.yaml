@@ -4,7 +4,7 @@ MS-Office:
 - id: msoffice-template
   title: 팁 & 템플릿
 Development:
-- id: algotirhm
+- id: algorithm
   title: 알고리즘
 - id: dev
   title: 개발 노트
