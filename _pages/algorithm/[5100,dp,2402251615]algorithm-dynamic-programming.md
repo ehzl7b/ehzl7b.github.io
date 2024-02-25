@@ -1,5 +1,5 @@
 ---
-title: "[Dynamic Programmig] 동적 계획법"
+title: "[Dynamic Programming] 동적 계획법"
 description: "동적 계획법의 이해와 알고리즘을 적용할 수 있는 경우"
 updated: "2024-02-25"
 ---
@@ -34,6 +34,7 @@ updated: "2024-02-25"
 
 아래는 밑에서부터 위로 (Bottom-Up) 차곡차곡 답을 찾아가는 방법으로 푼 풀이다.
 
+- python
 ```python
 def climbStairs(self, n: int) -> int:
     a = [None, 1, 2] + [0]*(n-2)
