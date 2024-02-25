@@ -43,18 +43,16 @@ LeetCode의 [35. Search Insert Position](https://leetcode.com/problems/search-in
 
 이진 탐색 코드 자체를 구현하는 것만으로도 풀 수 있다. `i == j` 지점이 바로 그 위치이기 때문이다.
 
-- rust
-```rust
-pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
-    let (mut i, mut j) = (0, nums.len());
+- python
+```python
+def searchInsert(self, nums: List[int], target: int) -> int:
+    i, j = 0, len(nums)
+
+    while i < j:
+        m = i + (j - i) // 2
+        (i := m + 1) if nums[m] < target else (j := m)
     
-    while i < j {
-        let m = i + (j - i) / 2;
-        if nums[m] < target { i = m + 1 } else { j = m }
-    }
-    
-    i as _
-}
+    return i
 ```
 
 while 구문으로 `i < j` 일 때만 순회한다.
