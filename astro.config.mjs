@@ -6,7 +6,7 @@ import { visit } from 'unist-util-visit'
 export default defineConfig({
   integrations: [
     UnoCSS({
-      injectReset: true // or a path to the reset file
+      // injectReset: true // or a path to the reset file
     }),
   ],
   build: {
