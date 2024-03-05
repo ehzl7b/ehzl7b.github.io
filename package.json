@@ -14,6 +14,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "astro": "^4.4.11"
+    "astro": "^4.4.11",
+    "unocss": "^0.58.5"
+  },
+  "stackblitz": {
+    "installDependencies": true,
+    "startCommand": false
   }
 }
