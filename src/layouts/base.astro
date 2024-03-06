@@ -1,0 +1,49 @@
+---
+let site_title = 'Tezyns'
+---
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Tezyns personal blog for hobby" />
+    <title>{ site_title }</title>
+    <link rel="icon" type="image/png" href="/favicon.svg" />
+    <link rel="preload" as="style" href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-coding.css" />
+  </head>
+  <body class="">
+    안녕하세요
+  </body>
+</html>
+
+<style lang="scss" is:global>
+  @import url(https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css);
+  @import url(https://cdn.jsdelivr.net/npm/open-color@1.9.1/open-color.min.css);
+  * {
+    -webkit-tap-highlight-color: transparent; box-sizing: border-box;
+  }
+  :root {
+    --fg-1: var(--oc-gray-8); --fg-2: var(--oc-gray-6);
+    --bg-1: var(--oc-gray-0);
+    &[data-theme="dark"] {
+      --fg-1: var(--oc-gray-0); --fg-2: var(--oc-gray-5);
+      --bg-1: var(--oc-gray-9);
+    }
+  }
+  html, body, div, header, main, footer, aside, nav, section, article {
+    -ms-overflow-style: none; scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  body {
+    @apply font-sans font-400 font-size-16px line-height-normal;
+  }
+  pre, code, kbd, samp {
+    @apply font-mono;
+  }
+  a, a:link, a:visited, a:hover, a:active {
+    text-decoration: none; color: var(--fg-a); border-bottom: 1px solid;
+  }
+</style>
