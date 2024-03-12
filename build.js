@@ -12,12 +12,59 @@ import unocss from '@unocss/postcss'
 import cssnano from 'cssnano'
 
 // 글로벌 변수 초기화
-$root = '.'
+let $root = '.'
+const pageinfos_new = new Map()
+hljs.registerLanguage('pseudo', function(hljs) {
+  return {
+    aliases: ['ps'],
+    contains: [
+      {
+        className: 'comment',
+        begin: /#/,
+        end: /\s\s|\n|$/,
+      },
+      {
+        className: 'strong',
+        begin: /\b[A-Z][A-Z0-9]*\b/,
+      },
+      {
+        className: 'number',
+        begin: /\b[0-9]+\b/,
+      },
+      {
+        className: 'leadline',
+        begin: /[\/|\\▲▶▼◀+-Ʌ>Ṿ<]+/,
+      },
+    ],
+  }
+})
+const parse_md = markdownIt({
+  html: true,
+  xhtmlOut: true,
+  highlight(code, lang) {
+    const language = hljs.getLanguage(lang) ? lang : 'plaintext'
+
+    let lines = code.trim().split('\n')
+    let tar_line = new Map()
+    let code_modified = lines.map((x, i) => {
+      if (x.startsWith('/-') || x.startsWith('/+') || x.startsWith('/=')) {
+        tar_line.set(i, x[1])
+        x = x.slice(2)
+      }
+      return x
+    }).join('\n')
+
+    lines = hljs.highlight(code_modified, { language }).value.trim().split('\n')
+    return lines.map((x, i) => {
+      return `<div class="codeline ${tar_line.get(i) || ''}">${x || ' '}</div>`
+    }).join('')
+  },
+})
 
 // _pages 디렉토리 안의 md 파일(페이지)들 빌드
 // md -> html -> json
 console.log("===> Building Start")
-build_count = 0
+let build_count = 0
 
 let mdfiles = fg.globSync($root + '/_pages/**/*.md')
 for (let mdfile of mdfiles) {
@@ -35,6 +82,7 @@ for (let mdfile of mdfiles) {
     const { content, data } = matter.read(mdfile, {})
     const render = pug.compileFile($root + '/_layouts/page.pug')
     fs.outputJSONSync(jsonfile, { name, ver, cat, pathname, ...data, content: render({content: parse_md.render(content), ...data}) }, 'utf-8')
+    pageinfos_new.set(name, {name, ver, cat, pathname, ...data, mdfile, jsonfile})
     build_count += 1
   }
 }
@@ -49,6 +97,14 @@ for (let [sup, sub] of Object.entries(navmenu)) {
   fs.outputJSONSync(jsonfile, {pathname, title: sup.toLocaleLowerCase() + ' 카테고리', content: render({pages: [...pageinfos_new.values()], cats: sub})}, 'utf-8')
   build_count += 1
 }
+
+// base.pug -> index.html & 404.html
+const menus = Object.keys(navmenu).map(sup => {
+  return { pathname: '/' + sup.toLocaleLowerCase(), title: sup }
+})
+const render = pug.compileFile($root + '/_layouts/base.pug')
+fs.outputFileSync($root + '/_site/index.html', render({menus}), 'utf-8')
+fs.copyFileSync($root + '/_site/index.html', $root + '/_site/404.html')
 
 // assets 복사
 fs.copySync($root + '/_assets', $root + '/_site/_assets', {
@@ -65,5 +121,6 @@ postcss([ postcss_nested, unocss, cssnano ]).process(
   }
 ).then(css => {
   fs.outputFileSync(css.opts.to, css.css)
+  console.log('===> Building Finished')
 })
 

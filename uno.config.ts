@@ -9,9 +9,13 @@ import {
   transformerDirectives,
   transformerVariantGroup
 } from 'unocss'
+import extractorPug from '@unocss/extractor-pug'
 import fs from 'fs-extra'
 
 export default defineConfig({
+  extractors: [
+    extractorPug(),
+  ],
   preflights: [
     // {
     //   getCSS: ({ theme }) => '',
