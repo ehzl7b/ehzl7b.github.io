@@ -4,6 +4,6 @@
   "editor.unicodeHighlight.nonBasicASCII": false,
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
-  "liveServer.settings.root": "docs",
+  "liveServer.settings.root": "_site",
   "liveServer.settings.file": "404.html"
 }
