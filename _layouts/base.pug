@@ -8,43 +8,46 @@ html(lang="ko", data-theme="light")
     meta(name='description', content='Some description')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     title #{site.title}
-    link(rel='icon' type='image/png' href='/assets/favicon.png')
-    //- link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css')
-    //- link(rel='stylesheet', href='https://webfontworld.github.io/NanumSquareNeo/NanumSquareNeo.css')
-    link(rel='stylesheet', href='https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-coding.css')
-    //- link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css')
-    link(rel='stylesheet', href='/_assets/main.css')
-  body(class='fixed top-0 right-0 bottom-0 left-0 flex flex-direction:column color:var(--fg-1) background:var(--bg-1)')
-    section(class='flex:0_0_48px min-height:0 width:100% overflow:hidden background:var(--bg-2)')
-      div(class='max-width:960px height:100% width:100% margin:0_auto padding:0_8px')
-        header(class='height:100% width:100% display:flex align-items:center justify-content:left gap:0_20px flex-wrap:wrap')
-          div
-            span#site-title #{site.title}
-            | ::
-          div
-            a(href='/') Home
-          each menu in menus
-            div 
-              a(href=menu.pathname) #{menu.title}
-          label#switch-theme(class='position:relative height:30px width:30px margin-left:auto overflow:hidden cursor:pointer')
-            input(type='checkbox', class='height:0 width:0 opacity:0 [&:checked+div]{top:-30px}')
-            div(class='position:absolute top:0 left:0 height:30px width:30px')
-              div(class='position:absolute top:0 left:0 height:30px width:30px display:flex align-items:center justify-content:center font-size:20px text-shadow:var(--shadow-1)')
-                span(class='height:30px width:30px icon background-image:var(--emoji-msflat-cityscape) filter:drop-shadow(0_0_0.1px_var(--fg-1))')
-              div(class='position:absolute top:30px left:0 height:30px width:30px display:flex align-items:center justify-content:center font-size:20px text-shadow:var(--shadow-1)')
-                span(class='height:30px width:30px icon background-image:var(--emoji-msflat-night-with-stars) filter:drop-shadow(0_0_0.1px_var(--fg-1))')
-    section#scroller(class='flex:1_0_0 min-height:0 width:100% overflow-y:scroll')
-      div(class='max-width:960px width:100% margin:0_auto padding:0_8px')
-        main(class='width:100%')
-          // fetched page goes here
-      div(class='position:sticky top:100vh background:var(--bg-2)')
-        div(class='height:48px max-width:960px width:100% margin:0_auto padding:0_8px')
-          footer(class='height:100% width:100% display:flex align-items:center justify-content:center flex-wrap:wrap gap:0_8px')
-            div This blog is designed by #{site.author},
-            div and Deployed on Github Pages.
+    link(rel='icon' type='image/png' href='/favicon.png')
+    link(rel="stylesheet", href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-coding.css")
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css")
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-color@1.9.1/open-color.min.css")
+    link(rel='stylesheet', href='/main.css')
+  body
+    label.menu-btn
+      input(type="checkbox")
+      .menu-btn-icon
+    .dummy
+      .bg-left
+      .bg-right
+    .sidebar
+      header
+        h1.site-name
+          a(href="#") Tezyns' Blog
+        label.theme-btn
+          .theme-left
+          .wrapper
+            input(type="checkbox")
+            .theme-switch
+          .theme-right
+      nav
+        .line
+        ul
+          li.item
+            a(href="#") Develope
+          li.item
+            a(href="#") MS Office Tips
+      footer
+        .line
+        div.footer-msg This blog is designed by Tezyns.
+    .mainview
+      article
+      // fetched page goes here...
     script.
       $root = document.querySelector('html')
-      $switch_theme_input = document.querySelector('#switch-theme input')
+      $sidebar = document.querySelector('.sidebar')
+      $theme_btn_input = document.querySelector('#theme-btn input')
+      $menu_btn_input = document.querySelector('label.menu-btn input')
 
       function set_theme(theme) {
         $root.dataset.theme = theme
@@ -53,15 +56,17 @@ html(lang="ko", data-theme="light")
     
       let cur_theme = window.sessionStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches  ? 'dark' : 'light')
       if (cur_theme === 'dark') {
-        $switch_theme_input.checked = true
+        $theme_btn_input.checked = true
         set_theme('dark')
       }
-      $switch_theme_input.onclick = function(e) {
+      $theme_btn_input.onclick = e => {
         set_theme((e.target.checked) ? 'dark' : 'light')
       }
+      $menu_btn_input.onclick = e => {
+        $sidebar.classList.toggle('checked')
+      }
     script.
-      const $scroller = document.querySelector('#scroller')
-      const $main = document.querySelector('main')
+      const $article = document.querySelector('article')
       async function fetch_content() {
         const cur_pathname = window.location.pathname
         const tar_pathname = '/pages/' + cur_pathname.slice(1) + (cur_pathname === '/' ? 'index.json' : '.json')
@@ -71,7 +76,7 @@ html(lang="ko", data-theme="light")
         } catch (err) {
           response = await (await fetch('/pages/404.json')).json()
         }
-        $main.innerHTML = response.content
+        $article.innerHTML = response.content
         document.title = response.title + `::#{site.title}`
       }
       // 주소 직접 입력
