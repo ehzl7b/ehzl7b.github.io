@@ -16,8 +16,7 @@
   "devDependencies": {
     "astro": "^4.4.11",
     "highlight.js": "^11.9.0",
-    "sass": "^1.71.1",
-    "unocss": "^0.58.5"
+    "sass": "^1.71.1"
   },
   "stackblitz": {
     "installDependencies": true,

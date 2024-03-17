@@ -1,49 +1,301 @@
 ---
-let site_title = 'Tezyns'
+const site = {
+  name: `Tezyns'Blog`
+}
 ---
 
 <!doctype html>
-<html>
+<html lang="ko" data-theme="light">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Tezyns personal blog for hobby" />
-    <title>{ site_title }</title>
-    <link rel="icon" type="image/png" href="/favicon.svg" />
-    <link rel="preload" as="style" href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-coding.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{ site.name }</title>
+    <link rel="stylesheet" href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-coding.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-color@1.9.1/open-color.min.css">
   </head>
-  <body class="">
-    안녕하세요
+  <body>
+    <label class="menu-btn">
+      <input type="checkbox">
+      <div class="menu-btn-icon"></div>
+    </label>
+    <div class="dummy">
+      <div class="bg-left"></div>
+      <div class="bg-right"></div>
+    </div>
+    <div class="sidebar">
+      <header>
+        <h1 class="site-name"><a href="#">{ site.name }</a></h1>
+          <label class="theme-btn">
+          <div class="theme-left"></div>
+          <div class="wrapper">
+            <input type="checkbox">
+            <div class="theme-switch"></div>
+          </div>
+          <div class="theme-right"></div>
+        </label>
+      </header>
+      <nav>
+        <div class="line"></div>
+        <ul>
+          <li class="item"><a href="#">Develope</a></li>
+          <li class="item"><a href="#">MS Office Tips</a></li>
+        </ul>
+      </nav>
+      <footer>
+        <div class="line"></div>
+        <div class="footer-msg">This blog is designed by Tezyns.</div>
+      </footer>
+    </div>
+    <div class="mainview">
+      <article>
+        <!-- page goes here -->
+      </article>
+    </div>
   </body>
 </html>
 
 <style lang="scss" is:global>
-  @import url(https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css);
-  @import url(https://cdn.jsdelivr.net/npm/open-color@1.9.1/open-color.min.css);
+  // scss variables
+  $bp: 1200px;
+  @mixin icon {
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    // display: inline-block;
+    // background-repeat: no-repeat;
+    // background-position: center;
+    // background-size: cover;
+    // filter: 
+    //   drop-shadow( 1px  0px 0px var(--fg-2)) 
+    //   drop-shadow(-1px  0px 0px var(--fg-2))
+    //   drop-shadow( 0px  1px 0px var(--fg-2)) 
+    //   drop-shadow( 0px -1px 0px var(--fg-2));
+  }
+
+  // globals
   * {
-    -webkit-tap-highlight-color: transparent; box-sizing: border-box;
+    box-sizing: border-box;
   }
   :root {
-    --fg-1: var(--oc-gray-8); --fg-2: var(--oc-gray-6);
-    --bg-1: var(--oc-gray-0);
+    --sidebar-fg-n: var(--oc-gray-8); --sidebar-fg-a: var(--oc-blue-6); --sidebar-fg-b: var(--oc-gray-8); --sidebar-fg-c: var(--oc-gray-6);
+    --sidebar-bg-n: var(--oc-grape-1); --sidebar-bg-b: var(--oc-grape-3);
+    
+    
+    --fg-1: var(--oc-gray-8); --fg-2: var(--oc-gray-6); --fg-3: var(--oc-gray-3);
+    --fg-r: var(--oc-red-6); --fg-g: var(--oc-green-6); --fg-b: var(--oc-blue-6);
+    --bg-1: var(--oc-grape-1); --bg-2: var(--oc-gray-0);
+    --bg-box: var(--bg-1);
     &[data-theme="dark"] {
-      --fg-1: var(--oc-gray-0); --fg-2: var(--oc-gray-5);
-      --bg-1: var(--oc-gray-9);
+      
     }
   }
-  html, body, div, header, main, footer, aside, nav, section, article {
-    -ms-overflow-style: none; scrollbar-width: none;
-    &::-webkit-scrollbar {
+  body, pre, code, kbd, samp {
+    font: 400 16px D2Coding,monospace; line-height: 1.5;
+  }
+  a, a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+  }
+
+  // layouts
+  label.menu-btn{
+    position: fixed; top: 16px; right: 16px; z-index: 9999;
+    height: 24px; width: 24px;
+    font-size: 24px;
+    cursor: pointer; overflow: hidden;
+    input {
+      height: 0; width: 0; opacity: 0;
+      &:checked + div {
+        transform: rotate(45deg);
+      }
+    }
+    .menu-btn-icon {
+      position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+      background-image: url("https://api.iconify.design/fluent-emoji:plus.svg");
+      transition: transform 0.4s;
+    }
+    @media (min-width: #{$bp}) {
       display: none;
     }
   }
-  body {
-    @apply font-sans font-400 font-size-16px line-height-normal;
+  .dummy {
+    position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 10;
+    display: flex;
+    .bg-left {
+      flex: 1 0 0;
+      background-color: var(--sidebar-bg-n);
+    }
+    .bg-right {
+      flex: 1 0 0;
+      background-color: var(--bg-2);
+    }
   }
-  pre, code, kbd, samp {
-    @apply font-mono;
+  .sidebar {
+    position: fixed; top: 0; right: 0; bottom: 0; left: -320px; max-width: 320px; z-index: 30;
+    background-color: var(--sidebar-bg-n);
+    overflow-y: scroll;
+    &.checked {
+      left: 0;
+    }
+    @media (min-width: #{$bp}) {
+      left: calc(50vw - #{calc($bp / 2)});
+    }
   }
-  a, a:link, a:visited, a:hover, a:active {
-    text-decoration: none; color: var(--fg-a); border-bottom: 1px solid;
+  .mainview {
+    position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 20;
+    background-color: var(--bg-2);
+    overflow-y: scroll;
+    @media (min-width: #{$bp}) {
+      left: calc(50vw - #{calc($bp / 2)} + 320px);
+      max-width: calc(#{$bp} - 320px);
+    }
+  }
+
+  // .sidebar
+  .sidebar {
+    overflow-y: scroll;
+    &:before, &:after {
+      content: " "; display: table-cell;
+    }
+    a, a:link, a:visited, a:hover, a:active {
+      color: var(--fg-b);
+    }
+    .line {
+      position: relative; height: 1rem; width: 95%; margin: 0 auto;
+      &:before {
+        content: " ";
+        position: absolute; top: -35%; left: 0; right: 0;
+        border-top: 1px solid var(--sidebar-fg-c);
+      }
+      &:after {
+        content: "<>"; 
+        position: absolute; top: -50%; left: 50%; height: 1rem;
+        display: inline-flex; align-items: center; justify-content: center;
+        color: var(--sidebar-fg-c); background-color: var(--sidebar-bg-n); transform: translate(-50%, -45%);
+      }
+    }
+    header {
+      .site-name {
+        margin: 1.5rem 0;
+        font-size: 2rem; text-align: center;
+      }
+      label.theme-btn {
+        position: relative;
+        height: 1.5rem; width: 7rem; margin: 1.5rem auto;
+        display: block;
+        cursor: pointer;
+        .theme-left {
+          position: absolute; top: 0; left: 0;
+          height: 1.5rem; width: 1.5rem;
+          @include icon;
+          --svg: url("https://api.iconify.design/material-symbols:sunny-outline-rounded.svg");
+        }
+        .theme-right {
+          position: absolute; top: 0; left: 5.5rem;
+          height: 1.5rem; width: 1.5rem;
+          @include icon;
+          --svg: url("https://api.iconify.design/material-symbols:nightlight-outline-rounded.svg");
+        }
+        .wrapper {
+          position: absolute; left: 2rem;
+          height: 1.5rem; width: 3rem;
+          display: inline-block;
+          border: 1px solid var(--sidebar-fg-c); border-radius: 99rem;
+          input {
+            height: 0; width: 0; opacity: 0;
+            &:checked + div {
+              left: 1.5rem;
+            }
+          }
+          .theme-switch {
+            position: absolute; top: 0.1rem; left: 0.1rem;
+            height: 1.2rem; width: 1.2rem;
+            background-color: var(--sidebar-fg-n); border-radius: 99rem;
+            transition: left 0.4s;
+          }
+        }
+      }
+    }
+    nav {
+      ul {
+        margin: 2rem 0;
+        li {
+          margin: 1.5rem 0 1.5rem 1.5rem;
+          font-size: 1.5rem;
+          &:before {
+            content: "\25b8";
+            display: inline-block; width: 1.5rem; margin-left: -1.5rem;
+          }
+        }
+      }
+    }
+    footer {
+      position: sticky; top: 100vw;
+      .footer-msg {
+        padding: 0.5rem 0 1.5rem 0;
+        text-align: center;
+      }
+    }
+  }
+
+  // mainview
+  .mainview {
+    article {
+      padding: 0 0.5rem;
+      font-size: 1rem; line-height: 1.5;
+      h1.page-title {
+        margin: 1.5rem 0;
+        font-size: 2rem;
+        text-align: center;
+        &:before {
+          content: " "; height: 2rem; width: 2rem;
+          @include icon;
+          --svg: url("https://api.iconify.design/material-symbols-light:format-quote.svg");
+          transform: scale(-1, -1);
+        }
+        &:after {
+          content: " "; height: 2rem; width: 2rem;
+          @include icon;
+          --svg: url("https://api.iconify.design/material-symbols-light:format-quote.svg");
+        }
+      }
+      .page-meta {
+        margin: 1.5rem 0;
+        .page-description {
+          &:before {
+          
+          }
+        }
+        .page-updated {
+          &:before {
+          
+          }
+        }
+      }
+      .page-main {
+        h2 {
+          margin: 3rem 0 1.5rem 0;
+          font-size: 1.5rem;
+        }
+        p {
+          margin: 1.5rem 0;
+        }
+      }
+    }
   }
 </style>
+
+<script is:inline>
+  'use strict'
+  $menu_btn_input = document.querySelector('label.menu-btn input')
+  $sidebar = document.querySelector('.sidebar')
+
+  $menu_btn_input.onclick = e => {
+    $sidebar.classList.toggle('checked')
+  }
+</script>
