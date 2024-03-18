@@ -1,11 +1,11 @@
 {
   "name": "tezyns-blog-builder",
   "version": "2.0.0",
-  "description": "static site generator for tezyns'blog",
+  "description": "builder for tezyns'blog with node.js and exteral useful modules",
   "main": "build.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node build.js pages"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +19,9 @@
     "markdown-it": "^14.0.0",
     "pug": "^3.0.2",
     "sass": "^1.72.0"
+  },
+  "stackblitz": {
+    "installDependencies": true,
+    "startCommand": false
   }
 }
