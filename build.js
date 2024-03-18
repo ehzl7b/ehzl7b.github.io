@@ -159,7 +159,7 @@ async function build_pages() {
   // sitemap.xml 빌드
   {
     const render = pug.compileFile($root + '/_layouts/sitemap.pug')
-    fs.outputFileSync($root + '/_site/index.html', render({pages}), 'utf-8')
+    fs.outputFileSync($root + '/_site/sitemap.xml', render({pages}), 'utf-8')
   }
   console.log('===> sitemap.xml updated')
 
@@ -177,10 +177,10 @@ async function build_assets() {
 
   // main.scss -> main.css
   const css = await sass.compileAsync($root + '/_assets/main.scss', {style: 'compressed'})
-  fs.outputFileSync($root + '/_site/assets/main.css', css.css, 'utf-8')
+  fs.outputFileSync($root + '/_site/main.css', css.css, 'utf-8')
   
   // copy static assets
-  fs.copySync($root + '/_assets', $root + '/_site/assets', {
+  fs.copySync($root + '/_assets', $root + '/_site', {
     filter: (from, to) => {
       return !from.includes('main.scss')
     }

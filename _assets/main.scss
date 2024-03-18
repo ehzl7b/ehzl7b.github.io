@@ -92,7 +92,7 @@ label.menu-btn{
     left: 0;
   }
   @media (min-width: #{$bp}) {
-    left: calc(50vw - #{$bp/2});
+    left: calc(50vw - #{calc($bp/2)});
   }
 }
 .mainview {
@@ -100,7 +100,7 @@ label.menu-btn{
   background-color: var(--bg-2);
   overflow-y: scroll;
   @media (min-width: #{$bp}) {
-    left: calc(50vw - #{$bp/2} + 320px);
+    left: calc(50vw - #{calc($bp/2)} + 320px);
     max-width: calc(#{$bp} - 320px);
   }
 }
