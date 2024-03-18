@@ -1,0 +1,20 @@
+nav
+  #categories
+    ul
+      each cat in cats
+        li
+          a(href='#'+cat.id) #{cat.title}
+  #posts
+    - var pages_reversed = [...pages].reverse()
+    each cat in cats 
+      if cat.order === 'desc'
+        - var pages_ = pages_reversed
+      else
+        - var pages_ = pages 
+      div(id=cat.id) #{cat.title}
+      ul
+        each page in pages_
+          if page.cat.includes(cat.id)
+            li
+              a(href=page.pathname) #{page.title}
+              span &nbsp;#{page.updated}
