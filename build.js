@@ -8,12 +8,10 @@ import hljs from 'highlight.js'
 import markdownIt from 'markdown-it'
 import yaml from 'js-yaml'
 
-
 /**
- * 변수 초기화
+ * 글로벌 변수 초기화
  */
-const stylify = new Bundler({})
-const $root = '.'
+const $root = process.env.PWD
 hljs.registerLanguage('pseudo', function(hljs) {
   return {
     aliases: ['ps'],
@@ -72,6 +70,10 @@ const parse_md = markdownIt({
  * 
  * 가장 먼저 검색되는 yaml || yml 파일 내용을 읽어서 네비게이션 json 빌드
  * 
+ * index.html, 404.html 빌드
+ * 
+ * sitemap.xml 빌드
+ * 
  * 빌드 끝낸 후 new page 목록을 로컬에 저장 
  */
 async function build_pages() {
@@ -80,7 +82,7 @@ async function build_pages() {
   // old page 목록 로딩
   const pageinfos = (() => {
     try {
-      return fs.readJSONSync($root + '/docs/pageinfos.json')
+      return fs.readJSONSync($root + '/_site/pageinfos.json')
     } catch(e) {
       return []
     }
@@ -101,7 +103,7 @@ async function build_pages() {
       // created or updated 된 경우만,
       if (!pageinfos_old.has(name) || pageinfos_old.get(name).ver !== ver) {
         const cat = parsed.dir.split('/_pages')[1]
-        const jsonfile = $root + ((cat === '' || cat === '/') ? '/docs/pages/' : '/docs/pages/post/') + name + '.json'
+        const jsonfile = $root + ((cat === '' || cat === '/') ? '/_site/pages/' : '/_site/pages/post/') + name + '.json'
         const pathname = (((cat === '' || cat === '/') ? '/' : '/post/') + name).replace('/index', '/')
         
         // json 빌드
@@ -117,7 +119,7 @@ async function build_pages() {
       }
     }
   }
-  console.log('===> ' + build_count + ' post page(s) converted')
+  console.log('===> ' + build_count + ' page(s) converted')
 
   // new page 목록에 없는 json 삭제
   for (let [name, info] of pageinfos_old) {
@@ -125,7 +127,7 @@ async function build_pages() {
       try {
         fs.unlinkSync(info.jsonfile)
       } catch(e) {
-        console.log('pageinfos.json 파일이 뭔가 잘못된 것 같습니다. node build all 을 실행해주세요')
+        console.log('pageinfos.json 파일이 뭔가 잘못된 것 같습니다. pageinfos.json 파일을 삭제하고 재실행 해주세요.')
         break
       }
     }
@@ -134,31 +136,35 @@ async function build_pages() {
   // 네비게이션 json 빌드
   const yamlfile = fg.globSync($root + '/_pages/**/*.{yaml,yml}')[0]
   const navmenu = yaml.load(fs.readFileSync(yamlfile, 'utf8'))
+  const pages = [...pageinfos_new.values()]
   for (let [sup, sub] of Object.entries(navmenu)) {
     const render = pug.compileFile($root + '/_layouts/nav.pug')
     const pathname = '/' + sup.toLocaleLowerCase()
-    const jsonfile = $root + '/docs/pages' + pathname + '.json'
-    fs.outputJSONSync(jsonfile, {pathname, title: sup.toLocaleLowerCase() + ' 카테고리', content: render({pages: [...pageinfos_new.values()], cats: sub})}, 'utf-8')
+    const jsonfile = $root + '/_site/pages' + pathname + '.json'
+    fs.outputJSONSync(jsonfile, {pathname, title: sup.toLocaleLowerCase() + ' 카테고리', content: render({pages, cats: sub})}, 'utf-8')
   }
-  console.log('===> navigation page(s) converted')
+  console.log('===> navigation pages converted')
+
+  // base.pug -> index.html & 404.html
+  {
+    const menus = Object.keys(navmenu).map(sup => {
+      return { pathname: '/' + sup.toLocaleLowerCase(), title: sup }
+    })
+    const render = pug.compileFile($root + '/_layouts/base.pug')
+    fs.outputFileSync($root + '/_site/index.html', render({menus}), 'utf-8')
+    fs.copyFileSync($root + '/_site/index.html', $root + '/_site/404.html')
+  }
+  console.log('===> index.html converted')
 
   // sitemap.xml 빌드
   {
     const render = pug.compileFile($root + '/_layouts/sitemap.pug')
-    fs.outputFileSync($root + '/docs/sitemap.xml', render({pages: [...pageinfos_new.values()]}))
+    fs.outputFileSync($root + '/_site/index.html', render({pages}), 'utf-8')
   }
-
-  // base.pug -> index.html & 404.html
-  const menus = Object.keys(navmenu).map(sup => {
-    return { pathname: '/' + sup.toLocaleLowerCase(), title: sup }
-  })
-  const render = pug.compileFile($root + '/_layouts/base.pug')
-  fs.outputFileSync($root + '/docs/index.html', render({menus}), 'utf-8')
-  fs.copyFileSync($root + '/docs/index.html', $root + '/docs/404.html')
-  console.log('===> index.html converted')
+  console.log('===> sitemap.xml updated')
 
   // new page 목록 저장
-  fs.outputJsonSync($root + '/docs/pageinfos.json', [...pageinfos_new.values()])
+  fs.outputJsonSync($root + '/_site/pageinfos.json', pages)
 }
 
 
@@ -166,14 +172,15 @@ async function build_pages() {
  * assets 빌드
  */
 async function build_assets() {
-  console.log('===> execute build_assets')
+  // // disable jekyll
+  // fs.outputFileSync($root + '/_site/.nojekyll', ' ', 'utf-8')
 
   // main.scss -> main.css
   const css = await sass.compileAsync($root + '/_assets/main.scss', {style: 'compressed'})
-  fs.outputFileSync($root + '/docs/main.css', css.css, 'utf-8')
+  fs.outputFileSync($root + '/_site/assets/main.css', css.css, 'utf-8')
   
   // copy static assets
-  fs.copySync($root + '/_assets', $root + '/docs/assets', {
+  fs.copySync($root + '/_assets', $root + '/_site/assets', {
     filter: (from, to) => {
       return !from.includes('main.scss')
     }
@@ -192,7 +199,7 @@ switch (process.argv[2]) {
     build_assets()
     break
   case 'all':
-    fs.removeSync($root + '/docs')
+    fs.removeSync($root + '/_site')
     build_pages()
     build_assets()
     break

@@ -1,7 +1,7 @@
 {
-  "name": "tezyns_ssg",
-  "version": "1.0.1",
-  "description": "tezyns static site generator",
+  "name": "tezyns-blog-builder",
+  "version": "2.0.0",
+  "description": "static site generator for tezyns'blog",
   "main": "build.js",
   "type": "module",
   "scripts": {
