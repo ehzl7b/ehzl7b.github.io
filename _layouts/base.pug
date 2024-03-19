@@ -9,14 +9,12 @@ html(lang="ko", data-theme="light")
     meta(name='viewport', content='width=device-width, initial-scale=1')
     title #{site.title}
     link(rel='icon' type='image/png' href='/favicon.png')
-    link(rel="stylesheet", href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-coding.css")
-    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css")
-    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-color@1.9.1/open-color.min.css")
     link(rel='stylesheet', href='/main.css')
   body
-    label.menu-btn
-      input(type="checkbox")
-      .menu-btn-icon
+    .menu-btn
+      label
+        input(type="checkbox")
+        .menu-btn-icon.icon
     .dummy
       .bg-left
       .bg-right
@@ -24,12 +22,13 @@ html(lang="ko", data-theme="light")
       header
         h1.site-name
           a(href="#") Tezyns' Blog
-        label.theme-btn
-          .theme-left
-          .wrapper
-            input(type="checkbox")
-            .theme-switch
-          .theme-right
+        .theme-btn
+          label
+            .theme-left
+            .wrapper
+              input(type="checkbox")
+              .theme-switch
+            .theme-right
       nav
         .line
         ul
