@@ -9,6 +9,8 @@ export default defineConfig({
       // injectReset: true // or a path to the reset file
     }),
   ],
+  publicDir: './_assets',
+  outDir: './_site',
   build: {
     inlineStylesheets: `never`,
     format: 'preserve',
