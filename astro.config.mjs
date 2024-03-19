@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config'
 import UnoCSS from 'unocss/astro'
+import icon from 'astro-icon'
 import hljs from 'highlight.js'
 import { visit } from 'unist-util-visit'
 
@@ -8,6 +9,7 @@ export default defineConfig({
     UnoCSS({
       // injectReset: true // or a path to the reset file
     }),
+    icon(),
   ],
   publicDir: './_assets',
   outDir: './_site',

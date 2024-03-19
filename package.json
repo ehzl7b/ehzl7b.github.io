@@ -22,5 +22,8 @@
   "stackblitz": {
     "installDependencies": true,
     "startCommand": false
+  },
+  "dependencies": {
+    "astro-icon": "^1.1.0"
   }
 }
