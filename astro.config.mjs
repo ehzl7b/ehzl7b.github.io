@@ -1,13 +1,13 @@
 import { defineConfig } from 'astro/config'
-// import UnoCSS from 'unocss/astro'
+import UnoCSS from 'unocss/astro'
 import hljs from 'highlight.js'
 import { visit } from 'unist-util-visit'
 
 export default defineConfig({
   integrations: [
-    // UnoCSS({
-    //   // injectReset: true // or a path to the reset file
-    // }),
+    UnoCSS({
+      // injectReset: true // or a path to the reset file
+    }),
   ],
   build: {
     inlineStylesheets: `never`,
