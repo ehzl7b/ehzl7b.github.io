@@ -101,7 +101,75 @@ async function build_pages() {
       build_count += 1
     }    
   }
+
+  // 네비게이션 json 빌드
+  const yamlfile = fg.globSync($root + '/_pages/**/*.{yaml,yml}')[0]
+  const navmenu = yaml.load(fs.readFileSync(yamlfile, 'utf8'))
+  const pages = [...pageinfos_new.values()]
+  for (let [sup, sub] of Object.entries(navmenu)) {
+    const render = pug.compileFile($root + '/_layouts/nav.pug')
+    const pathname = '/' + sup.toLocaleLowerCase()
+    const jsonfile = $root + '/_site/pages' + pathname + '.json'
+    fs.outputJSONSync(jsonfile, {pathname, title: sup.toLocaleLowerCase() + ' 카테고리', content: render({pages, cats: sub})}, 'utf-8')
+  
+    build_count += 1
+  }
   console.log('===> ' + build_count + ' page(s) converted')
+
+  // base.pug -> index.html & 404.html
+  {
+    const menus = Object.keys(navmenu).map(sup => {
+      return { pathname: '/' + sup.toLocaleLowerCase(), title: sup }
+    })
+    const render = pug.compileFile($root + '/_layouts/base.pug')
+    fs.outputFileSync($root + '/_site/index.html', render({menus}), 'utf-8')
+    fs.copyFileSync($root + '/_site/index.html', $root + '/_site/404.html')
+  }
+  console.log('===> index.html converted')
+
+  // sitemap.xml 빌드
+  {
+    const render = pug.compileFile($root + '/_layouts/sitemap.pug')
+    fs.outputFileSync($root + '/_site/sitemap.xml', render({pages}), 'utf-8')
+  }
+  console.log('===> sitemap.xml updated')
+
+  // new page 목록 저장
+  fs.outputJsonSync($root + '/_site/pageinfos.json', pages)
 }
 
-build_pages();
+/**
+ * assets 빌드
+ */
+async function build_assets() {
+  // // disable jekyll
+  // fs.outputFileSync($root + '/_site/.nojekyll', ' ', 'utf-8')
+
+  // main.scss -> main.css
+  const css = await sass.compileAsync($root + '/_assets/main.scss', {style: 'compressed'})
+  fs.outputFileSync($root + '/_site/main.css', css.css, 'utf-8')
+  
+  // copy static assets
+  fs.copySync($root + '/_assets', $root + '/_site', {
+    filter: (from, to) => {
+      return !from.includes('main.scss')
+    }
+  })
+}
+
+/**
+ * 진입점
+ */
+switch (process.argv[2]) {
+  case 'pages':
+    build_pages()
+    break
+  case 'assets':
+    build_assets()
+    break
+  case 'all':
+    fs.removeSync($root + '/_site')
+    build_pages()
+    build_assets()
+    break
+}
