@@ -14,7 +14,7 @@ html(lang="ko", data-theme="light")
     .menu-btn
       label
         input(type="checkbox")
-        .menu-btn-icon.icon
+        .menu-btn-icon
     .dummy
       .bg-left
       .bg-right
@@ -45,8 +45,8 @@ html(lang="ko", data-theme="light")
     script.
       $root = document.querySelector('html')
       $sidebar = document.querySelector('.sidebar')
-      $theme_btn_input = document.querySelector('#theme-btn input')
-      $menu_btn_input = document.querySelector('label.menu-btn input')
+      $theme_btn_input = document.querySelector('.theme-btn input')
+      $menu_btn_input = document.querySelector('.menu-btn input')
 
       function set_theme(theme) {
         $root.dataset.theme = theme
