@@ -1,0 +1,50 @@
+name: Tezyns Deployment Pages
+on:
+  push:
+    branches: ["main"]
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout build library in main branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: '.'
+      - name: delete old pages
+        run: rm -rf _pages
+      - name: checkout build library in main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: './_pages'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+      - run: npm ci
+      - run: node build pages
+      - name: Check if there are any changes
+        id: verify_diff
+        run: git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+      # - name: Upload artifact
+      #   if: steps.verify_diff.outputs.changed == 'true'
+      #   uses: actions/upload-pages-artifact@v2
+      #   with:
+      #     path: './_site'
+      # - name: Deploy to GitHub Pages
+      #   if: steps.verify_diff.outputs.changed == 'true'
+      #   uses: actions/deploy-pages@v2
+      - name: Update Repo
+        if: steps.verify_diff.outputs.changed == 'true'
+        run: |
+          git config --global user.name "tezyns"
+          git config --global user.email "tezyns@outlook.com"
+          git add .
+          git commit -m "deployment"
+          git push
+        
