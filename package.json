@@ -1,0 +1,24 @@
+{
+  "name": "tezyns-blog-builder",
+  "version": "2.0.0",
+  "description": "",
+  "main": "./_libs/index.js",
+  "type": "module",
+  "scripts": {
+    "pages": "node index pages",
+    "assets": "node index assets",
+    "test": "node index test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "fast-glob": "^3.3.2",
+    "fs-extra": "^11.2.0",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.9.0",
+    "markdown-it": "^14.1.0",
+    "pug": "^3.0.2",
+    "sass": "^1.72.0"
+  }
+}

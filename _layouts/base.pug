@@ -1,4 +1,4 @@
-- var site = {title: 'Tezyns Blog', author: 'Tezyns'}
+- var site = {title: `Tezyns'Blog`, author: `Tezyns`}
 
 doctype html
 html(lang="ko", data-theme="light")
@@ -32,10 +32,9 @@ html(lang="ko", data-theme="light")
       nav
         .line
         ul
-          li.item
-            a(href="#") Develope
-          li.item
-            a(href="#") MS Office Tips
+          each menu in menus
+            li.item
+              a(href=menu.pathname) #{menu.title}
       footer
         .line
         div.footer-msg This blog is designed by Tezyns.
