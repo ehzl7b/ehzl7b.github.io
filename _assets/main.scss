@@ -5,23 +5,23 @@
 // vars
 @mixin icon {
   display: inline-block;
-  vertical-align: text-top;
+  vertical-align: middle;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-image: var(--svg);
+  // background-image: var(--svg);
   // filter: 
-  //   drop-shadow( 1px  0px 0px var(--fg-2)) 
-  //   drop-shadow(-1px  0px 0px var(--fg-2))
-  //   drop-shadow( 0px  1px 0px var(--fg-2)) 
-  //   drop-shadow( 0px -1px 0px var(--fg-2));
+    // drop-shadow( 1px  0px 0px var(--fg-1)) 
+    // drop-shadow(-1px  0px 0px var(--fg-1))
+    // drop-shadow( 0px  1px 0px var(--fg-1)) 
+    // drop-shadow( 0px -1px 0px var(--fg-1));
   background-color: currentColor;
   -webkit-mask-image: var(--svg);
   mask-image: var(--svg);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  -webkit-mask-size: 101% 101%;
-  mask-size: 101% 101%;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 // globals
@@ -35,8 +35,8 @@ html, body, div, header, main, footer, aside, nav, section {
   }
 }
 :root {
-  --fg-1: var(--oc-gray-8); --fg-2: var(--oc-gray-6); --fg-a: var(--oc-blue-6); --fg-b: var(--oc-red-6); --fg-c: var(--oc-gray-6);
-  --bg-1: var(--oc-grape-1); --bg-2: var(--oc-gray-1);
+  --fg-1: var(--oc-gray-8); --fg-2: var(--oc-gray-6); --fg-a: var(--oc-blue-8); --fg-b: var(--oc-red-8); --fg-c: var(--oc-gray-8);
+  --bg-1: var(--oc-gray-2); --bg-2: var(--oc-gray-0);
   --box-1: var(--oc-gray-3);
   &[data-theme="dark"] {
 
@@ -54,7 +54,7 @@ b, strong {
 
 // layouts
 .menu-btn {
-  position: fixed; top: 1rem; right: 1rem; height: 1.5rem; width: 1.5rem; z-index: 9999;
+  position: fixed; top: 1rem; right: 1rem; height: 2rem; width: 2rem; z-index: 9999;
   label {
     position: relative; height: 100%; width: 100%;
     display: block; font-size: 1.5rem; cursor: pointer; overflow: hidden;
@@ -67,7 +67,7 @@ b, strong {
     .menu-btn-icon {
       position: absolute; top: 0; left: 0; height: 100%; width: 100%;
       @include icon;
-      --svg: url("https://api.iconify.design/fluent-emoji-flat:plus.svg");
+      --svg: url("https://api.iconify.design/clarity:plus-circle-line.svg");
       transition: transform 0.4s;
     }
   }
@@ -88,7 +88,7 @@ b, strong {
   }
 }
 .sidebar {
-  position: fixed; top: 0; right: 0; bottom: 0; left: -320px; max-width: 320px; z-index: 30;
+  position: fixed; top: 0; right: 0; bottom: 0; left: -320px; max-width: 320px; padding: 0 0.5rem; z-index: 30;
   background-color: var(--bg-1); overflow-y: scroll;
   transition: left 0.4s;
   &.checked {
@@ -96,11 +96,15 @@ b, strong {
   }
   @media (min-width: 1200px) {
     left: calc(50vw - 600px);
+    &.checked {
+      left: calc(50vw - 600px);
+    }
   }
 }
 .mainview {
   position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 20;
   background-color: var(--bg-2); overflow-y: scroll;
+  transition: left 0.4s;
   @media (min-width: 1200px) {
     left: calc(50vw - 280px); /*50vw - 600px + 320px*/
     max-width: 880px; /*1200px - 320px*/
@@ -113,7 +117,7 @@ b, strong {
     content: " "; display: table-cell;
   }
   .line {
-    position: relative; height: 1rem; width: 95%; margin: 0 auto;
+    position: relative; height: 1rem; width: 100%; margin: 0 auto;
     &:before {
       content: " "; position: absolute; top: -35%; left: 0; right: 0;
       border-top: 1px solid var(--fg-c);
@@ -137,12 +141,12 @@ b, strong {
         .theme-left {
           position: absolute; top: 0; left: 0; height: 1.5rem; width: 1.5rem;
           @include icon;
-          --svg: url("https://api.iconify.design/fluent-emoji-flat:sun-with-face.svg");
+          --svg: url("https://api.iconify.design/bi:sun.svg");
         }
         .theme-right {
           position: absolute; top: 0; left: 5.5rem; height: 1.5rem; width: 1.5rem;
           @include icon;
-          --svg: url("https://api.iconify.design/fluent-emoji-flat:new-moon-face.svg");
+          --svg: url("https://api.iconify.design/bi:moon-stars.svg");
         }
         .wrapper {
           position: absolute; top: 0; left: 2rem; height: 1.5rem; width: 3rem;
@@ -176,7 +180,7 @@ b, strong {
     }
   }
   footer {
-    position: sticky; top: 100vw;
+    position: sticky; top: 100vh;
     .footer-msg {
       padding: 0.5rem 0 1.5rem 0;
       text-align: center;
@@ -190,15 +194,15 @@ b, strong {
     content: " "; display: table-cell;
   }
   article {
-    padding: 0 0.5rem;
+    margin: 1.5rem 0; padding: 0 0.5rem;
     line-height: 1.5;
     h1.page-title {
       margin: 1.5rem 0;
       font-size: 2rem;
       &:before {
-        content: " "; display: inline-block; height: 2rem; width: 2rem; margin-right: 1rem;
+        content: " "; display: inline-block; height: 2rem; width: 2rem; margin-right: 0.5rem;
         @include icon;
-        --svg: url("https://api.iconify.design/fluent-emoji-flat:memo.svg");
+        --svg: url("https://api.iconify.design/bi:chat-square-text.svg");
       }
     }
     .page-meta {
@@ -207,14 +211,14 @@ b, strong {
         &:before {
           content: " "; display: inline-block; height: 1rem; width: 1rem; margin-right: 0.5rem;
           @include icon;
-          --svg: url("https://api.iconify.design/fluent-emoji-flat:label.svg");
+          --svg: url("https://api.iconify.design/bi:journal-bookmark.svg");
         }
       }
       .page-updated {
         &:before {
           content: " "; display: inline-block; height: 1rem; width: 1rem; margin-right: 0.5rem;
           @include icon;
-          --svg: url("https://api.iconify.design/fluent-emoji-flat:spiral-calendar.svg");
+          --svg: url("https://api.iconify.design/bi:arrow-clockwise.svg");
         }
       }
     }
@@ -222,6 +226,11 @@ b, strong {
       h2 {
         margin: 3rem 0 1.5rem 0;
         font-size: 1.5rem;
+        &:before {
+          content: " "; display: inline-block; height: 1.5rem; width: 1.5rem; margin-right: 0.5rem;
+          @include icon;
+          --svg: url("https://api.iconify.design/bi:hash.svg");
+        }
       }
       p {
         margin: 1.5rem 0;

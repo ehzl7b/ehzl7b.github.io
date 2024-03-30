@@ -21,7 +21,7 @@ html(lang="ko", data-theme="light")
     .sidebar
       header
         h1.site-name
-          a(href="#") Tezyns' Blog
+          a(href="/") Tezyns'Blog
         .theme-btn
           label
             .theme-left
@@ -42,10 +42,10 @@ html(lang="ko", data-theme="light")
       article
       // fetched page goes here...
     script.
-      $root = document.querySelector('html')
-      $sidebar = document.querySelector('.sidebar')
-      $theme_btn_input = document.querySelector('.theme-btn input')
-      $menu_btn_input = document.querySelector('.menu-btn input')
+      const $root = document.querySelector('html')
+      const $sidebar = document.querySelector('.sidebar')
+      const $theme_btn_input = document.querySelector('.theme-btn input')
+      const $menu_btn_input = document.querySelector('.menu-btn input')
 
       function set_theme(theme) {
         $root.dataset.theme = theme
@@ -65,6 +65,8 @@ html(lang="ko", data-theme="light")
       }
     script.
       const $article = document.querySelector('article')
+      //- const $sidebar = document.querySelector('.sidebar')
+
       async function fetch_content() {
         const cur_pathname = window.location.pathname
         const tar_pathname = '/pages/' + cur_pathname.slice(1) + (cur_pathname === '/' ? 'index.json' : '.json')
@@ -86,7 +88,9 @@ html(lang="ko", data-theme="light")
           if (e.target.href !== window.location.href) {
             history.pushState(null, null, e.target.href)
             await fetch_content()
-            $scroller.scrollTo({ top: 0 })
+            //- $scroller.scrollTo({ top: 0 })
+            $sidebar.classList.remove('checked')
+            $menu_btn_input.checked = false
           }
         }
       }
