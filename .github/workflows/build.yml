@@ -10,13 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout build library in main branch
+      - name: checkout build library in gh-pages branch
         uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: '.'
-      # - name: delete old pages
-      #   run: rm -rf _pages
+      - name: delete old pages
+        run: rm -rf _pages
       - name: checkout build library in main branch
         uses: actions/checkout@v4
         with:
