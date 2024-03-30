@@ -10,24 +10,6 @@ import yaml from 'js-yaml'
 
 const $root = process.env.PWD
 
-// 스위치
-switch (process.argv[2]) {
-  case 'test':
-    test()
-    break
-  case 'pages':
-    build_pages()
-    break
-  case 'assets':
-    build_assets()
-    break
-  case 'all':
-    fs.removeSync($root + '/_site')
-    build_pages()
-    build_assets()
-    break
-}
-
 // hljs 초기화
 hljs.registerLanguage('pseudo', function(hljs) {
   return {
@@ -148,15 +130,26 @@ async function build_pages() {
       }
     }
   }
+  const pages = [...pageinfos_new.values()]
 
   // 네비게이션 json 빌드
   const yamlfile = fg.globSync($root + '/_pages/**/*.{yaml,yml}')[0]
   const navmenu = yaml.load(fs.readFileSync(yamlfile, 'utf8'))
-  for (let [sup, sub] of Object.entries(navmenu)) {
+  const menus = navmenu.menus.map(x => {
+    return {...x, pathname: '/' + x.id}
+  })
+  // for (let [sup, sub] of Object.entries(navmenu)) {
+  //   const render = pug.compileFile($root + '/_layouts/nav.pug')
+  //   const pathname = '/' + sup.toLocaleLowerCase()
+  //   const jsonfile = $root + '/_site/pages' + pathname + '.json'
+  //   fs.outputJSONSync(jsonfile, {pathname, title: sup.toLocaleLowerCase() + ' 카테고리', content: render({pages: [...pageinfos_new.values()], cats: sub})}, 'utf-8')
+  // }
+  for (let cat of menus) {
     const render = pug.compileFile($root + '/_layouts/nav.pug')
-    const pathname = '/' + sup.toLocaleLowerCase()
-    const jsonfile = $root + '/_site/pages' + pathname + '.json'
-    fs.outputJSONSync(jsonfile, {pathname, title: sup.toLocaleLowerCase() + ' 카테고리', content: render({pages: [...pageinfos_new.values()], cats: sub})}, 'utf-8')
+    // const pathname = '/' +  cat.id
+    const jsonfile = $root + '/_site/pages' + cat.pathname + '.json'
+    // fs.outputJSONSync(jsonfile, {pathname: cat.pathname, title: cat.title + ' 카테고리', content: render({pages, cat})}, 'utf-8')
+    fs.outputJSONSync(jsonfile, {...cat, content: render({pages, cat, title: cat.title, description: '###', updated: '####'})}, 'utf-8')
   }
 
   // base.pug -> index.html & 404.html
@@ -164,7 +157,7 @@ async function build_pages() {
     // const menus = Object.keys(navmenu).map(sup => {
     //   return { pathname: '/' + sup.toLocaleLowerCase(), title: sup }
     // })
-    const menus = navmenu.menus
+    
     const render = pug.compileFile($root + '/_layouts/base.pug')
     fs.outputFileSync($root + '/_site/index.html', render({menus}), 'utf-8')
     fs.copyFileSync($root + '/_site/index.html', $root + '/_site/404.html')
@@ -179,7 +172,7 @@ async function build_pages() {
   console.log('===> sitemap.xml updated')
 
   // new page 목록 저장
-  fs.outputJsonSync($root + '/_site/pageinfos.json', [...pageinfos_new.values()])
+  fs.outputJsonSync($root + '/_site/pageinfos.json', pages)
 }
 
 
@@ -214,4 +207,22 @@ function test() {
   const menus = navmenu.menus
   console.log(navmenu)
   console.log(menus)
+}
+
+// 스위치
+switch (process.argv[2]) {
+  case 'test':
+    test()
+    break
+  case 'pages':
+    build_pages()
+    break
+  case 'assets':
+    build_assets()
+    break
+  case 'all':
+    fs.removeSync($root + '/_site')
+    build_pages()
+    build_assets()
+    break
 }
