@@ -149,7 +149,9 @@ async function build_pages() {
     // const pathname = '/' +  cat.id
     const jsonfile = $root + '/_site/pages' + cat.pathname + '.json'
     // fs.outputJSONSync(jsonfile, {pathname: cat.pathname, title: cat.title + ' 카테고리', content: render({pages, cat})}, 'utf-8')
-    fs.outputJSONSync(jsonfile, {...cat, content: render({pages, cat, title: cat.title, description: '###', updated: '####'})}, 'utf-8')
+    const description = cat.title + ' 관련 포스팅들'
+    const updated = new Date().toISOString().split('T')[0]
+    fs.outputJSONSync(jsonfile, {...cat, content: render({pages, cat, title: cat.title, description, updated})}, 'utf-8')
   }
 
   // base.pug -> index.html & 404.html
