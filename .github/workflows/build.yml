@@ -28,15 +28,15 @@ jobs:
           cache: npm
       - run: npm i
       - run: node index pages
-      - name: Check if there are any changes
-        id: verify_diff
-        run: git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+      - run: data +%s > report.txt
+      # - name: Check if there are any changes
+      #   id: verify_diff
+      #   run: git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
       - name: Update Repo
-        if: steps.verify_diff.outputs.changed == 'true'
+        # if: steps.verify_diff.outputs.changed == 'true'
         run: |
           git config --global user.name "tezyns"
           git config --global user.email "tezyns@outlook.com"
-          git add .
-          git commit -m "deployment"
+          git commit -am "deployment"
           git push
         
