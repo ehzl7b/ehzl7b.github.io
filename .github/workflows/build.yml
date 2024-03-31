@@ -28,7 +28,7 @@ jobs:
           cache: npm
       - run: npm i
       - run: node index pages
-      - run: data +%s > report.txt
+      - run: date +%s > report.txt
       # - name: Check if there are any changes
       #   id: verify_diff
       #   run: git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
