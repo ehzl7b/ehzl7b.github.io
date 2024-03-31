@@ -1,7 +1,6 @@
 name: Tezyns Deployment Assets
 on:
-  push:
-    branhes: [gh-pages]
+  workflow_dispatch:
 permissions:
   contents: write
   pages: write

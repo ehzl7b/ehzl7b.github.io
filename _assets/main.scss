@@ -39,11 +39,13 @@ html, body, div, header, main, footer, aside, nav, section {
   --bg-1: var(--oc-gray-2); --bg-2: var(--oc-gray-0);
   --box-1: var(--oc-gray-3);
   &[data-theme="dark"] {
-
+    --fg-1: var(--oc-gray-1); --fg-2: var(--oc-gray-2); --fg-a: var(--oc-blue-2); --fg-b: var(--oc-red-2); --fg-c: var(--oc-gray-2);
+    --bg-1: var(--oc-gray-7); --bg-2: var(--oc-gray-9);
+    --box-1: var(--oc-gray-6);
   }
 }
 body, pre, code, kbd, samp {
-  font: 400 16px D2Coding,monospace;
+  font: 400 16px D2Coding,monospace; color: var(--fg-1);
 }
 a, a:link, a:visited, a:hover, a:active {
   font-weight: 400; text-decoration: none; color: var(--fg-a);
