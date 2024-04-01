@@ -1,21 +1,19 @@
 import { defineConfig } from 'astro/config'
 // import UnoCSS from 'unocss/astro'
-import icon from 'astro-icon'
 import hljs from 'highlight.js'
 import { visit } from 'unist-util-visit'
 import yaml from '@rollup/plugin-yaml'
 
 export default defineConfig({
   integrations: [
-    // UnoCSS({
-    //   // injectReset: true // or a path to the reset file
-    // }),
-    icon(),
+    UnoCSS({
+      // injectReset: true // or a path to the reset file
+    }),
   ],
   publicDir: './_assets',
   outDir: './_site',
   build: {
-    inlineStylesheets: `never`,
+    inlineStylesheets: 'never',
     format: 'preserve',
   },
   markdown: {

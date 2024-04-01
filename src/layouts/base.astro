@@ -1,5 +1,4 @@
 ---
-import { Icon } from 'astro-icon/components'
 import menus from '../../_pages/navmenu.yaml'
 
 const site = {
@@ -18,11 +17,11 @@ const site = {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-color@1.9.1/open-color.min.css">
   </head>
-  <body>
+  <body class="fixed top-0 right-0 bottom-0 left-0">
     <div class="menu-btn">
       <label>
         <input type="checkbox">
-        <div class="menu-btn-icon"><Icon name="bi:plus-circle" /></div>
+        <div class="menu-btn-icon"></div>
       </label>
     </div>
     <div class="dummy">
@@ -34,12 +33,12 @@ const site = {
         <h1 class="site-name"><a href="/">{site.name}</a></h1>
         <div class="theme-btn">
           <label>
-            <div class="theme-left"><Icon name="bi:sun" /></div>
+            <div class="theme-left"></div>
             <div class="wrapper">
               <input type="checkbox">
               <div class="theme-switch"></div>
             </div>
-            <div class="theme-right"><Icon name="bi:moon-stars" /></div>
+            <div class="theme-right"></div>
           </label>
         </div>
       </header>
