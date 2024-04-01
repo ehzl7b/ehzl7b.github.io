@@ -1,4 +1,7 @@
 ---
+import { Icon } from 'astro-icon/components'
+import menus from '../../_pages/navmenu.yaml'
+
 const site = {
   name: `Tezyns'Blog`
 }
@@ -10,28 +13,16 @@ const site = {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{ site.name }</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-coding.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-color@1.9.1/open-color.min.css">
   </head>
-  <body class="
-    fixed top-0 right-0 bottom-0 left-0
-  ">
-    <div class="
-      fixed top-[1rem] right-[1rem] z-[9999]
-      h-[1.5rem] w-[1.5rem]
-      font-size-[1.5rem]
-      cursor-pointer overflow-hidden
-    ">
-      <label class="
-        relative h-full w-full
-        block
-      ">
-        <input type="checkbox" class="
-          h-0 w-0 opacity-0
-          [&:checked+div]-rotate-45
-        ">
-        <div class="menu-btn-icon"></div>
+  <body>
+    <div class="menu-btn">
+      <label>
+        <input type="checkbox">
+        <div class="menu-btn-icon"><Icon name="bi:plus-circle" /></div>
       </label>
     </div>
     <div class="dummy">
@@ -40,37 +31,43 @@ const site = {
     </div>
     <div class="sidebar">
       <header>
-        <h1 class="site-name"><a href="#">{ site.name }</a></h1>
-          <label class="theme-btn">
-          <div class="theme-left"></div>
-          <div class="wrapper">
-            <input type="checkbox">
-            <div class="theme-switch"></div>
-          </div>
-          <div class="theme-right"></div>
-        </label>
+        <h1 class="site-name"><a href="/">{site.name}</a></h1>
+        <div class="theme-btn">
+          <label>
+            <div class="theme-left"><Icon name="bi:sun" /></div>
+            <div class="wrapper">
+              <input type="checkbox">
+              <div class="theme-switch"></div>
+            </div>
+            <div class="theme-right"><Icon name="bi:moon-stars" /></div>
+          </label>
+        </div>
       </header>
       <nav>
-        <div class="line"></div>
         <ul>
-          <li class="item"><a href="#">Develope</a></li>
-          <li class="item"><a href="#">MS Office Tips</a></li>
+          {
+            menus.map(menu => {
+              <li class="item"><a href={`/` + menu.id}>{menu.title}</a></li>
+            })
+          }
         </ul>
       </nav>
       <footer>
-        <div class="line"></div>
-        <div class="footer-msg">This blog is designed by Tezyns.</div>
+        <div class="footer-msg">This blog is designed by Tez</div>
       </footer>
     </div>
     <div class="mainview">
       <article>
-        <!-- page goes here -->
+        <slot /> <!-- fetched article goes here -->
       </article>
     </div>
   </body>
 </html>
 
 <style lang="scss" is:global>
+  [data-icon] {
+    height: 100%; width: 100%;
+  }
   * {
   -webkit-tap-highlight-color: transparent; box-sizing: border-box;
   }

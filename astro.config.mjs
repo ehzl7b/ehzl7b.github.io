@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config'
 import icon from 'astro-icon'
 import hljs from 'highlight.js'
 import { visit } from 'unist-util-visit'
+import yaml from '@rollup/plugin-yaml'
 
 export default defineConfig({
   integrations: [
@@ -20,6 +21,9 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: false,
     remarkPlugins: [remarkHighlightjs],
+  },
+  vite: {
+    plugins: [yaml()],
   },
 })
 
