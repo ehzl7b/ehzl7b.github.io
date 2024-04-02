@@ -205,10 +205,11 @@ const site = {
   var $root = document.querySelector('html');
   var $menu_btn_input = document.querySelector('.menu-btn label input');
   var $sidebar = document.querySelector('.sidebar');
-  var $theme_btn_input = document.querySelector('.theme_btn label .wrapper input');
+  var $theme_btn_input = document.querySelector('.theme-btn label .wrapper input');
   var $theme_left = document.querySelector('.theme-left');
   var $theme_right = document.querySelector('.theme-right');
 
+  // 메뉴 버튼 조작
   $menu_btn_input.onclick = e => {
     if (e.target.checked) {
       $sidebar.classList.add('checked');
@@ -217,16 +218,24 @@ const site = {
     }
   };
 
-  var theme_btn_click = e => {
-    if (e.target.checked) {
-      $root.dataset.theme = 'dark';
+  // 테마 전환 버튼 조작
+  var set_theme = theme => {
+    $root.dataset.theme = theme;
+    window.sessionStorage.setItem('theme', theme);
+    if (theme === 'dark') {
       $theme_left.classList.add('checked');
       $theme_right.classList.add('checked');
     } else {
-      $root.dataset.theme = 'light';
       $theme_left.classList.remove('checked');
       $theme_right.classList.remove('checked');
     }
   };
-  $theme_btn_input.onclick = theme_btn_click;
+  let cur_theme = window.sessionStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches  ? 'dark' : 'light');
+  if (cur_theme === 'dark') {
+    $theme_btn_input.checked = true;
+    set_theme('dark');
+  }
+  $theme_btn_input.onclick = e => {
+    set_theme((e.target.checked) ? 'dark' : 'light');
+  };
 </script>
