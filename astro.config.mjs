@@ -6,9 +6,9 @@ import yaml from '@rollup/plugin-yaml'
 
 export default defineConfig({
   integrations: [
-    UnoCSS({
-      // injectReset: true // or a path to the reset file
-    }),
+    // UnoCSS({
+    //   // injectReset: true // or a path to the reset file
+    // }),
   ],
   publicDir: './_assets',
   outDir: './_site',
