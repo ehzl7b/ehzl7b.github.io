@@ -25,9 +25,8 @@ bcdedit /set {current} description "<이름>"
 
 ## WSL 설치
 
-`WINDOWS + I` 키 --> "기능" 으로 검색 --> "Windows 기능 켜기/끄기" 클릭 --> Hyper-V, Linux용 Windows 하위 시스템 체크 --> 확인 클릭 --> 재부팅
-
-재부팅 후 --> `WINDOWS` 키 --> "cmd" 로 검색 --> "명령 프롬프트"를 **관리자 권한으로 실행** 클릭
+`WINDOWS` 키 --> "cmd" 로 검색 --> "명령 프롬프트"를 **관리자 권한으로 실행** 클릭
+(위 Windows 설정에서 계속 이어진다면 명령 프롬프트 창이 띄워져 있을 것이다.)
 
 활성화된 cmd 에 아래 명령어를 위부터 순서대로 입력하여 설치
 
@@ -44,6 +43,8 @@ wsl --update
 wsl --list --online
 wsl --install <Distro>
 ```
+
+설치 완료 후 재부팅 --> 재부팅하면, 창이 새로 뜨는데, Ubuntu 에서 사용할 이름과 비밀번호 입력
 
 [VSCode](https://code.visualstudio.com/Download) 다운로드 후 설치
 
