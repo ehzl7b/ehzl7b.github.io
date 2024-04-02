@@ -35,12 +35,12 @@ const site = {
         <h1 class="site-name"><a href="/">{site.name}</a></h1>
         <div class="theme-btn">
           <label>
-            <div class="theme-left"></div>
+            <div class="theme-left"><Icon name="bi:cloud-sun" /></div>
             <div class="wrapper">
               <input type="checkbox">
               <div class="theme-switch"></div>
             </div>
-            <div class="theme-right"></div>
+            <div class="theme-right"><Icon name="bi:moon-stars" /></div>
           </label>
         </div>
       </header>
@@ -59,6 +59,7 @@ const site = {
     </div>
     <div class="mainview">
       <article>
+        Mainview...
         <slot /> <!-- fetched article goes here -->
       </article>
     </div>
@@ -68,7 +69,7 @@ const site = {
 <style lang="scss" is:global>
   // global
   [data-icon] {
-    height: 100%; width: 100%;
+    height: 100%; width: 100%; vertical-align: top;
   }
   :root {
     --fg-1: var(--oc-gray-8); --fg-2: var(--oc-gray-6); --fg-a: var(--oc-blue-8); --fg-b: var(--oc-red-8);
@@ -79,7 +80,7 @@ const site = {
     }
   }
   * {
-    -webkit-tap-highlight-color: transparent; box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; box-sizing: border-box; transition: all 0.4s;
   }
   body, div, header, main, footer, section {
     -ms-overflow-style: none; scrollbar-width: none;
@@ -103,7 +104,7 @@ const site = {
       display: block; cursor: pointer;
       .menu-btn-bg {
         position: absolute; top: 0; right: 0; bottom: 0; left: 0;
-        background-color: var(--bg-1); border-radius: 0.25rem;
+        background-color: var(--fg-a); border-radius: 99px; opacity: 0.33;
       }
       input {
         height: 0; width: 0; opacity: 0;
@@ -113,7 +114,6 @@ const site = {
       }
       .menu-btn-icon {
         position: absolute; top: 0; right: 0; bottom: 0; left: 0;
-        transition: transform 0.4s;
       }
     }
   }
@@ -130,9 +130,79 @@ const site = {
     }
   }
   .sidebar {
-    position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 20;
+    position: fixed; top: 0; left: -320px; width: 320px; height: 100%; z-index: 30;
+    padding: 0 0.5rem;
+    background-color: var(--bg-1);
+    &.checked {
+      left: 0px;
+    }
+    @media (min-width: 1200px) {
+      left: calc(50vw - 600px);
+      &.checked {
+        left: calc(50vw - 600px);
+      }
+    }
   }
   .mainview {
-    position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 30;
+    position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 20;
+    padding: 0 0.5rem;
+    background-color: var(--bg-2);
+    @media (min-width: 1200px) {
+      left: calc(50vw - 280px);
+    }
+  }
+
+  // header
+  header {
+    height: 100%; width: 100%;
+    h1.site-name {
+      margin: 1.5rem 0;
+      font-size: 2rem; text-align: center;
+    }
+    .theme-btn {
+      height: 1.5rem; width: 100%; margin: 1.5rem 0;
+      text-align: center;
+      overflow: hidden;
+      label {
+        height: 100%;
+        display: inline-flex; align-items: center; justify-content: center; column-gap: 0.5rem;
+        cursor: pointer;
+        .theme-left {
+          height: 1rem; width: 1rem;
+          color: var(--fg-b);
+        }
+        .wrapper {
+          position: relative;
+          height: 1.2rem; width: 2rem;
+          box-sizing: content-box; border: 1px solid var(--fg-2); border-radius: 99px;
+          input {
+            height: 0; width: 0; opacity: 0;
+            &:checked+div {
+              left: 0.9rem;
+            }
+          }
+          .theme-switch {
+            position: absolute; top: 0.1rem; left: 0.1rem; height: 1rem; width: 1rem;
+            background-color: var(--fg-1); border-radius: 99px;
+          }
+        }
+        .theme-right {
+          height: 1rem; width: 1rem;
+        }
+      }
+    }
   }
 </style>
+
+<script is:inline>
+  var $menu_btn_input = document.querySelector('.menu-btn label input');
+  var $sidebar = document.querySelector('.sidebar');
+
+  $menu_btn_input.onclick = e => {
+    if (e.target.checked) {
+      $sidebar.classList.add('checked');
+    } else {
+      $sidebar.classList.remove('checked');
+    }
+  };
+</script>
