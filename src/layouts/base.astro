@@ -169,7 +169,10 @@ const site = {
         cursor: pointer;
         .theme-left {
           height: 1rem; width: 1rem;
-          color: var(--fg-b);
+          color: var(--fg-1);
+          &.checked {
+            color: var(--fg-2);
+          }
         }
         .wrapper {
           position: relative;
@@ -188,6 +191,10 @@ const site = {
         }
         .theme-right {
           height: 1rem; width: 1rem;
+          color: var(--fg-2);
+          &.checked {
+            color: var(--fg-1);
+          }
         }
       }
     }
@@ -195,8 +202,12 @@ const site = {
 </style>
 
 <script is:inline>
+  var $root = document.querySelector('html');
   var $menu_btn_input = document.querySelector('.menu-btn label input');
   var $sidebar = document.querySelector('.sidebar');
+  var $theme_btn_input = document.querySelector('.theme_btn label .wrapper input');
+  var $theme_left = document.querySelector('.theme-left');
+  var $theme_right = document.querySelector('.theme-right');
 
   $menu_btn_input.onclick = e => {
     if (e.target.checked) {
@@ -205,4 +216,17 @@ const site = {
       $sidebar.classList.remove('checked');
     }
   };
+
+  var theme_btn_click = e => {
+    if (e.target.checked) {
+      $root.dataset.theme = 'dark';
+      $theme_left.classList.add('checked');
+      $theme_right.classList.add('checked');
+    } else {
+      $root.dataset.theme = 'light';
+      $theme_left.classList.remove('checked');
+      $theme_right.classList.remove('checked');
+    }
+  };
+  $theme_btn_input.onclick = theme_btn_click;
 </script>
