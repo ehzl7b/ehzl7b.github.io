@@ -12,13 +12,24 @@ updated: "2024-03-30"
 
 다운로드 파일 안에서 추천하는 대로, [Ventoy](https://www.ventoy.net/en/index.html) 프로그램을 이용해서, 윈도우즈 설치 USB 제작
 
+## Windows 설정
+
+멀티부팅할 때 뜨는 이름 변경을 위해 `WINDOWS` 키 --> "cmd" 로 검색 --> "명령 프롬프트"를 **관리자 권한으로 실행** 클릭
+
+cmd 창에 `<이름>` 칸에 원하는 이름을 넣고 아래 명령어 입력
+
+- 명령 프롬프트
+```powershell
+bcdedit /set {current} description "<이름>"
+```
+
 ## WSL 설치
 
 `WINDOWS + I` 키 --> "기능" 으로 검색 --> "Windows 기능 켜기/끄기" 클릭 --> Hyper-V, Linux용 Windows 하위 시스템 체크 --> 확인 클릭 --> 재부팅
 
 재부팅 후 --> `WINDOWS` 키 --> "cmd" 로 검색 --> "명령 프롬프트"를 **관리자 권한으로 실행** 클릭
 
-활성화된 cmd 창 클릭 --> 아래 명령어를 위부터 순서대로 입력하여 설치
+활성화된 cmd 에 아래 명령어를 위부터 순서대로 입력하여 설치
 
 - 명령 프롬프트
 ```powershell
