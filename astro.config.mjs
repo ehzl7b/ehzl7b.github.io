@@ -3,12 +3,14 @@ import { defineConfig } from 'astro/config'
 import hljs from 'highlight.js'
 import { visit } from 'unist-util-visit'
 import yaml from '@rollup/plugin-yaml'
+import icon from 'astro-icon'
 
 export default defineConfig({
   integrations: [
     // UnoCSS({
     //   // injectReset: true // or a path to the reset file
     // }),
+    icon(),
   ],
   publicDir: './_assets',
   outDir: './_site',
