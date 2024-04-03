@@ -1,8 +1,0 @@
-{
-  "editor.tabSize": 2,
-  "editor.unicodeHighlight.nonBasicASCII": false,
-  // "editor.fontFamily": "ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace",
-  "editor.fontFamily": "D2Coding,monospace",
-  "workbench.trustedDomains.promptInTrustedWorkspace": true,
-  "workbench.colorTheme": "Default Dark Modern"
-}
