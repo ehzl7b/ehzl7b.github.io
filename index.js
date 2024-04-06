@@ -13,5 +13,14 @@ switch (process.argv[2]) {
     fs.removeSync('./_site')
     build_pages()
     build_assets()
-    break   
+    break
+  case 'test':
+    test()
+    break
+}
+
+import render from './_libs/render.js'
+function test() {
+  let a = render('./test.md')
+  console.log(a)
 }

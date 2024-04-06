@@ -1,4 +1,4 @@
-import pug, { render } from 'pug'
+import pug from 'pug'
 import matter from 'gray-matter'
 import hljs from 'highlight.js'
 import markdownIt from 'markdown-it'
@@ -54,12 +54,25 @@ const parse_md = markdownIt({
   },
 })
 
-export default render(srcfile, tplfile, ...args) {
-  let {ext} = path.parse(srcfile)
-  let {content, data} = matter.read(srcfile)
-  if (ext === '.md') {
-    content = parse_md(content)
-    Object.assign(args, content)
+// render function
+export default function render(file, args={}) {
+  let {content, data} = matter.read(file)
+  Object.assign(args, data)
+  
+  let {ext} = path.parse(file)
+  switch (ext) {
+    case '.md':
+      content = parse_md.render(content)
+      break
+    case '.pug':
+      content = pug.compile(content)(args)
+      break
   }
-  const compiled = pug.compileFile(tplfile)()
+
+  if ('layout' in args) {
+    let {layout, ...args_} = {...args, content}
+    return render(`${process.env.PWD}/_layouts/${layout}.pug`, args_)
+  } else {
+    return content
+  }
 }
