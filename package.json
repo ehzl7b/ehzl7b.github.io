@@ -4,6 +4,7 @@
   "main": "index.js",
   "type": "module",
   "devDependencies": {
+    "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.9.0",

@@ -1,5 +1,6 @@
 import pug from 'pug'
 import matter from 'gray-matter'
+import yaml from 'js-yaml'
 import hljs from 'highlight.js'
 import markdownIt from 'markdown-it'
 import path from 'path'
@@ -56,7 +57,9 @@ const parse_md = markdownIt({
 
 // render function
 export default function render(file, args={}) {
-  let {content, data} = matter.read(file)
+  let {content, data} = matter.read(file, {
+    engines: { yaml: s => yaml.load(s, { schema: yaml.JSON_SCHEMA }) }
+  })
   Object.assign(args, data)
   
   let {ext} = path.parse(file)
@@ -70,9 +73,9 @@ export default function render(file, args={}) {
   }
 
   if ('layout' in args) {
-    let {layout, ...args_} = {...args, content}
-    return render(`${process.env.PWD}/_layouts/${layout}.pug`, args_)
+    let {layout, ...args_} = args
+    return render(`${process.env.PWD}/_layouts/${layout}.pug`, {content, ...args_})
   } else {
-    return content
+    return {content, args}
   }
 }
