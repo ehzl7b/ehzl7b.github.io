@@ -73,9 +73,11 @@ export default function render(file, args={}) {
   }
 
   if ('layout' in args) {
-    let {layout, ...args_} = args
-    return render(`${process.env.PWD}/_layouts/${layout}.pug`, {content, ...args_})
+    let layout = args.layout
+    delete args.layout
+    return render(`${process.env.PWD}/_layouts/${layout}.pug`, {content, ...args})
   } else {
+    delete args.content
     return {content, args}
   }
 }

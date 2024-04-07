@@ -1,5 +1,6 @@
 import fs from 'fs-extra'
 import fg from 'fast-glob'
+import yaml from 'js-yaml'
 import path from 'path'
 import render from './render.js'
 
@@ -48,7 +49,7 @@ export default function build_pages() {
         let pathname = (((cat === '' || cat === '/') ? '/' : '/post/') + name).replace('/index', '/')
         let {content, args} = render(mdfile)
         fs.outputJSONSync(jsonfile, {name, ver, cat, pathname, content}, 'utf-8')
-        pageinfos_new.set(name, {name, ver, cat, pathname, mdfile, jsonfile, title: args.title, updated: args.updated})
+        pageinfos_new.set(name, {name, ver, cat, pathname, mdfile, jsonfile, ...args})
 
         build_count += 1
       } else {
@@ -56,7 +57,7 @@ export default function build_pages() {
       }
     }
   }
-  console.log(`${build_count} file(s) generated`)
+  console.log(`===> ${build_count} file(s) generated`)
 
   // new page 목록에 없는 json 삭제
   for (let [name, info] of pageinfos_old) {
@@ -65,11 +66,41 @@ export default function build_pages() {
         fs.unlinkSync(info.jsonfile)
       } catch(e) {
         console.log('pageinfos.json 파일이 뭔가 잘못된 것 같습니다. node index all 명령어를 실행하세요.')
-        break
+        process.exit(1)
       }
     }
   }
 
   // 네비게이션 json 빌드
-  const pages = [...pageinfos_new.values()]
+  let pages = [...pageinfos_new.values()]
+  let yamlfile = fg.globSync(`${process.env.PWD}/_pages/**/*.{yaml,yml}`)[0]
+  let menus = yaml.load(fs.readFileSync(yamlfile, 'utf8'))
+  for (let x of menus) {
+    let pathname = `/${x.id}`
+    let jsonfile = `${process.env.PWD}/_site/pages/${x.id}.json`
+    let description = `${x.title} 관련 포스팅들`
+    let updated = new Date().toISOString().split('T')[0]
+
+    let {content, args} = render(`${process.env.PWD}/_layouts/nav.pug`, {cat: x, description, updated, pathname, pages})
+    fs.outputJSONSync(jsonfile, {...args, content}, 'utf-8')
+  }
+  console.log('===> navigation page(s) is(are) generated')
+
+  // index.html, 404.html 빌드
+  {
+    let {content, args} = render(`${process.env.PWD}/_layouts/default.pug`, menus)
+    fs.outputFileSync(`${process.env.PWD}/_site/index.html`, content, 'utf-8')
+    fs.copyFileSync(`${process.env.PWD}/_site/index.html`, `${process.env.PWD}/_site/404.html`)
+  }
+  console.log('===> index.html is generated')
+
+  // sitemap.xml 빌드
+  {
+    let {content, args} = render(`${process.env.PWD}/_layouts/sitemap.pug`, {pages})
+    fs.outputFileSync(`${process.env.PWD}/_site/sitemap.xml`, content, 'utf-8')
+  }
+  console.log('===> sitemap.xml is generated')
+
+  // new page 목록 저장
+  fs.outputJsonSync(`${process.env.PWD}/_site/pageinfos.json`, pages)
 }
