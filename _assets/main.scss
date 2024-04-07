@@ -74,7 +74,7 @@ b, strong {
   }
 }
 .sidebar {
-  position: fixed; top: 0; left: -320px; height: 100%; width: 320px; padding: 0 5px; z-index: 20; overflow-y: scroll;
+  position: fixed; top: 0; left: -320px; height: 100%; width: 320px; padding: 0 0.5rem; z-index: 20; overflow-y: scroll;
   background-color: var(--bg-1);
   &:before, &:after {
     content: " "; display: table-cell;
@@ -90,7 +90,7 @@ b, strong {
   }
 }
 .mainview {
-  position: fixed; top: 0; left: 0; height: 100%; width: 100%; max-width: 880px; padding: 0 5px; z-index: 10; overflow-y: scroll;
+  position: fixed; top: 0; left: 0; height: 100%; width: 100%; padding: 0 0.5rem; z-index: 10; overflow-y: scroll;
   background-color: var(--bg-2);
   &:before, &:after {
     content: " "; display: table-cell;
@@ -172,7 +172,7 @@ b, strong {
     content: " "; display: table-cell;
   }
   article {
-    margin: 1.5rem 0; padding: 0 0.5rem;
+    margin: 1.5rem 0;
     line-height: 1.5;
     h1.page-title {
       margin: 1.5rem 0;
@@ -212,6 +212,25 @@ b, strong {
       }
       p {
         margin: 1.5rem 0;
+      }
+      >ul, >pre, >blockquote {
+        width: calc(100% + 1rem); margin-left: -0.5rem; margin-right: -0.5rem;
+        background-color: var(--bg-3); padding-left: 0.5rem; padding-right: 0.5rem;
+      }
+      >ul {
+        margin-top: 1.5rem; margin-bottom: -1.5rem;
+        border-bottom: 1px solid var(--fg-3);
+      }
+      >pre {
+        margin-top: 1.5rem; margin-bottom: 1.5rem;
+        >code {
+          width: 100%; padding-top: 0.5rem; padding-bottom: 0.5rem;
+          display: block; overflow-x: auto;
+        }
+      }
+      >blockquote {
+        margin-top: 1.5rem; margin-bottom: 1.5rem;
+        padding-top: 0.5rem; padding-bottom: 0.5rem;
       }
     }
   }
