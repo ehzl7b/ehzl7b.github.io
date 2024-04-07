@@ -88,7 +88,7 @@ export default function build_pages() {
 
   // index.html, 404.html 빌드
   {
-    let {content, args} = render(`${process.env.PWD}/_layouts/default.pug`, menus)
+    let {content, args} = render(`${process.env.PWD}/_layouts/default.pug`, {menus})
     fs.outputFileSync(`${process.env.PWD}/_site/index.html`, content, 'utf-8')
     fs.copyFileSync(`${process.env.PWD}/_site/index.html`, `${process.env.PWD}/_site/404.html`)
   }

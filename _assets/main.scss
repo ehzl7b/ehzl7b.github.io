@@ -9,14 +9,14 @@
 }
 :root {
   --fg-1: var(--oc-gray-8); --fg-2: var(--oc-gray-6); --fg-3: var(--oc-gray-4); --fg-a: var(--oc-blue-8); --fg-b: var(--oc-red-8);
-  --bg-1: var(--oc-gray-2); --bg-2: var(--oc-gray-0); --bg-3: var(--oc-indigo-0);
+  --bg-1: var(--oc-gray-2); --bg-2: var(--oc-gray-0); --bg-3: var(--oc-indigo-3);
   &[data-theme="dark"] {
-    --fg-1: var(--oc-gray-1); --fg-2: var(--oc-gray-3); --fg-3: var(--oc-gray-5); --fg-a: var(--oc-blue-1); --fg-b: var(--oc-red-1);
-    --bg-1: var(--oc-gray-7); --bg-2: var(--oc-gray-9); --bg-3: var(--oc-indigo-9);
+    --fg-1: var(--oc-gray-1); --fg-2: var(--oc-gray-3); --fg-3: var(--oc-gray-5); --fg-a: var(--oc-blue-2); --fg-b: var(--oc-red-2);
+    --bg-1: var(--oc-gray-7); --bg-2: var(--oc-gray-9); --bg-3: var(--oc-indigo-6);
   }
 }
 body, pre, code, samp, kbd {
-  font: 400 16px 'D2Coding', monospace;
+  font: 400 16px 'D2Coding', monospace; color: var(--fg-1);
 }
 * {
   box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: left 0.4s, transform 0.4s;
@@ -40,9 +40,10 @@ b, strong {
   label {
     position: relative; height: 100%; width: 100%;
     display: block;
+    cursor: pointer;
     .menu-btn-bg {
       position: absolute; top: 0; right: 0; bottom: 0; left: 0;
-      background-color: var(--fg-a); opacity: 0.3;
+      background-color: var(--fg-a); opacity: 0.3; border-radius: 99px;
     }
     input {
       height: 0; width: 0; opacity: 0;
@@ -51,9 +52,13 @@ b, strong {
       }
     }
     .menu-btn-icon {
+      @include icon;
       position: absolute; top: 0; right: 0; bottom: 0; left: 0;
       --svg: url('https://api.iconify.design/bi:plus-circle.svg');
     }
+  }
+  @media (min-width: 1200px) {
+    display: none;
   }
 }
 .dummy {
@@ -77,11 +82,137 @@ b, strong {
   &.checked {
     left: 0;
   }
+  @media (min-width: 1200px) {
+    left: calc(50vw - 600px);
+    &.checked {
+      left: calc(50vw - 600px);
+    }
+  }
 }
 .mainview {
   position: fixed; top: 0; left: 0; height: 100%; width: 100%; max-width: 880px; padding: 0 5px; z-index: 10; overflow: hidden;
   background-color: var(--bg-2);
   &:before, &:after {
     content: " "; display: table-cell;
+  }
+  @media (min-width: 1200px) {
+    left: calc(50vw - 280px); /*50vw - 600px + 320px*/
+    max-width: 880px; /*1200px - 320px*/
+  }
+}
+
+// sidebar
+.sidebar {
+  &:before, &:after {
+    content: " "; display: table-cell;
+  }
+  header {
+    .site-name {
+      margin: 1.5rem 0;
+      font-size: 2rem; text-align: center;
+    }
+    .theme-btn {
+      position: relative; height: 1.5rem; width: 7rem; margin: 1.5rem auto;
+      label {
+        position: relative; height: 100%; width: 100%;
+        display: block; cursor: pointer; overflow: hidden;
+        .theme-left {
+          position: absolute; top: 0; left: 0; height: 1.5rem; width: 1.5rem;
+          @include icon;
+          --svg: url("https://api.iconify.design/bi:sun.svg");
+        }
+        .theme-right {
+          position: absolute; top: 0; left: 5.5rem; height: 1.5rem; width: 1.5rem;
+          @include icon;
+          --svg: url("https://api.iconify.design/bi:moon-stars.svg");
+        }
+        .wrapper {
+          position: absolute; top: 0; left: 2rem; height: 1.5rem; width: 3rem;
+          display: inline-block; border: 1px solid var(--fg-3); border-radius: 99rem;
+          input {
+            height: 0; width: 0; opacity: 0;
+            &:checked + div {
+              left: 1.5rem;
+            }
+          }
+          .theme-switch {
+            position: absolute; top: 0.1rem; left: 0.1rem; height: 1.2rem; width: 1.2rem;
+            background-color: var(--fg-2); border-radius: 99rem;
+            transition: left 0.4s;
+          }
+        }
+      }
+    }
+  }
+  nav {
+    ul {
+      margin: 2rem 0;
+      li {
+        margin: 1.5rem 0 1.5rem 1.5rem;
+        font-size: 1.5rem;
+        &:before {
+          content: "\25b8";
+          display: inline-block; width: 1.5rem; margin-left: -1.5rem;
+        }
+      }
+    }
+  }
+  footer {
+    position: sticky; top: 100vh;
+    .footer-msg {
+      padding: 0.5rem 0 1.5rem 0;
+      text-align: center;
+    }
+  }
+}
+
+// mainview
+.mainview {
+  &:before, &:after {
+    content: " "; display: table-cell;
+  }
+  article {
+    margin: 1.5rem 0; padding: 0 0.5rem;
+    line-height: 1.5;
+    h1.page-title {
+      margin: 1.5rem 0;
+      font-size: 2rem;
+      &:before {
+        content: " "; display: inline-block; height: 2rem; width: 2rem; margin-right: 0.5rem;
+        @include icon;
+        --svg: url("https://api.iconify.design/bi:chat-square-text.svg");
+      }
+    }
+    .page-meta {
+      margin: 1.5rem 0;
+      .page-description {
+        &:before {
+          content: " "; display: inline-block; height: 1rem; width: 1rem; margin-right: 0.5rem;
+          @include icon;
+          --svg: url("https://api.iconify.design/bi:journal-bookmark.svg");
+        }
+      }
+      .page-updated {
+        &:before {
+          content: " "; display: inline-block; height: 1rem; width: 1rem; margin-right: 0.5rem;
+          @include icon;
+          --svg: url("https://api.iconify.design/bi:arrow-clockwise.svg");
+        }
+      }
+    }
+    .page-main {
+      h2 {
+        margin: 3rem 0 1.5rem 0;
+        font-size: 1.5rem;
+        &:before {
+          content: " "; display: inline-block; height: 1.5rem; width: 1.5rem; margin-right: 0.5rem;
+          @include icon;
+          --svg: url("https://api.iconify.design/bi:hash.svg");
+        }
+      }
+      p {
+        margin: 1.5rem 0;
+      }
+    }
   }
 }
