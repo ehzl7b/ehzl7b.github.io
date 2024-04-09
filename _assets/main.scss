@@ -221,7 +221,7 @@ b, strong {
           --svg: url("https://api.iconify.design/bi:hash.svg");
         }
       }
-      p {
+      >p {
         margin: 1.5rem 0;
       }
       >ul, >pre, >blockquote {
@@ -243,13 +243,27 @@ b, strong {
       >pre {
         margin-top: 1.5rem; margin-bottom: 1.5rem;
         >code {
-          width: 100%; padding-top: 0.5rem; padding-bottom: 0.5rem;
+          width: 100%; padding-top: 1rem; padding-bottom: 1rem;
           display: block; overflow-x: auto;
         }
       }
       >blockquote {
         margin-top: 1.5rem; margin-bottom: 1.5rem;
-        padding-top: 0.5rem; padding-bottom: 0.5rem;
+        padding-top: 1rem; padding-bottom: 1rem;
+      }
+      img {
+        max-width: 100%;
+      }
+      .lists {
+        ul {
+          li {
+            margin: 0 0 0 1rem;
+            &:before {
+              content: "\25b8";
+              display: inline-block; width: 1rem; margin-left: -1rem;
+            }
+          }
+        }
       }
     }
   }

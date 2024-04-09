@@ -48,7 +48,7 @@ export default function build_pages() {
         let jsonfile = process.env.PWD + ((cat === '' || cat === '/') ? '/_site/pages/' : '/_site/pages/post/') + name + '.json'
         let pathname = (((cat === '' || cat === '/') ? '/' : '/post/') + name).replace('/index', '/')
         let {content, args} = render(mdfile)
-        fs.outputJSONSync(jsonfile, {name, ver, cat, pathname, content}, 'utf-8')
+        fs.outputJSONSync(jsonfile, {name, ver, cat, pathname, ...args, content}, 'utf-8')
         pageinfos_new.set(name, {name, ver, cat, pathname, mdfile, jsonfile, ...args})
 
         build_count += 1
@@ -77,11 +77,12 @@ export default function build_pages() {
   let menus = yaml.load(fs.readFileSync(yamlfile, 'utf8'))
   for (let x of menus) {
     let pathname = `/${x.id}`
+    let title = x.title
     let jsonfile = `${process.env.PWD}/_site/pages/${x.id}.json`
     let description = `${x.title} 관련 포스팅들`
     let updated = new Date().toISOString().split('T')[0]
 
-    let {content, args} = render(`${process.env.PWD}/_layouts/nav.pug`, {cat: x, description, updated, pathname, pages})
+    let {content, args} = render(`${process.env.PWD}/_layouts/nav.pug`, {cat: x, title, description, updated, pathname, pages})
     fs.outputJSONSync(jsonfile, {...args, content}, 'utf-8')
   }
   console.log('===> navigation page(s) is(are) generated')
