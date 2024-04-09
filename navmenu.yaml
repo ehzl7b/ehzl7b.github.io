@@ -1,8 +1,10 @@
+- id: ms-office
+  title: MS Office 팁
 - id: dev
-  title: "개발 노트"
+  title: 개발 노트
   order: desc
 - id: diary
-  title: "아무거나 일기"
+  title: 아무거나 일기
   order: desc
 
 
