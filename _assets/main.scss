@@ -224,6 +224,11 @@ b, strong {
       >p {
         margin: 1.5rem 0;
       }
+      p {
+        >code {
+          border: 1px dashed;
+        }
+      }
       >ul, >pre, >blockquote {
         width: calc(100% + 1rem); margin-left: -0.5rem; margin-right: -0.5rem;
         background-color: var(--bg-3); padding-left: 0.5rem; padding-right: 0.5rem;
