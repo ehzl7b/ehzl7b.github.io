@@ -2,11 +2,12 @@
   "name": "tezyns-blog-builder",
   "version": "3.0.0",
   "description": "",
-  "main": "./_libs/index.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "pages": "node index pages",
     "assets": "node index assets",
+    "all": "node index all",
     "test": "node index test"
   },
   "keywords": [],
