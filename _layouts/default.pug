@@ -23,6 +23,8 @@ html(lang='ko')
       .right
         .menu-btn +
         .article.container
+          .site-title #{site.title}
+          .content
           // fetched page goes here...
     script.
       "use strict";
@@ -38,7 +40,7 @@ html(lang='ko')
         $layout.classList.add("show");
       }
     script.
-      var $article = document.querySelector(".article");
+      var $content = document.querySelector(".content");
 
       async function fetch_content() {
         const cur_pathname = window.location.pathname;
@@ -49,7 +51,7 @@ html(lang='ko')
         } catch (err) {
           response = await (await fetch('/pages/404.json')).json();
         }
-        $article.innerHTML = response.content;
+        $content.innerHTML = response.content;
         document.title = response.title + `::#{site.title}`;
 
         // 사이드바 감추기
