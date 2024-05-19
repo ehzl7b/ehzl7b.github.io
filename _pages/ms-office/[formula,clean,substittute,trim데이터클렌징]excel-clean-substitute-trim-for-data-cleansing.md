@@ -32,7 +32,7 @@ updated: 2024-05-19
 =TEXT(셀, "셀서식")
 ```
 
-두 수식 중 아무거나 하나를 사용하면 된다. 정교한 텍스를 위한 `셀서식` 지정방법은 [MS 오피스 문서](https://support.microsoft.com/ko-kr/office/%ec%88%ab%ec%9e%90-%ec%84%9c%ec%8b%9d%ec%9d%84-%ec%82%ac%ec%9a%a9%ec%9e%90-%ec%a7%80%ec%a0%95%ed%95%98%eb%8a%94-%ec%a7%80%ec%b9%a8-c0a1d1fa-d3f4-4018-96b7-9c9354dd99f5?ui=ko-kr&rs=ko-kr&ad=kr)를 참고하자.
+두 수식 중 아무거나 하나를 사용하면 된다. 정교한 텍스트를 위한 `셀서식` 지정방법은 [MS 오피스 문서](https://support.microsoft.com/ko-kr/office/%ec%88%ab%ec%9e%90-%ec%84%9c%ec%8b%9d%ec%9d%84-%ec%82%ac%ec%9a%a9%ec%9e%90-%ec%a7%80%ec%a0%95%ed%95%98%eb%8a%94-%ec%a7%80%ec%b9%a8-c0a1d1fa-d3f4-4018-96b7-9c9354dd99f5?ui=ko-kr&rs=ko-kr&ad=kr)를 참고하자.
 
 ## 클렌징 함수식
 
