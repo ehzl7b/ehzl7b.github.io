@@ -77,7 +77,11 @@ b, strong {
       cursor: pointer;
     }
     .article {
-      max-width: #{$mainview-max-width}; margin: 0 auto;
+      // max-width: #{$mainview-max-width}; margin: 0 auto;
+      width: #{$mainview-max-width}; margin: 0 auto;
+      @media (max-width: #{$mainview-max-width}) {
+        width: 100vw;
+      }
     }
   }
 }
@@ -142,6 +146,14 @@ b, strong {
       margin: 1rem 0;
       >code {
         color: var(--fg-box); background: var(--bg-box); border-radius: 2px;
+      }
+      >em {
+        margin-top: -1rem;
+        display: block;
+        font-size: 0.9rem; color: var(--fg-sub);
+        &:before {
+          content: "* ";
+        }
       }
     }
     >ul {
