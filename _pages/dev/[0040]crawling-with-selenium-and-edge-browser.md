@@ -90,7 +90,7 @@ mode, header = 'a', False
 if not os.path.exists('output.csv'):
     mode, header = 'w', True 
 
- df.to_csv('output.csv', index=False, mode=mode, encoding='utf-8-sig', header=header)
+df.to_csv('output.csv', index=False, mode=mode, encoding='utf-8-sig', header=header)
 ```
 
 위에서 언급한 `msedgedriver.exe` 가 Python 파일과 같은 폴더에 위치해야 한다. (다른 폴더에 넣고 경로 지정을 해줄 수도 있지만 굳이 그럴 필요는 없을 것이다.)
