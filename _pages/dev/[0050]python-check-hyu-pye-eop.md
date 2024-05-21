@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Python 으로 국세청 휴폐업 조회 API 사용
+title: Python으로 국세청 휴폐업 조회 API 사용
 description: Python 코드로 국세청에서 제공하는 사업자등록번호 기반 휴폐업 조회 시스템 API 사용 
 updated: 2023-08-15
 ---
