@@ -1,0 +1,9 @@
+---
+layout: page
+title: 동적 계획법(Dynamic Programming)과 메모이제이션(Memoization)
+updated: 수학의 점화식 풀이와 유사한 동적 계획법 알고리즘과, 과도한 재귀호출을 줄일 수 있는 메모이제이션 기법 소개
+updated: 2024-05-23
+---
+
+## 동적 계획법
+
