@@ -1,5 +1,7 @@
 - id: ms-office
   title: MS Office 팁
+- id: algorithm
+  title: 알고리즘 스터디
 - id: dev
   title: 개발 노트
   order: desc
