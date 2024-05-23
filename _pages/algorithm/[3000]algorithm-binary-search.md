@@ -20,7 +20,7 @@ updated: 2024-05-23
 # 오름차순 정렬된 A 배열에서 특정값 x를 찾는다고 할 때...
 
 1: i = 0, j = len(A)              # i, j는 A 배열을 가리키는 인덱스, i 이상 ~ j 미만 사이에 x가 있다고 가정
-2: m = i + Trunc((j-i) / 2)              # m은 i, j 사이의 중간 인덱스, (j-i) / 2의 결과에서 소수점 이하는 버림
+2: m = i + Trunc((j-i) / 2)       # m은 i, j 사이의 중간 인덱스, (j-i) / 2의 결과에서 소수점 이하는 버림
 3: A[m] < x 라면 i = m+1          # A의 m 인덱스의 값과 x를 비교, x가 크다면 m 포함하여 보다 왼쪽에 있는 모든 값들은 버려도 되므로 i를 m+1 위치로 끌어올림
 4: x <= A[m] 라면 j = m           # 3행이 아니라면 m 포함하여 보다 오른쪽에 있는 모든 값들은 버려도 되므로 j를 m 위치로 끌어내림
 5: i == j 될때까지 3 ~ 4행 반복   # 해보면 알겠지만 반드시 i == j 되는 시점이 등장하며, 이때 반복 종료
@@ -48,20 +48,20 @@ def searchInsert(self, nums: List[int], target: int) -> int:
     return i
 ```
 
-- go
-```go
-func searchInsert(nums []int, target int) int {
-	i, j := 0, len(nums)
+- rust
+```rust
+pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
+    let (mut i, mut j) = (0, nums.len());
 
-	for i < j {
-		m := i + (j-i)/2
-		if nums[m] < target {
-			i = m + 1
-		} else {
-			j = m
-		}
-	}
+    while i < j {
+        let m = i + (j - i) / 2;
+        if nums[m] < target {
+            i = m + 1;
+        } else {
+            j = m;
+        }
+    }
 
-	return i
+    return i as _;
 }
 ```
