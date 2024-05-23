@@ -65,3 +65,23 @@ pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
     return i as _;
 }
 ```
+
+각 언어마다 이진 탐색을 위한 기본 함수를 제공하고 있다. 이를 사용하여 풀 수도 있다.
+
+- python
+```python
+from bisect import bisect_left
+
+def searchInsert(self, nums: List[int], target: int) -> int:
+    return bisect_left(nums, target)
+```
+
+- rust
+```rust
+pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
+    return match nums.binary_search(&target) {
+        Ok(x) => x,
+        Err(x) => x,
+    } as _;
+}
+```
