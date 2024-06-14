@@ -33,55 +33,22 @@ updated: 2024-05-23
 
 오름차순으로 정렬된 배열 nums와 정수 target이 주어질 때, 오름차순을 해치지 않게 target이 nums의 어느 인덱스에 들어갈 수 있는지를 찾는 문제다.
 
-- python
-```python
-def searchInsert(self, nums: List[int], target: int) -> int:
-    i, j = 0, len(nums)
+- javascript
+```js
+var searchInsert = function(nums, target) {
+    let [i, j] = [0, nums.length]
 
-    while i < j:
-        m = i + (j - i) // 2
-        if nums[m] < target:
-            i = m + 1
-        else:
-            j = m
-
-    return i
-```
-
-- rust
-```rust
-pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
-    let (mut i, mut j) = (0, nums.len());
-
-    while i < j {
-        let m = i + (j - i) / 2;
-        if nums[m] < target {
-            i = m + 1;
+    while (i < j) {
+        let m = i + ~~((j-i)/2)
+        if (nums[m] < target) {
+            i = m+1
         } else {
-            j = m;
+            j = m
         }
     }
 
-    return i as _;
+    return i
 }
 ```
 
-각 언어마다 이진 탐색을 위한 기본 함수를 제공하고 있다. 이를 사용하여 풀 수도 있다.
-
-- python
-```python
-from bisect import bisect_left
-
-def searchInsert(self, nums: List[int], target: int) -> int:
-    return bisect_left(nums, target)
-```
-
-- rust
-```rust
-pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
-    return match nums.binary_search(&target) {
-        Ok(x) => x,
-        Err(x) => x,
-    } as _;
-}
-```
+각 언어마다 이진 탐색을 위한 기본 함수를 제공하고 있는 경우가 있는데, javascript 는 없는 것 같다.
