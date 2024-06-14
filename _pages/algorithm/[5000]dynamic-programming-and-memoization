@@ -7,6 +7,22 @@ updated: 2024-05-23
 
 ## 동적 계획법
 
+[나무위키](https://namu.wiki/w/%EB%8F%99%EC%A0%81%20%EA%B3%84%ED%9A%8D%EB%B2%95)나 다른 곳에서 개념을 찾아봐도 너무 추상적이라 이해가 잘 되지 않는다. 영문으로는 DP(Dynamic Programming)인데 왜 동적 계획법인지도 모르겠다.
+
+그냥고등학교 수학시간에 배웠던 [점화식](https://ko.wikipedia.org/wiki/%EC%A0%90%ED%99%94%EC%8B%9D)을 코드로 표현한 것이 DP다라고 하는 것이 더 확 와닿는 것 같다.
+
+점화식은 수열의 첫째항을 나타내는 "초기값"과, 앞선 수열과 뒤에 위치한 수열간의 관계식을 나타내는 "일반항"으로 구성되며, 이들을 통해 N 번째 수열의 값을 추적한다. DP도 비슷한 방식으로 구현된다.
+
+## 프로그래머스: 멀리뛰기
+
+[https://school.programmers.co.kr/learn/courses/30/lessons/12914](https://school.programmers.co.kr/learn/courses/30/lessons/12914)
+
+멀리뛰기를 한칸 또는 두칸을 뛸 수 있을때, N 칸을 멀리뛸 수 있는 가짓수를 찾는 문제다. DP로 풀 수 있으며, [피보나치 수열](https://namu.wiki/w/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98%20%EC%88%98%EC%97%B4)값을 찾는 방법과 매우 닮았다.
+
+초기값과 일반항은 아래와 같다.
+
+- pseudo
+```pseudo
 
 ## 프로그래머스: 땅따먹기
 
