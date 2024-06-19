@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 동적 계획법(Dynamic Programming) 카데인 알고리즘(Kadane's Algorithm)
+title: 동적 계획법(Dynamic Programming) - 카데인 알고리즘(Kadane's Algorithm)
 description: 어떤 배열에서 연속 합이 가장 큰 부분합을 구할 때 사용하는 알고리즘 소개
 updated: 2024-06-17
 ---

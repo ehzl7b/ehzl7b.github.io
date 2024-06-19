@@ -1,17 +1,9 @@
 ---
 layout: page
-title: 동적 계획법(Dynamic Programming)과 메모이제이션(Memoization)
-description: 수학의 점화식 풀이와 유사한 동적 계획법 알고리즘과, 과도한 재귀호출을 줄일 수 있는 메모이제이션 기법 소개
+title: 동적 계획법(Dynamic Programming) - Iterative, Recursive DP 및 메모이제이션(Memoization)
+description: iterative, recursive 방식의 DP와 recursive DP에서 과도한 재귀호출을 줄일 수 있는 메모이제이션 기법 소개
 updated: 2024-06-14
 ---
-
-## 동적 계획법
-
-[나무위키](https://namu.wiki/w/%EB%8F%99%EC%A0%81%20%EA%B3%84%ED%9A%8D%EB%B2%95)나 다른 곳에서 개념을 찾아봐도 너무 추상적이라 이해가 잘 되지 않는다. 영문으로는 DP(Dynamic Programming)인데 이를 왜 동적 계획법이라고 번역하는지도 모르겠다.
-
-그냥 고등학교 수학시간에 배웠던 [점화식](https://ko.wikipedia.org/wiki/%EC%A0%90%ED%99%94%EC%8B%9D) 사상을 코드로 옮긴 것이 DP다라고 하는 것이 더 확 와닿는 것 같다.
-
-점화식은 수열의 첫째항을 나타내는 "초기값"과, 앞선 수열과 뒤에 위치한 수열간의 관계식을 나타내는 "일반항"으로 구성되며, 이들을 통해 N 번째 수열의 값을 추적한다. DP는 이 방식으로 구현된 알고리즘이다.
 
 ## 프로그래머스: 멀리뛰기
 
@@ -106,48 +98,3 @@ function solution(n) {
 ```
 
 시간초과가 나왔던 코드를 Arrow 함수로서 f 로 정의한 뒤, 이를 다시 클로저로 감쌌다. h Map 개체가 저장소 역할을 한다. 리턴하는 Arrow 함수를 보면 h 안에 n의 결과값이 없다면 먼저 구해서 넣고, 결과값을 리턴하도록 되어 있다.
-
-## 프로그래머스: 땅따먹기
-
-[https://school.programmers.co.kr/learn/courses/30/lessons/12913](https://school.programmers.co.kr/learn/courses/30/lessons/12913)
-
-4개의 열로 점수가 써진 땅이 있을 때, 1행부터 땅을 밟아서 숫자들을 모두 더했을 때 가장 큰 값을 찾는 문제다. 단, 다음행으로 내려갈 때 같은 열은 선택할 수 없다는 제약이 있다.
-
-DP로 풀려면 초기값과 일반항을 알아야 하는데 아래와 같다.
-
-- pseudo
-```pseudo
-# land N번째 각 열(인덱스) 점수 합계를 모은 배열을 a[N]이라 할 때,
-
-초기값: a[0] = land[0]
-일반항: a[N] = [
-                  land[N][0] + max(a[N-1][1], a[N-1][2], a[N-1][3]),
-                  land[N][1] + max(a[N-1][0], a[N-1][2], a[N-1][3]),
-                  land[N][2] + max(a[N-1][0], a[N-1][1], a[N-1][3]),
-                  land[N][3] + max(a[N-1][0], a[N-1][1], a[N-1][2]),
-               ]  
-```
-
-코드 구현은 아래와 같다.
-
-- javascript
-```js
-function solution(land) {
-    let a = land[0]
-    
-    for (let x of land.slice(1)) {
-        a = [
-            x[0] + Math.max(a[1], a[2], a[3]),
-            x[1] + Math.max(a[0], a[2], a[3]),
-            x[2] + Math.max(a[0], a[1], a[3]),
-            x[3] + Math.max(a[0], a[1], a[2]),
-        ]
-    }
-    
-    return Math.max(...a)
-}
-```
-
-iterative DP 방식이다.
-
-문제는 제일 마지막의 최대값만 리턴하도록 요구하므로, a 배열 누적을 굳이 쌓을필요는 없기에, for 문 안에서 계속 a 변수가 갱신되도록 했다.

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 이진 탐색(Binary Search)
+title: 이진 탐색(Binary Search) - 개요
 description: 오름차순으로 정렬된 Data Set에서 원하는 Data를 빠른 속도로 탐색 구현
 updated: 2024-05-23
 ---

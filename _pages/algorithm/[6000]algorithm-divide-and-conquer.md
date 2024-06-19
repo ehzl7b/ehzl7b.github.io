@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 분할 정복(Divide and Conquer)
+title: 분할 정복(Divide and Conquer) - 개요
 description: 분할 정복 알고리즘 소개
 updated: 2024-06-17
 ---
