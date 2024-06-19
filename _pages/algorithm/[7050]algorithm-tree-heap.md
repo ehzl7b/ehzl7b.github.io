@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 이진 트리(Binary Tree) - 힙(Heap) 자료구조
+title: 트리(Tree) - 힙(Heap) 자료구조
 description: 이진 트리를 응용한 힙 자료구조 소개
 updated: 2024-06-19
 ---
