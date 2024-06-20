@@ -91,7 +91,7 @@ g 제너레이터를 보면 h Map 개체에 [합성수, 소수] 형태로 데이
 
 구글링을 또 해보니 어느 외국 [사이트](https://illya.sh/the-codeumentary-blog/regular-expression-check-if-number-is-prime/)에서 정규식을 가지고 어떤 숫자가 소수인지 아닌지 판별하는 방법을 소개하고 있었다.
 
-이를 사용해서 아래와 같이 풀어보았다.
+이를 약간 변형해서 아래와 같이 풀어보았다.
 
 - javascript
 ```js
