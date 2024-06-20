@@ -88,3 +88,29 @@ function* g() {
 아쉽게도 시간초과로 풀 수는 없었다.
 
 g 제너레이터를 보면 h Map 개체에 [합성수, 소수] 형태로 데이터를 저장해 간다. 찬찬히 살펴보면 에라토스테네스의 체 방식을 그대로 사용하는 것을 알 수 있다.
+
+구글링을 또 해보니 어느 외국 [사이트](https://illya.sh/the-codeumentary-blog/regular-expression-check-if-number-is-prime/)에서 정규식을 가지고 어떤 숫자가 소수인지 아닌지 판별하는 방법을 소개하고 있었다.
+
+이를 사용해서 아래와 같이 풀어보았다.
+
+- javascript
+```js
+var countPrimes = function(n) {
+    let a = []
+
+    for (let i=2; i < n; i++) {
+        if (isPrime(i)) a.push(i)
+    }
+
+    return a.length
+}
+
+function isPrime(n) {
+    var re = /^1?$|^(11+?)\1+$/;
+    return !re.test('1'.repeat(n));
+}
+```
+
+isPrime 함수가 아주 독특하다. 원리는 "1" 이라는 문자를 n 개 나열했을 때, 2 이상의 수로 "1" 을 똑같은 개수로 나눌 수 있는지를 탐색한다. 기발한 방법이다.
+
+아쉽게도 속도는 제일 느려서, 이 역시 시간초과로 문제를 통과할 순 없었다.
