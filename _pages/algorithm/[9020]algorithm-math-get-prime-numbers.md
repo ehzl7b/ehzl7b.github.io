@@ -99,18 +99,17 @@ var countPrimes = function(n) {
     let a = []
 
     for (let i=2; i < n; i++) {
-        if (isPrime(i)) a.push(i)
+        if (f(i)) a.push(i)
     }
 
     return a.length
 }
 
-function isPrime(n) {
-    var re = /^1?$|^(11+?)\1+$/;
-    return !re.test('1'.repeat(n));
+function f(n) {
+    return !/^1?$|^(11+)\1+$/.test("1".repeat(n))
 }
 ```
 
-isPrime 함수가 아주 독특하다. 원리는 "1" 이라는 문자를 n 개 나열했을 때, 2 이상의 수로 "1" 을 똑같은 개수로 나눌 수 있는지를 탐색한다. 기발한 방법이다.
+f 함수가 아주 독특하다. 원리는 "1" 이라는 문자를 n 개 나열했을 때, 2 이상의 수로 "1" 을 똑같은 개수로 나눌 수 있는지를 탐색한다. 기발한 방법이다.
 
 아쉽게도 속도는 제일 느려서, 이 역시 시간초과로 문제를 통과할 순 없었다.
