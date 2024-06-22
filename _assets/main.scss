@@ -189,10 +189,9 @@ b, strong {
       font-size: 0.9rem; color: var(--fg-box); background: var(--bg-box); border-radius: 2px;
       >code {
         padding: 0.5rem 0;
-        display: block;
+        display: grid;
         overflow-x: auto;
         >div {
-          width: fit-content;
           &:before, &:after {
             content: " "; width: 0.5rem;
             display: inline-block;
