@@ -220,18 +220,18 @@ b, strong {
 }
 
 // hljs
-.\/\+ {
+.\+ {
   background: var(--green-950);
   &:before {
     content: "+" !important;
   }
 }
-.\/\- {
+.\- {
   background: var(--red-950);
   &:before {
     content: "-" !important;
   }
 }
-.\/\= {
+.\= {
   background: var(--blue-950);
 }
