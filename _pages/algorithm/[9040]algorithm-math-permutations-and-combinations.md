@@ -45,7 +45,6 @@ class Solution:
             # if all(x <= y for x, y in zip(a[:-1], a[1:])):    # 중복조합
             if all(x < y for x, y in zip(a[:-1], a[1:])):       # 조합
                 yield [lst[x] for x in a]
-            
 
             i = r-1
             while a[i] == n-1:
