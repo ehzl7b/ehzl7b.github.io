@@ -17,14 +17,15 @@ updated: 2024-06-20
 
 주어진 수들의 LCM 을 구하는 문제다.
 
-- javascript
-```js
-let gcd = (x, y) => x%y ? gcd(y, x%y) : y
-let lcm = (x, y) => x*y / gcd(x, y)
+- python
+```py
+from functools import reduce
 
-function solution(arr) {
-    return arr.reduce(lcm)
-}
+def gcd(x, y): return gcd(y, x%y) if x%y else y
+def lcm(x, y): return x*y // gcd(x, y)
+
+def solution(arr):
+    return reduce(lcm, arr)
 ```
 
 두 수의 gcd, lcm 을 구해주는 함수를 먼저 구현했다. x, y 크기에 관계없이 자연수이기만 하면 된다. 간혹 다른 블로그에서 x > y 이어야한다는 조건을 다는 경우도 봤는데 x < y 이면 gcd(x, y) 의 결과는 자연스럽게 x 와 y 의 값을 교환한다. 따라서 x < y 이어도 상관이 없다.

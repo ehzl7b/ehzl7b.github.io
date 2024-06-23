@@ -33,22 +33,29 @@ updated: 2024-05-23
 
 오름차순으로 정렬된 배열 nums와 정수 target이 주어질 때, 오름차순을 해치지 않게 target이 nums의 어느 인덱스에 들어갈 수 있는지를 찾는 문제다.
 
-- javascript
-```js
-var searchInsert = function(nums, target) {
-    let [i, j] = [0, nums.length]
+- python
+```py
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        i, j = 0, len(nums)
 
-    while (i < j) {
-        let m = i + ~~((j-i)/2)
-        if (nums[m] < target) {
-            i = m+1
-        } else {
-            j = m
-        }
-    }
+        while i < j:
+            m = i + (j-i)//2
+            if nums[m] < target:
+                i = m+1
+            else:
+                j = m
 
-    return i
-}
+        return i
 ```
 
-각 언어마다 이진 탐색을 위한 기본 함수를 제공하고 있는 경우가 있는데, javascript 는 없는 것 같다.
+각 언어마다 이진 탐색을 위한 기본 함수를 제공하고 있는 경우가 있는데, python 은 bisect 라이브러리를 통해 제공하고 있다.
+
+- python
+```py
+from bisect import bisect_left
+
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        return bisect_left(nums, target)
+```

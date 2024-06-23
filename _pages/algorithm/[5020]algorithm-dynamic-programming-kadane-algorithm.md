@@ -18,25 +18,24 @@ DP의 일종으로, 수학의 점화식과 같이 풀면 된다. 초기값과 �
 # 어떤 배열 arr 에서 i 인덱스까지의 최대 부분합을 sub[i]라 할 때...
 
 초기값: sub[0] = arr[0]
-일반항: sub[i] = max(sub[i], sub[i] + arr[i-1])
+일반항: sub[i] = max(arr[i], arr[i] + sub[i-1])
 ```
 
-i-1 인덱스까지의 최대 부분합에서, i 인덱스를 더한 값과 i 인덱스의 자체값을 비교하는 것이 핵심이다.
+i-1 인덱스까지의 최대 부분합에 i 인덱스를 더한 값과, i 인덱스의 자체값을 비교하는 것이 핵심이다.
 
 아래는 풀이다.
 
-- javascript
-```js
-var maxSubArray = function(nums) {
-    let a = Array(nums.length).fill(0)
-    a[0] = nums[0]
+- python
+```py
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        a = [0]*len(nums)
+        a[0] = nums[0]
 
-    for (let i=1; i < nums.length; i++) {
-        a[i] = Math.max(nums[i], nums[i] + a[i-1])
-    }
-
-    return Math.max(...a)
-}
+        for i in range(1, len(nums)):
+            a[i] = max(nums[i], nums[i] + a[i-1])
+        
+        return max(a)
 ```
 
 a 배열은 i 인덱스까지의 최대 부분합들이 모여있는 배열이므로, 이 중에서 최대값을 리턴하면 된다.

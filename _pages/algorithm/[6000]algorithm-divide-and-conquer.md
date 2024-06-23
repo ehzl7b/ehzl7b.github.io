@@ -21,21 +21,21 @@ updated: 2024-06-17
 
 DP 방식으로 풀어내는 방식이 가장 일반적([별도 포스팅](/page/dynamic-programming-kadane-algorithm) 참고)이지만 DAC로도 풀 수 있다.
 
-- javascript
-```js
-var maxSubArray = function(nums) {
-    const dac = a => {
-        if (a.length === 1) return [a[0], a[0], a[0], a[0]]
+- python
+```py
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        def dac(arr):
+            if len(arr) == 1:
+                return arr[0], arr[0], arr[0], arr[0]
+            
+            m = len(arr)//2
+            ll, lm, lr, lt = dac(arr[:m])
+            rl, rm, rr, rt = dac(arr[m:])
 
-        let m = ~~(a.length / 2)
-        let [ll, lm, lr, lt] = dac(a.slice(0, m))
-        let [rl, rm, rr, rt] = dac(a.slice(m))
-
-        return [Math.max(ll, lt+rl), Math.max(lm, lr+rl, rm), Math.max(lr+rt, rr), lt+rt]
-    }
-
-    return dac(nums)[1]
-}
+            return max(ll, lt+rl), max(lm, lr+rl, rm), max(lr+rt, rr), lt+rt
+        
+        return dac(nums)[1]
 ```
 
 위 코드가 어떻게 최대 부분합을 구할 수 있는지 이해하려면 다소 까다로운데, 아래와 같이 생각해볼 수 있다.
@@ -64,23 +64,4 @@ var maxSubArray = function(nums) {
 4: 연결배열의 전체 합계값, A 배열의 합계 + B 배열의 합계
 ```
 
-아래는 위 내용을 정리한 코드다. (이런 방법을 누가 생각했는지 대단하다.)
-
-- javascript
-```js
-var maxSubArray = function(nums) {
-    const dac = a => {
-        if (a.length === 1) return [a[0], a[0], a[0], a[0]]
-
-        let m = ~~(a.length / 2)
-        let [ll, lm, lr, lt] = dac(a.slice(0, m))
-        let [rl, rm, rr, rt] = dac(a.slice(m))
-
-        return [Math.max(ll, lt+rl), Math.max(lm, lr+rl, rm), Math.max(lr+rt, rr), lt+rt]
-    }
-
-    return dac(nums)[1]
-}
-```
-
-dac 재귀함수의 리턴값의 1번 인덱스가 최종 답이다.
+위에서 2번 항목에 대한 값을 최종적으로 찾아내면 된다. (누가 생각했는지 정말 기발했다.)

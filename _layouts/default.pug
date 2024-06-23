@@ -16,6 +16,8 @@ html(lang='ko')
           .aside-title CATEGORIES
           .nav
             ul
+              li.item
+                a(href=`/`) HOME
               each menu in menus
                 li.item
                   a(href=`/${menu.id}`) #{menu.title}

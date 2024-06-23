@@ -30,28 +30,26 @@ updated: 2024-06-14
 
 아래는 초기값과 일반항을 그대로 사용하여 iterative DP 방식으로 푼 코드다.
 
-- javascript
-```js
-function solution(n) {
-    let a = [0n, 1n, 2n, ...Array(n).fill(0)]
+- python
+```py
+def solution(n):
+    a = [None, 1, 2] + [0]*(n-2)
     
-    for (let i=3; i <= n; i++) {
+    for i in range(3, n+1):
         a[i] = a[i-2] + a[i-1]
-    }
     
-    return a[n] % 1234567n
-}
+    return a[n] % 1234567
 ```
 
-초기값과 함께 n 개 이상의 공간이 준비된 a 배열을 상정한 뒤, for 반복문으로 일반항 값들을 계산하여 배열에 담아낸다.
+초기값과 함께 충분한 공간이 준비된 a 리스트을 상정한 뒤, for 반복문으로 일반항 값들을 계산하여 배열에 담아낸다.
 
-문제를 보면 n 이 최대 2,000까지 될 수 있는데, 이 경우 무지무지하게 큰 값이 나오게 되므로 [BigInt 개체](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/BigInt)를 사용했다.
+문제를 보면 n 이 최대 2,000까지 될 수 있는데, 이 경우 무지무지하게 큰 값이 나오게 되는데, 보통 python 은 매우 큰 정수도 별도 타입이나 클래스 인스턴스를 생성하지 않아도 사용할 수 있다.
 
 위 코드를 좀 더 효율화 할 수 있다.
 
 우선, 문제에서 요구하는 것은 n칸 멀리뛰기 가짓수만이므로, n까지의 모든 가짓수를 모아놓은 a 배열을 만들 필요는 없다. 단순 변수 a, b 만을 사용하면 된다.
 
-다음으로, 나머지를 구하는 % 연산자의 특성을 활용하면 BigInt 개체를 굳이 사용하지 않아도 된다. % 연산은 아래와 같은 공식이 성립한다.
+다음으로, 나머지를 구하는 % 연산자의 특성을 활용하면 너무 큰 수 생성에 따른 메모리나 퍼포먼스 부담을 줄일 수 있다. % 연산은 아래와 같은 공식이 성립한다.
 
 - note
 ```text
@@ -60,18 +58,18 @@ function solution(n) {
 
 아래는 개선 코드다.
 
-- javascript
-```js
-function solution(n) {
-    if (n < 3) return n
+- python
+```py
+def solution(n):
+    if n < 3:
+        return n
     
-    let [a, b] = [1, 2]
-    for (let i=3; i <= n; i++) {
-        [a, b] = [b, (a+b) % 1234567]
-    }
+    a, b = 1, 2
     
+    for _ in range(3, n+1):
+        a, b = b % 1234567, (a+b) % 1234567
+        
     return b
-}
 ```
 
 ## 프로그래머스: 땅따먹기
@@ -97,22 +95,20 @@ DP로 풀려면 초기값과 일반항을 알아야 하는데 아래와 같다.
 
 코드 구현은 아래와 같다.
 
-- javascript
-```js
-function solution(land) {
-    let a = land[0]
+- python
+```py
+def solution(land):
+    a = land[0]
     
-    for (let x of land.slice(1)) {
-        a = [
-            x[0] + Math.max(a[1], a[2], a[3]),
-            x[1] + Math.max(a[0], a[2], a[3]),
-            x[2] + Math.max(a[0], a[1], a[3]),
-            x[3] + Math.max(a[0], a[1], a[2]),
-        ]
-    }
+    for x in land[1:]:
+        a = (
+            x[0] + max(a[1], a[2], a[3]),
+            x[1] + max(a[0], a[2], a[3]),
+            x[2] + max(a[0], a[1], a[3]),
+            x[3] + max(a[0], a[1], a[2]),
+        )
     
-    return Math.max(...a)
-}
+    return max(a)
 ```
 
 문제에서는 제일 마지막의 최대값만 리턴하도록 요구하므로, a 배열 누적을 굳이 쌓을필요는 없기에, for 문 안에서 계속 a 변수가 갱신되도록 했다.

@@ -21,7 +21,7 @@ updated: 2024-06-19
 
 배열의 모든 요소들이 K 이상을 달성할 수 있다면, 몇번의 조합으로 가능한지를 구하는 문제다.
 
-이 문제를 시간초과없이 구하려면 힙 자료구조를 이용해야 하며, javascript 에는 기본으로 제공되는 자료구조가 아니므로 아래와 같이 직접 구현해야 한다.
+이 문제를 시간초과없이 구하려면 힙 자료구조를 이용해야 하며, 아래는 heap 자료구조를 javascript로 구현해본 코드다. (python으로는 직접구현하면 아무리해도 시간초과를 피할 수 없었기에 javascript로 풀었다.)
 
 - javascript
 ```js
@@ -100,3 +100,28 @@ function solution(scoville, K) {
 Heap 클래스의 인스턴트 h 를 생성하고, 주어진 값들을 h 에 푸시한다.
 
 이후 while 반복문을 통해, 문제에서 요구하는대로 v1, v2 값들을 추출하여 조합을 하고 다시 푸시한다. 중간중간에 if 문으로 무한반복문을 탈출 할 수 있는 조건을 붙여줬다.
+
+참고로 python이 기본제공하면서 힙 자료구조를 구현해주는 heapq 라이브러리를 사용하면 문제를 통과할 수 있다.
+
+- python
+```py
+from heapq import heapify, heappush, heappop
+
+def solution(scoville, K):
+    heapify(scoville)
+    
+    i = 0
+    while 1:
+        if not scoville:
+            return -1
+        p = heappop(scoville)
+        if K <= p:
+            return i
+        
+        if not scoville:
+            return -1
+        q = heappop(scoville)
+        
+        heappush(scoville, p + q*2)
+        i += 1
+```

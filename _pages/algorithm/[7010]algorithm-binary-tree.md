@@ -19,57 +19,51 @@ updated: 2024-06-19
 
 중위 탐색 일반적인 코드는 아래와 같다.
 
-- javascript
-```js
-var inorderTraversal = function(root) {
-    let a = []
+- python
+```py
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        a = []
 
-    ;(function f(n) {
-        if (n) {
-            f(n.left)
-            a.push(n.val)
-            f(n.right)
-        }
-    })(root)
+        def f(n):
+            if n:
+                f(n.left)
+                a.append(n.val)
+                f(n.right)
 
-    return a
-}
+        f(root)
+        return a
 ```
 
-재귀호출 방식이다. if 구문 안에있는 a.push(n.val) 위치가 f(n.left) 에 오면 전위, f(n.left) 와 f(n.right) 가운데 오면 중위, f(n.right) 아래에 오면 후위 탐색이 된다.
+재귀호출 방식이다. if 구문 안에있는 a.append(n.val) 위치가 f(n.left) 에 오면 전위, f(n.left) 와 f(n.right) 가운데 오면 중위, f(n.right) 아래에 오면 후위 탐색이 된다.
 
 이 문제 다른 풀이를 보면 아래와 같이 기발하게 풀어낸 코드도 있었다.
 
-- javascript
-```js
-var inorderTraversal = function(root) {
-    return (root) ? [...inorderTraversal(root.left), root.val, ...inorderTraversal(root.right)] : []
-}
+- python
+```py
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        return [*self.inorderTraversal(root.left), root.val, *self.inorderTraversal(root.right)] if root else []
 ```
 
 iterative 방식으로 풀 수도 있다.
 
-- javascript
-```js
-var inorderTraversal = function(root) {
-    let a = []
+- python
+```py
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        a = []
+        st = [(root, False)]
 
-    let st = [[root, false]]
-    while (st.length) {
-        let [n, v] = st.pop()
-        if (n) {
-            if (v) {
-                a.push(n.val)
-            } else {
-                st.push([n.right, false])
-                st.push([n, true])
-                st.push([n.left, false])
-            }
-        }
-    }
-
-    return a
-}
+        while st:
+            n, v = st.pop()
+            if n:
+                if v:
+                    a.append(n.val)
+                else:
+                    st.extend([(n.right, False), (n, True), (n.left, False)])
+        
+        return a
 ```
 
-코드에서 가장 주의해야 할 것은 스택을 나타내는 st 배열에 노드들을 담을 때, right 가 left 보다 먼저 담기는 것에 주의해야 한다. 후입선출의 원리를 생각하면 쉽게 이해가 된다.
+가장 주의해야 할 것은, 스택을 나타내는 st 리스트에 노드들을 담을 때, right 가 left 보다 먼저 담기는 것에 주의해야 한다. 후입선출의 원리를 생각하면 쉽게 이해가 된다.
