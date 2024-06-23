@@ -23,83 +23,92 @@ n 개 요소를 가진 배열에서 k 개를 골라 나열한다고 했을 때, 
 
 "중복순열"에서 반복되는 요소가 없는 것이 "순열"이다. 그리고 "중복순열"에서 앞의 요소가 뒤 요소보다 큰 경우가 없는 것이 "중복조합"이며, 반복되는 요소마저 없다면 "조합"이 된다.
 
-javascript 제너레이터 문법을 이용해서 아래와 같이 구현할 수 있다.
-
-- javascript
-```js
-function* g(arr, k) {
-    let a = Array(k).fill(0)
-    let n = arr.length
-
-    while (true) {
-        // yield a.map(x => arr[x])                                                 // 중복순열
-        // if (a.length === new Set(a).size) yield a.map(x => arr[x])               // 순열
-        // if (a.every((x, i) => i === 0 || a[i-1] <= x)) yield a.map(x => arr[x])  // 중복조합
-        if (a.every((x, i) => i === 0 || a[i-1] < x)) yield a.map(x => arr[x])      // 조합
-
-        let i = k-1
-        while (a[i] === n-1) {
-            i--
-            if (i < 0) return
-        }
-
-        a[i]++
-        for (let j=i+1; j < k; j++) a[j] = 0
-    }
-}
-```
-
-k 개의 요소가 들어갈 수 있는 a 배열을 생성하고 초기값으로 0 을 채운다.
-
-while 구문으로 순회하면서, 먼저 a 배열이 "순열" 또는 "조합"이 될 수 있는가를 검사하여 yield 한다.
-
-다음으로 인덱스를 가리키는 i 변수를 생성하여, a 배열의 가장 뒷부분으로 보낸 뒤, 추가로 숫자를 증가시킬 수 있는 인덱스인지 (즉, 인덱스 안의 숫자가 최대값인지 아닌지)를 검사한다.
-
-최대값이라면 인덱스를 앞으로 이동하여 계속하여 검사하며, i 인덱스가 음수가 되면 (사실상 0 인덱스마저도 최대값이 들어있다면...) 제너레이터를 종료한다.
-
-숫자를 증가시킬 수 있는 i 인덱스를 찾았다면 숫자를 증가시키고, i 인덱스 뒤쪽의 요소들은 모두 0 으로 초기화 한다.
-
 # Leetcode: 77. Combinations
 
 [https://leetcode.com/problems/combinations](https://leetcode.com/problems/combinations)
 
-n C k 에 해당하는 배열 조합을 찾아서 리턴하는 문제다.
+nCr 에 해당하는 모든 경우의 수를 찾아서 리턴하는 문제다. python 제너레이터 문법으로 "중복순열"과 "조합"의 관계를 이용하여 아래와 같이 구현해보았다.
 
-아쉽게도 위에서 언급한 g 제너레이터로는 시간초과로 문제를 풀 수 없다.
-
-"중복순열"에 해당하는 모든 경우의 수를 탐색하고, "조합"의 조건의 맞는가를 검색하기 때문에 비효율적인 것 같다. 약간 효율적으로 탐색할 수 있도록 고쳐서 풀었다.
-
-- javascript
+- python
 ```js
-var combine = function(n, k) {
-    let arr = [...Array(n).keys()].map(x => x+1)
-    return [...g(arr, k)]
-}
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        return [x for x in self.g(list(range(1, n+1)), k)]
 
-function* g(arr, k) {
-/=    let a = [...Array(k).keys()]
-    let n = arr.length
+    def g(self, lst, r):
+        a = [0]*r
+        n = len(lst)
 
-    while (true) {
-        if (a.every((x, i) => i === 0 || a[i-1] < x)) yield a.map(x => arr[x])
+        while 1:
+            # if 1:                                             # 중복순열
+            # if len(a) == len(set(a)):                         # 순열
+            # if all(x <= y for x, y in zip(a[:-1], a[1:])):    # 중복조합
+            if all(x < y for x, y in zip(a[:-1], a[1:])):       # 조합
+                yield [lst[x] for x in a]
+            
 
-        let i = k-1
-/=        while (a[i] === i + n - k) {
-            i--
-            if (i < 0) return
-        }
-
-        a[i]++
-/=        for (let j=i+1; j < k; j++) a[j] = a[j-1]+1
-    }
-}
+            i = r-1
+            while a[i] == n-1:
+                i -= 1
+                if i < 0:
+                    return
+            
+            a[i] += 1
+            for j in range(i+1, r):
+                a[j] = 0
 ```
 
-g 제너레이터에서 세군데를 고쳤다.
+g 제너레이터 부분을 보면, nCr 에 해당하는 경우를 모두 구하기 위해 우선 r 개의 요소가 들어갈 수 있는 a 리스트를 생성하고 초기값으로 0 을 채운다.
+
+while 구문으로 순회하면서, 먼저 a 리스트가 "조합"이 될 수 있는가를 검사하여 yield 한다.
+
+다음으로 인덱스를 가리키는 i 변수를 생성하여, a 리스트 가장 뒷부분을 가리키도록 한 뒤, 추가로 숫자를 증가시킬 수 있는지 (즉, 인덱스 안의 숫자가 최대값인지 아닌지)를 검사한다.
+
+최대값이라면 인덱스를 앞으로 이동하여 계속하여 검사하며, i 인덱스가 음수가 되면 (사실상 0 인덱스마저도 최대값이 들어있다면...) 제너레이터를 종료한다.
+
+숫자를 증가시킬 수 있는 인덱스를 찾았다면 해당 숫자를 증가시키고, i 인덱스 뒤쪽의 요소들은 모두 0 으로 초기화 한다.
+
+그러나 위 코드는 시간초과로 풀 수가 없다. "중복순열"에 해당하는 모든 경우의 수를 탐색하고, "조합"의 조건의 맞는가를 검색하기 때문에 비효율적인 것 같다. 약간 효율적으로 탐색할 수 있도록 고쳤다.
+
+- python
+```py
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        return [x for x in self.g(list(range(1, n+1)), k)]
+
+    def g(self, lst, r):
+/-        a = [0]*r
+/+        a = [*range(0, r)]
+        n = len(lst)
+
+        while 1:
+/-            # if 1:                                             # 중복순열
+/-            # if len(a) == len(set(a)):                         # 순열
+/-            # if all(x <= y for x, y in zip(a[:-1], a[1:])):    # 중복조합
+/-            if all(x < y for x, y in zip(a[:-1], a[1:])):       # 조합
+/-                yield [lst[x] for x in a]
+/+            yield [lst[x] for x in a]    
+
+            i = r-1
+/-            while a[i] == n-1:
+/+            while a[i] == i + n - r:
+                i -= 1
+                if i < 0:
+                    return
+            
+            a[i] += 1
+            for j in range(i+1, r):
+/-                a[j] = 0
+/+                a[j] = a[j-1]+1
+```
+
+g 제너레이터에서 4군데를 고쳤다.
 
 첫째는 초기값인데, 조합의 특성상 중복 없이, 뒤의 값은 앞의 값보다 무조건 커야하므로, 예를들어 [0, 0, 0, 0] 이 아닌 [0, 1, 2, 3] 이 초기값이 되도록 했다.
 
-둘째는 인덱스 i 가 가질 수 있는 최대값이다. "중복순열" 에서는 n-1 이 최대값이지만, "조합"에서는 i+n-k 가 된다.
+둘째는 다른 곳에서 "조합"이 되는 경우만을 직접 만들도록 했기 때문에, 조건 검사 없이 yield 하도록 했다.
+
+셋째는 인덱스 i 가 가질 수 있는 최대값이다. "중복순열"에서는 n-1 이 최대값이지만, "조합"에서는 i+n-k 가 된다.
 
 - pseudo
 ```pseudo
@@ -111,7 +120,7 @@ A = [0, 1, 2, 3, 4], n = 5, k = 5
 # 2번 이후의 인덱스가 없으므로, [0, 1, 4] 와 같은 형태도 가능하기 때문이다.
 B = [0, 1, 2], n = 5, k = 5
 
-여러가지 경우를 가지고 따져보면, i 인덱스에 들어갈 수 있는 최대값은 i + (n - k) 가 됨을 알 수 있다.
+# 여러가지 경우를 가지고 따져보면, i 인덱스에 들어갈 수 있는 최대값은 i + (n - k) 가 됨을 알 수 있다.
 ```
 
-셋째는 i 인덱스의 값을 증가시킨 후, i 뒤에 나오는 인덱스의 초기값인데, "조합" 특성상 뒤의 값은 앞의 값보다 무조건 커야한다는 특성을 반영하여 수정했다.
+넷째는 i 인덱스의 값을 증가시킨 후, i 뒤에 나오는 인덱스의 초기값인데, "조합" 특성상 뒤의 값은 앞의 값보다 무조건 커야한다는 특성을 반영하도록 했다.

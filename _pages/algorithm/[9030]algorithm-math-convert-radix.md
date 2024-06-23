@@ -17,29 +17,27 @@ updated: 2024-06-22
 
 주어진 수를 3진법 수로 바꾸고, 그 숫자를 뒤집어서 다시 10진법으로 환원하는 문제다.
 
-- javascript
-```js
-Number.prototype.toRadix = function(r, d="0123456789abcdefghijklmnopqrstuvwxyz") {
-    return this < r ? d[this%r] : (~~(this/r)).toRadix(r) + d[this%r]
-}
-String.prototype.toInt = function(r, d="0123456789abcdefghijklmnopqrstuvwxyz") {
-    return this.split("").reverse().reduce((a, x, i) => a + d.indexOf(x) * r ** i, 0)
-}
+- python
+```py
+def toRadix(n, r, d="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+    return d[n%r] if n < r else toRadix(n//r, r) + d[n%r]
 
-function solution(n) {
-    return n.toRadix(3).split("").reverse().join("").toInt(3)
-}
+def toInt(s, r, d="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+    return sum(d.index(x) * r**i for i, x in enumerate(s[::-1]))
+
+def solution(n):
+    return toInt(str(toRadix(n, 3)[::-1]), 3)
 ```
 
-javascript의 prototype 문법을 사용하여, 함수들이 체인형태로 이어질 수 있도록 구성했다.
+python는 int 함수가 위에서 작성한 toInt 함수와 동일한 기능을 제공하는데, 아래는 이를 사용한 풀이다.
 
-javascript는 진법 변환을 위한 기본 함수를 제공하는데, 아래는 이를 사용한 풀이다.
+- python
+```py
+def toRadix(n, r, d="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+    return d[n%r] if n < r else toRadix(n//r, r) + d[n%r]
 
-- javascript
-```js
-function solution(n) {
-    return parseInt(n.toString(3).split("").reverse().join(""), 3)
-}
+def solution(n):
+    return int(toRadix(n, 3)[::-1], 3)
 ```
 
 # 프로그래머스: N진수 게임
@@ -48,32 +46,31 @@ function solution(n) {
 
 n 진법으로 변형된 수를 m 명의 인원들이 한글자씩 순서대로 말하는 게임이 있다. 이때, p 번째 자리에 앉아있는 사람이 t 개의 컨닝페이퍼를 만든다고 할 때, 그 컨닝페이퍼를 리턴하는 문제다.
 
-- javascript
-```js
-function solution(n, t, m, p) {
-    let a = ""
-    let chs = []
-    let gn = g(n)
+- python
+```py
+def solution(n, t, m, p):
+    a = ""
+    pool = ""
+    gen = iter(g(n))
     
-    while (a.length < t) {
-        while (chs.length < m) chs = [...chs, ...gn.next().value.split("")]
-        a += chs.splice(0, m)[p-1]
-    }
+    while len(a) < t:
+        while len(pool) < m:
+            pool += next(gen)
+        a += pool[p-1]
+        pool = pool[m:]
     
     return a
-}
 
-function* g(r) {
-    let toRadix = (n, r, d="0123456789ABCDEF") => n < r ? d[n%r] : toRadix(~~(n/r), r) + d[n%r]
+def g(r):
+    def toRadix(n, r, d="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+        return d[n%r] if n < r else toRadix(n//r, r) + d[n%r]
     
-    let i = 0
-    while (true) {
+    i = 0
+    while 1:
         yield toRadix(i, r)
-        i++
-    }
-}
+        i += 1
 ```
 
 먼저 g 제너레이터를 구현하였다. r 진법의 수를 순서대로 필요할 때마다 yield 한다.
 
-solution 함수의 while 구문이 핵심인데, chs 배열의 요소 개수가 m 개가 안되면 그 때마다 제너레이터를 호출하여 한글자씩 끊어서 채운다. 그리고 chs 배열의 앞부분부터 m개씩 끊고, p-1번째 글자를 컨닝페이퍼에 채우는 구조다.
+solution 함수의 while 구문이 핵심인데, pool 문자열의 요소 개수가 m 개가 안되면 그 때마다 제너레이터를 호출하여 뒤에 채운다. 그리고 pool p-1번째 글자를 컨닝페이퍼에 채우고, 앞에서부터 m개수만큼 끊어낸다.
