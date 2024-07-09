@@ -12,7 +12,7 @@ updated: 2024-05-21
 <!--#endregion-->
 
 - excel
-```excel
+```xlsx
 =MID(CELL("filename", 셀), FIND("]", CELL("filename", 셀)) + 1, 256)
 ```
 
@@ -36,7 +36,7 @@ End Function
 ```
 
 - excel
-```excel
+```xlsx
 =SheetName(셀)
 ```
 
