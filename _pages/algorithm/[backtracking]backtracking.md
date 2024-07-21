@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: algorithm
 title: 백트래킹(Backtracking)
 description: 모든 경우의 수를 탐색하는 백트래킹 알고리즘 문제풀이
 updated: 2024-07-21
