@@ -14,12 +14,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "fast-glob": "^3.3.2",
-    "fs-extra": "^11.2.0",
-    "gray-matter": "^4.0.3",
-    "highlight.js": "^11.9.0",
-    "markdown-it": "^14.1.0",
-    "pug": "^3.0.2",
-    "sass": "^1.74.1"
+    "astro": "=4.16.10",
+    "fast-glob": "=3.3.2",
+    "fs-extra": "=11.2.0",
+    "gray-matter": "=4.0.3",
+    "highlight.js": "=11.9.0",
+    "markdown-it": "=14.1.0",
+    "pug": "=3.0.2",
+    "sass": "=1.74.1"
   }
 }
