@@ -14,7 +14,7 @@ const { props } = Astro.props;
     </div>
     <div class="article">
         <div>
-            article
+            Page Loading...
         </div>
     </div>
     <div class="footer">
@@ -29,11 +29,11 @@ const { props } = Astro.props;
 
     // return { html, frontmatter }
     async function render(url) {
-        let html = await (await fetch(`https://raw.githubusercontent.com/ehzl7b/ehzl7b.github.io/main/_pages${url === "/" ? "/index.md" : url}`)).text();
+        let html = await (await fetch(`https://raw.githubusercontent.com/ehzl7b/ehzl7b.github.io/main/_md${url === "/" ? "/index.md" : url}`)).text();
         let frontmatter = "";
 
         if (html.startsWith("404: Not Found")) {
-            html = await (await fetch(`https://raw.githubusercontent.com/ehzl7b/ehzl7b.github.io/main/_pages/404.md`)).text();
+            html = await (await fetch(`https://raw.githubusercontent.com/ehzl7b/ehzl7b.github.io/main/_md/404.md`)).text();
         }
 
         if (html.startsWith("---")) {
@@ -54,16 +54,16 @@ const { props } = Astro.props;
     async function content(url) {
         let { html, frontmatter } = await render(url);
         
-        return `<h1 class="page-title">${frontmatter.title ?? ""}</h1>`
-             + `<div class="meta description">${frontmatter.description ?? ""}</div>`
-             + `<div class="meta updated">${frontmatter.updated ?? ""}</div>`
+        return `<h1 class="page-title">${frontmatter?.title ?? ""}</h1>`
+             + `<div class="meta description">${frontmatter?.description ?? ""}</div>`
+             + `<div class="meta updated">${frontmatter?.updated ?? ""}</div>`
              + html; 
     }
 
     
     // test code
     document.addEventListener("DOMContentLoaded", async () => {
-        let url = "/[2404081041]index.mds";
+        let url = "/";
         const $article = document.querySelector(".article div");
 
         let html = await content(url);

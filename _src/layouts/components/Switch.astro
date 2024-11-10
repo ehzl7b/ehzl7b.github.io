@@ -1,52 +1,61 @@
 ---
-const { id, left, right } = Astro.props;
+const { left, right } = Astro.props;
 ---
 
-<label>
+<label class="switch">
     <div class="left">{left}</div>
-    <div class="switch">
+    <div class="wrapper">
         <div class="bar"></div>
         <div class="btn"></div>
     </div>
     <div class="right">{right}</div>
 </label>
 
-<script define:vars={{ id }}>
+<script>
     "use strict";
-    const $bar = document.querySelector(`#${id}`);
-    $bar.onclick = function(e) {
-        console.log(`${id} clicked`);
+
+    const $switch = document.querySelector("label.switch");
+    const $btn = $switch.querySelector(".btn");
+    const $html = document.querySelector("html");
+
+    $switch.onclick = function(e) {
+        $btn.classList.toggle("clicked");
+        $html.dataset.theme = $html?.dataset.theme === "light" ? "dark" : "light";
     };
 </script>
 
 <style lang="scss">
-    label {
-        position: relative; height: 1.5rem; width: 4rem;
+    label.switch {
+        position: relative; height: 1.5rem; width: 5rem;
         display: block;
         cursor: pointer; overflow: hidden;
 
         & > div {
-            position: absolute; top: 0;
+            position: absolute; top: 0; text-align: center;
         }
         
         .left {
-            left: 0; height: 1rem; width: 1rem;
+            left: 0; height: 1.5rem; width: 1.5rem;
         }
-        .switch {
+        .wrapper {
             position: relative;
-            left: 1rem; height: 100%; width: 2rem;
+            left: 1.5rem; height: 100%; width: 2rem;
             display: flex; align-items: center;
             .bar {
                 height: 0.5rem; width: 100%;
                 background: var(--bg-sub); border-radius: 9999px;
             }
             .btn {
-                position: absolute; height: 1rem; width: 1rem;
+                position: absolute; left: 0; height: 1rem; width: 1rem;
                 background: var(--fg-sub); border-radius: 9999px;
+
+                &.clicked {
+                    left: 1rem;
+                }
             }
         }
         .right {
-            left: 3rem; height: 1rem; width: 1rem;
+            left: 3.5rem; height: 1.5rem; width: 1.5rem;
         }
     }
 </style>
