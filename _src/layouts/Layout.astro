@@ -1,0 +1,52 @@
+---
+import Header from "./Header.astro";
+import Article from "./Article.astro";
+import Footer from "./Footer.astro";
+
+const { props } = Astro.props;
+---
+
+<div class="layout">
+    <div class="header">
+        <div>
+            <Header {props} />
+        </div>
+    </div>
+    <div class="article">
+        <div>
+            article
+        </div>
+    </div>
+    <div class="footer">
+        <div>
+            <Footer {props} />
+        </div>
+    </div>
+</div>
+
+<style lang="scss">
+    $max-width: 1200px;
+
+    .layout {
+        position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 0;
+        overflow-x: hidden; overflow-y: scroll;
+
+        &:before, &:after {
+            content: " "; display: table-cell; clear: both;
+        }
+    }
+    .header, .article, .footer {
+        width: 100%;
+
+        & > div {
+            position: relative; width: 100%; max-width: #{$max-width}; margin: 0 auto; padding: 0 5px;
+        }
+    }
+    .header {
+        border-bottom: 1px solid var(--fg-sub);
+    }
+    .footer {
+        position: sticky; top: 100vh;
+        border-top: 1px solid var(--fg-sub);
+    }
+</style>

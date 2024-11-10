@@ -1,0 +1,33 @@
+---
+import Switch from "./components/Switch.astro";
+
+const { props } = Astro.props;
+const categories = [
+    {cat: "대문", path: "#"},
+    {cat: "MS오피스 팁", path: "#"},
+];
+---
+
+<header>
+    <div class="nav">
+        <ul>
+            <li class="site-title">{props.site.title} ::</li>
+            {categories.map(item => (
+                <li><a href={item.path}>{item.cat}</a></li>
+            ))}
+        </ul>
+    </div>
+    <div class="switch">
+        <Switch id="switch-theme" left="🌞" right="🌚" />
+    </div>
+</header>
+
+<style lang="scss">
+    header {
+        width: 100%; padding: 0.5rem 0;
+        display: flex; justify-content: space-between;
+        .nav ul {
+            display: flex; column-gap: 1rem; flex-wrap: wrap;
+        }
+    }
+</style>

@@ -1,7 +1,7 @@
 {
   "recommendations": [
-    "ritwickdey.liveserver",
-    "astro-build.astro-vscode",
-    "antfu.unocss"
+    "astro-build.astro-vscode"
+    // "ritwickdey.liveserver",
+    // "antfu.unocss"
   ]
 }
