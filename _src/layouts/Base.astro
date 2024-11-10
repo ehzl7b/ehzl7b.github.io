@@ -13,11 +13,73 @@ const { props } = Astro.props;
         <title>:: {props.site.title}</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/d2coding@1.3.2/d2coding-full.min.css" />
+        <!-- <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/highlight.min.js"></script> -->
     </head>
     <body>
         <Layout {props} />
     </body>
 </html>
+
+<script type="module">
+    import markdownIt from "https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/+esm";
+    import highlightJs from "https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm";
+    import jsYaml from "https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm";
+
+    window.markdownit = markdownIt;
+    window.hljs = highlightJs;
+    window.yaml = jsYaml;
+    
+    hljs.registerLanguage('pseudo', (hljs) => {
+        return {
+            aliases: ['ps'],
+            contains: [
+            {
+                className: 'comment',
+                begin: /#/,
+                end: /\s\s|\n|$/,
+            },
+            {
+                className: 'strong',
+                begin: /\b[A-Z][A-Z0-9]*\b/,
+            },
+            {
+                className: 'number',
+                begin: /\b[0-9]+\b/,
+            },
+            {
+                className: 'leadline',
+                begin: /[|/\\=+<>∧∨-]+/,
+            },
+            ],
+        }
+    });
+
+    window.md = markdownit({
+        html: true,
+        xhtmlOut: true,
+        highlight(code, lang) {
+            const language = hljs.getLanguage(lang) ? lang : 'plaintext'
+
+            let lines = code.trim().split('\n')
+            let tar_line = new Map()
+            let code_modified = lines.map((x, i) => {
+            if (x.startsWith('/-') || x.startsWith('/+') || x.startsWith('/=')) {
+                tar_line.set(i, x[1])
+                x = x.slice(2)
+            }
+            return x
+            }).join('\n')
+
+            lines = hljs.highlight(code_modified, { language }).value.trim().split('\n')
+            return lines.map((x, i) => {
+            return `<div class="codeline ${tar_line.get(i) || ''}">${x || ' '}</div>`
+            }).join('')
+        },
+    });
+    
+</script>
 
 <style is:global lang="scss">
     * {
