@@ -27,9 +27,9 @@ updated: "2024-11-11"
 
 24년 11월... 쌀쌀해지는 날씨에, 블로그 리뉴얼하는 김에, 다시 대문 페이지를 업데이트 해보았다.
 
-'''python
+```python
 def sayHello(s):
     print(f"hello, {s}!")
 
 sayHello("blog")
-'''
+```
