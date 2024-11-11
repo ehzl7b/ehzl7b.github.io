@@ -13,9 +13,6 @@ const { props } = Astro.props;
         <title>:: {props.site.title}</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/d2coding@1.3.2/d2coding-full.min.css" />
-        <!-- <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/highlight.min.js"></script> -->
     </head>
     <body>
         <Layout {props} />
@@ -37,14 +34,15 @@ const { props } = Astro.props;
     };
 
     window.onload = () => {
-    // document.addEventListener("DOMContentLoaded", () => {
-        document.querySelector("html").classList.remove("preload");
+        const $html = document.querySelector("html");
+        $html.classList.remove("preload");
     };
 </script>
 
 <style is:global lang="scss">
-    :root.preload * {
+    .preload * {
         transition: none !important;
+        animation-duration: 0.001s !important;
     }
     * {
         box-sizing: border-box;
