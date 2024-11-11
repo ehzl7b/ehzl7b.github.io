@@ -1,8 +1,8 @@
 ---
-const { left, right } = Astro.props;
+const { id, left, right } = Astro.props;
 ---
 
-<label class="switch">
+<label class="switch" id={id}>
     <div class="left">{left}</div>
     <div class="wrapper">
         <div class="bar"></div>
@@ -11,17 +11,26 @@ const { left, right } = Astro.props;
     <div class="right">{right}</div>
 </label>
 
-<script>
+<script define:vars={{ id }}>
     "use strict";
 
-    const $switch = document.querySelector("label.switch");
-    const $btn = $switch.querySelector(".btn");
-    const $html = document.querySelector("html");
-
-    $switch.onclick = function(e) {
+    document.querySelector(`label#${id}`).onclick = (e) => {
+        let $btn = document.querySelector(`label#${id} .btn`);
         $btn.classList.toggle("clicked");
-        $html.dataset.theme = $html?.dataset.theme === "light" ? "dark" : "light";
+
+        window.switches[id].h($btn.classList.contains("clicked"));
     };
+</script>
+
+<script define:vars={{ id }}>
+    "use strict";
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        let theme = window.sessionStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches  ? 'dark' : 'light');
+        if (theme === "dark") {
+            document.querySelector(`label#${id}`).onclick();
+        }
+    });
 </script>
 
 <style lang="scss">
@@ -48,6 +57,7 @@ const { left, right } = Astro.props;
             .btn {
                 position: absolute; left: 0; height: 1rem; width: 1rem;
                 background: var(--fg-sub); border-radius: 9999px;
+                transition: left 0.4s;
 
                 &.clicked {
                     left: 1rem;

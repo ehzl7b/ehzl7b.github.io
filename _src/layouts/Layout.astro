@@ -45,7 +45,7 @@ const { props } = Astro.props;
         }
 
         if (html) html = md.render(html);
-        if (frontmatter) frontmatter = yaml.load(frontmatter);
+        if (frontmatter) frontmatter = yaml.render(frontmatter);
 
         return { html, frontmatter };
     }
