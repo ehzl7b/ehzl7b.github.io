@@ -1,13 +1,11 @@
-// import pugPlugin from "@11ty/eleventy-plugin-pug";
 import markdownIt from "markdown-it";
 import hljs from "highlight.js";
 
 export default async function(eleventyConfig) {
-  // eleventyConfig.addPlugin(pugPlugin);
+  eleventyConfig.addFilter("my_filter", (x) => x.replace(/\[\w*?\]/, ""));
   eleventyConfig.setTemplateFormats("md,liquid");
 	eleventyConfig.setInputDirectory("_src");
   eleventyConfig.addPassthroughCopy({ "_assets": "/" });
-  eleventyConfig.setDataDirectory("_data");
   eleventyConfig.setLibrary("md", markdownIt({
     html: true,
     highlight(code, lang) {
