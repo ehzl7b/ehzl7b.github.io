@@ -1,0 +1,19 @@
+{
+  "name": "ehzl7b.github.io",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "rm -rf _site | npx sass _srcs/main.scss _site/main.css --style=compressed",
+    "build": "eleventy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "sass": "^1.80.6"
+  }
+}

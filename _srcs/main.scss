@@ -1,0 +1,7 @@
+$var: 10px;
+
+body {
+  div {
+    height: #{$var};
+  }
+}
