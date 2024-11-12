@@ -14,7 +14,6 @@
   "type": "module",
   "dependencies": {
     "@11ty/eleventy": "^3.0.0",
-    "@11ty/eleventy-plugin-pug": "^1.0.0",
     "highlight.js": "^11.10.0",
     "sass": "^1.80.6"
   }
