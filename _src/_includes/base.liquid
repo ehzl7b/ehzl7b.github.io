@@ -19,9 +19,9 @@
             <div class="items">
               <h1 class="site-title">{{ site.title }} ::</h1>
               <div class="item"><a href="/">🏠Home</a></div>
-              {% comment %} {%- for ... -%}
-                <div class="item"><a href="#">zzzz</a></div>
-              {%- endfor -%} {% endcomment %}
+              {% for cat in collections.cats %}
+                <div class="item"><a href="{{ cat.data.permalink }}">{{ cat.data.title }}</a></div>
+              {% endfor %}
             </div>
             <div class="switches">
               <label class="switch-theme">
