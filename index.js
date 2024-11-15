@@ -18,9 +18,10 @@ function render(file, vars) {
   if ("layout" in vars) {
     let {layout, ...nextVars} = vars;
     return render(`${$_src}/_layout/${layout}.liquid`, nextVars);
+  } else {
+    vars = JSON.parse(renderer.liquid(JSON.stringify(vars), vars));
+    return {vars, content};
   }
-  
-  return {vars, content};
 }
 
 const $_src = "./_src";
