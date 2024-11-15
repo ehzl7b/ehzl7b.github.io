@@ -1,7 +1,7 @@
 import path from "node:path";
 import fg from "fast-glob";
 import fs from "fs-extra";
-import _ from "lodash";
+// import _ from "lodash";
 import { renderer } from "./_lib/renderer.js";
 import global from "./_src/vars.js";
 
@@ -29,6 +29,10 @@ const $page = `${$_src}/page`;
 const pagesGlob = fg.globSync(`${$_src}/**/*.{md,liquid}`, {ignore: `${$_src}/_layout/**/*`});
 
 const pagesMap = new Map();
-for (let x of pagesGlob) {
-  console.log(render(x, global));  
+for (let file of pagesGlob) {
+  let {dir, base, name, ext} = path.parse(file.replace($_src, ""));
+  let {vars, content} = render(file, {cat: dir, name, ...global});
+  pagesMap.set(vars.permalink, {cat: dir, title: vars.title, content});
 }
+
+console.log(pagesMap);
