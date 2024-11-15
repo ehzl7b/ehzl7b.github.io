@@ -5,6 +5,7 @@
     "highlight.js": "^11.10.0",
     "js-yaml": "^4.1.0",
     "liquidjs": "^10.18.0",
+    "lodash": "^4.17.21",
     "markdown-it": "^14.1.0"
   },
   "name": "ehzl7b.github.io",
@@ -25,5 +26,5 @@
     "url": "https://github.com/ehzl7b/ehzl7b.github.io/issues"
   },
   "homepage": "https://github.com/ehzl7b/ehzl7b.github.io#readme",
-  "description": ""
+  "description": "어즐 SSG"
 }
