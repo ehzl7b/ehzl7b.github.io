@@ -62,7 +62,7 @@ console.log(`==> 템플릿마다 웹페이지를 생성하고 저장하였습니
 for (let {cat, permalink, icon, title, reverse} of global.site.cats) {
   if (cat in pagesMap) {
     let pages = pagesMap[cat];
-    let {vars, content} = render(`${$_src}/_layout/catpage.liquid`, {permalink, icon, title, pages, reverse});
+    let {vars, content} = render(`${$_src}/_layout/catpage.liquid`, {permalink, icon, title, pages, reverse, site: global.site});
 
     save(vars.permalink, content);
   }

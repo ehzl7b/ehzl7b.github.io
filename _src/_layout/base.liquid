@@ -19,8 +19,8 @@
             <div class="items">
               <h1 class="site-title">{{ site.title }} ::</h1>
               <div class="item"><a href="/">🏠Home</a></div>
-              {% for cat in collections.cats %}
-                <div class="item"><a href="{{ cat.data.permalink }}">{{ cat.data.title }}</a></div>
+              {% for cat in site.cats %}
+                <div class="item"><a href="{{ cat.permalink }}">{{ cat.icon }}{{ cat.title }}</a></div>
               {% endfor %}
             </div>
             <div class="switches">
