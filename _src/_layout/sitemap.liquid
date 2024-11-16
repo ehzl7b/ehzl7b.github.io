@@ -1,0 +1,7 @@
+---
+permalink: "/sitemap.xml"
+---
+
+{% for page in pages %}
+  <url>{{ page.permalink }}</url>
+{% endfor %}

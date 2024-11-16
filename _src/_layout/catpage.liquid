@@ -1,4 +1,5 @@
 ---
 ---
 
-<p>카테고리 페이지</p>
+<p>카테고리 페이지:: {{ permalink }} - {{ icon }} - {{ title }}</p>
+{% for page in pages %}<p>{{ page.permalink }}</p>{% endfor %}
