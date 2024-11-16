@@ -5,3 +5,7 @@ permalink: "/"
 ---
 
 # {{ title }}
+
+```js
+console.log("hello world"); /+
+```
