@@ -1,5 +1,15 @@
 ---
+layout: "page"
+title: "{{ title }} 카테고리"
+description: "{{ title }} 카테고리 페이지들, <code>ctfl + F</code> 로 검색하세요."
+updated: {% assign today = "now" | date: "%Y-%m-%d" %}
 ---
 
-<p>카테고리 페이지:: {{ permalink }} - {{ icon }} - {{ title }}</p>
-{% for page in pages %}<p>{{ page.permalink }}</p>{% endfor %}
+{% if reverse == true %}
+  {% assign pages = pages | reverse %}
+{% endif %}
+<ul>
+  {% for page in pages %}
+    <li><a href="{{ page.permalink }}">{{ page.title }}</a>, Last updated: {{ page.updated }}</li>
+  {% endfor %}
+</ul>

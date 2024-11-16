@@ -2,7 +2,7 @@
 layout: "page"
 title: "어즐 SSG(Static Site Generator) 개발 기록"
 description: "Nodejs 및 다양한 모듈을 사용하여, 간단한 SSG 를 만들어 본 경험을 기록한 페이지"
-updated: "2024-11-xx"
+updated: "2024-11-16"
 ---
 
 ## 어즐 SSG
