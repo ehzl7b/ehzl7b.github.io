@@ -33,8 +33,9 @@ for (let mdFile of mdGlob) {
   Object.assign(vars, {...t});
 
   // markdown 콘텐츠 렌더링
-  t = renderer.liquid(content, vars);
-  t = renderer.md(t).trim();
+  t = renderer.md(content).trim();
+  // t = renderer.liquid(t, vars);
+  // t = renderer.md(t).trim();
   Object.assign(vars, {content: t});
 
   // pagesMap 삽입

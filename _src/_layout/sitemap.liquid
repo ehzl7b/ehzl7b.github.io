@@ -4,8 +4,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   {%- for x in pagesMap -%}
-    {%- for y in x[1] %}
-      <url><loc>{{ y.permalink }}</loc><lastmod>{{ y.updated }}</lastmod></url>
+    {%- for page in x[1] -%}
+        {%- if page.skipSiteMap != true -%}
+          <url><loc>{{ page.permalink }}</loc><lastmod>{{ page.updated }}</lastmod></url>
+        {% endif %}
     {%- endfor -%}
   {%- endfor %}
 </urlset>

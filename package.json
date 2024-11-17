@@ -15,7 +15,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "rm -rf _site | npx sass _src/asset/main.scss _site/main.css --style=compressed",
+    "prebuild": "rm -rf _site",
     "build": "node index"
   },
   "repository": {
