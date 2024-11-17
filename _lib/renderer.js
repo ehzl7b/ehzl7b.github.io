@@ -44,6 +44,7 @@ const md = markdownIt({
 
 const engine = new Liquid();
 engine.registerFilter("remove_label", x => x.replace(/\[.*\]/, ""));
+engine.registerFilter("today_to_string", x => x + new Date().toISOString().split("T")[0]);
 
 // export
 export const renderer = {
