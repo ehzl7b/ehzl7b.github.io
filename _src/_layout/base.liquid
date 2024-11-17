@@ -19,8 +19,8 @@
             <div class="items">
               <h1 class="site-title">{{ site.title }} ::</h1>
               <div class="item"><a href="/">🏠Home</a></div>
-              {% for cat in site.cats %}
-                <div class="item"><a href="{{ cat.permalink }}">{{ cat.icon }}{{ cat.title }}</a></div>
+              {% for dir in pagesMap["/dir"] %}
+                <div class="item"><a href="{{ dir.permalink }}">{{ dir.icon }}{{ dir.title }}</a></div>
               {% endfor %}
             </div>
             <div class="switches">

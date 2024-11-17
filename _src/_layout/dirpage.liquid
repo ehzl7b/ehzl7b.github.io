@@ -1,15 +1,18 @@
 ---
 layout: "page"
 title: "{{ title }} 카테고리"
-description: "{{ title }} 카테고리 페이지들, <code>ctfl + F</code> 로 검색하세요."
-updated: {% assign today = "now" | date: "%Y-%m-%d" %}
+description: "{{ title }} 카테고리에 속한 페이지들입니다. <code>ctfl + F</code> 로 검색하세요."
+updated: "{{ '' | today_to_string }}"
 ---
 
-{% if reverse == true %}
+{% assign pages = pagesMap[dir] %}
+{% if reverse %}
   {% assign pages = pages | reverse %}
 {% endif %}
+
 <ul>
   {% for page in pages %}
     <li><a href="{{ page.permalink }}">{{ page.title }}</a>, Last updated: {{ page.updated }}</li>
   {% endfor %}
 </ul>
+<p>&nbsp;</p>

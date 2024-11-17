@@ -129,7 +129,7 @@ label.switch-theme {
           content: "🟧"; font-size: 0.8rem; height: 2rem; width: 2rem; vertical-align: top; display: inline-flex; align-items: center; justify-content: center;
       }
   }
-  p {
+  p, ul {
       margin: 1.5rem 0;
   }
   & > ul {
