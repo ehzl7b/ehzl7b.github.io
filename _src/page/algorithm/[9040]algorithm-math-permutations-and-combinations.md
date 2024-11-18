@@ -76,29 +76,29 @@ class Solution:
         return [x for x in self.g(list(range(1, n+1)), k)]
 
     def g(self, lst, r):
-/-        a = [0]*r
-/+        a = [*range(0, r)]
+        a = [0]*r /-
+        a = [*range(0, r)] /+
         n = len(lst)
 
         while 1:
-/-            # if 1:                                             # 중복순열
-/-            # if len(a) == len(set(a)):                         # 순열
-/-            # if all(x <= y for x, y in zip(a[:-1], a[1:])):    # 중복조합
-/-            if all(x < y for x, y in zip(a[:-1], a[1:])):       # 조합
-/-                yield [lst[x] for x in a]
-/+            yield [lst[x] for x in a]    
+            # if 1:                                             # 중복순열 /-
+            # if len(a) == len(set(a)):                         # 순열 /-
+            # if all(x <= y for x, y in zip(a[:-1], a[1:])):    # 중복조합 /-
+            if all(x < y for x, y in zip(a[:-1], a[1:])):       # 조합 /-
+                yield [lst[x] for x in a] /-
+            yield [lst[x] for x in a] /+    
 
             i = r-1
-/-            while a[i] == n-1:
-/+            while a[i] == i + n - r:
+            while a[i] == n-1: /-
+            while a[i] == i + n - r: /+
                 i -= 1
                 if i < 0:
                     return
             
             a[i] += 1
             for j in range(i+1, r):
-/-                a[j] = 0
-/+                a[j] = a[j-1]+1
+                a[j] = 0 /-
+                a[j] = a[j-1]+1 /+
 ```
 
 g 제너레이터에서 4군데를 고쳤다.
