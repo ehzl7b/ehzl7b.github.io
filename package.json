@@ -1,0 +1,33 @@
+{
+  "devDependencies": {
+    "fast-glob": "^3.3.2",
+    "fs-extra": "^11.2.0",
+    "highlight.js": "^11.10.0",
+    "js-yaml": "^4.1.0",
+    "liquidjs": "^10.18.0",
+    "lodash": "^4.17.21",
+    "markdown-it": "^14.1.0",
+    "sass": "^1.81.0"
+  },
+  "name": "ehzl7b.github.io",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "rm -rf _site",
+    "build": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehzl7b/ehzl7b.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ehzl7b/ehzl7b.github.io/issues"
+  },
+  "homepage": "https://github.com/ehzl7b/ehzl7b.github.io#readme",
+  "description": "어즐 SSG"
+}
