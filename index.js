@@ -1,81 +1,90 @@
-import path from "node:path";
-import fg from "fast-glob";
-import fs from "fs-extra";
-import * as sass from "sass";
-import { renderer } from "./_lib/renderer.js";
-import global from "./_src/globals.js";
+import path from "node:path"
+import fs from "fs-extra"
+import fg from "fast-glob"
+import { renderer } from "./_lib/renderer.js"
+import layout from "liquidjs/dist/tags/layout.js"
 
 
-const $_src = "./_src";
-const $_site = "./_site";
+const $_page = "./_page"
+const $_layout = "./_layout"
+const $_site = "./_site"
+const $global = {
+  site: {
+    title: "어즐 블로그",
+  },
+  layout: "page",
+  permalink: "/page/{{ name | remove_label }}/",
+  filepath: `${$_site}/{{ name | remove_label }}.html`, 
+  content: "",
+}
 
+const pagesMap = {}
 
-console.log("===> 빌드 시작");
-
-const mdGlob = fg.globSync(`${$_src}/**/*.md`, {ignore: `${$_src}/_layout/**/*.md`});
-const pagesMap = {};
-
+// 전체 markdown 템플릿 순회
+const mdGlob = fg.globSync(`${$_page}/*.md`)
 for (let mdFile of mdGlob) {
-  let vars = {};
-  let t = undefined;
+  let vars = {}
 
-  // global 오브젝트 렌더링
-  let {dir, name} = path.parse(mdFile);
-  dir = dir.replace($_src, "") || "/";
-  Object.assign(vars, {name});
-  t = JSON.parse(renderer.liquid(JSON.stringify(global), vars))
-  Object.assign(vars, {...t});
+  // 파일경로 분해 결과 vars 에 삽입
+  let {dir, name, ext} = path.parse(mdFile)
+  dir = dir.replace($_page, "") || "/"
+  Object.assign(vars, {dir, name})
 
-  // markdown 프론트매터 렌더링
-  let {frontmatter, content} = renderer.separate(fs.readFileSync(mdFile, "utf-8"));
-  t = renderer.liquid(frontmatter, vars).trim();
-  t = renderer.yaml(t);
-  Object.assign(vars, {...t});
+  // $global 렌더링 후 vars 에 삽입
+  Object.assign(vars, JSON.parse(renderer.liquid(JSON.stringify($global), vars)))
 
-  // markdown 콘텐츠 렌더링
-  t = renderer.md(content).trim();
-  // t = renderer.liquid(t, vars);
-  // t = renderer.md(t).trim();
-  Object.assign(vars, {content: t});
+  let file = mdFile
+  while (true) {
+    let layout = vars.layout
+    delete vars.layout
+    let {frontmatter, content} = renderer.separate(fs.readFileSync(file, "utf-8").trim())
 
-  // pagesMap 삽입
-  pagesMap[dir] ??= [];
-  pagesMap[dir].push({...vars});
-}
+    // 프론트매터 렌더링
+    Object.assign(vars, renderer.yaml(renderer.liquid(frontmatter, vars)))
 
-for (let [dir, pages] of Object.entries(pagesMap)) {
-  for (let [i, page] of pages.entries()) {
-    // layout 체이닝
-    while ("layout" in page) {
-      let {layout, ...vars} = page;
-      let t = undefined;
-
-      // liquid 템플릿 프론트메터 렌더링
-      let{frontmatter, content} = renderer.separate(fs.readFileSync(`${$_src}/_layout/${layout}.liquid`, "utf-8"));
-      t = renderer.liquid(frontmatter, vars).trim();
-      t = renderer.yaml(t);
-      Object.assign(vars, {...t, pagesMap});
-
-      // liquid 템플릿 콘텐츠 렌더링
-      t = renderer.liquid(content, vars).trim();
-      Object.assign(vars, {content: t});
-
-      page = vars;
+    // 콘텐츠 렌더링
+    content = (ext === ".md") ? renderer.md(content) : renderer.liquid(content, vars)
+    Object.assign(vars, {content})
+    
+    // layout 체이닝, layout 없다면 pagesMap 업데이트 후 브레이크
+    if ("layout" in vars) {
+      file = `${$_layout}/${layout}.liquid`
+    } else {
+      pagesMap[dir] ??= []
+      pagesMap[dir].push(vars)
+      break
     }
-
-    // 렌더링 결과 저장
-    let t = `${$_site}${page.permalink}`;
-    fs.outputFileSync(t.endsWith("/") ? `${t}index.html` : t, page.content);
   }
+
+
+
+  // // 파일경로 분해 결과를 변수로 하여, $global liquid 렌더링
+  // let {dir, name} = path.parse(mdFile)
+  // dir = dir.replace($_page, "") || "/"
+  // let vars = {dir, name}
+  // Object.assign(vars, JSON.parse(renderer.liquid(JSON.stringify($global), vars)))
+
+  // // 위 결과를 변수로 하여, 프론트매터 liquid 렌더링
+  // let {frontmatter, content} = renderer.separate(fs.readFileSync(mdFile, "utf-8").trim())
+  // Object.assign(vars, renderer.yaml(renderer.liquid(frontmatter)))
+
+  // // 콘텐츠 markdown 렌더링
+  // content = renderer.md(content).trim()
+  // Object.assign(vars, {content})
+
+  // // 프론트매터를 변수로 하여, 콘텐츠 liquid 렌더링 (layout 체이닝)
+  // while ("layout" in vars) {
+  //   let {layout, ...rest} = vars
+  //   vars = rest
+
+  //   let {frontmatter, content} = renderer.separate(fs.readFileSync(`${$_layout}/${layout}.liquid`, "utf-8").trim())
+  //   Objext.assign(vars, renderer.yaml(renderer.liquid(frontmatter)))
+  //   content = renderer.liquid(, vars)
+  // }
+
+  // // 프론트매터, 콘텐츠 렌더링 결과를 pagesMap 에 저장
+  // pagesMap[dir] ??= []
+  // pagesMap[dir].push(vars)
 }
 
-console.log(`==> 총 ${mdGlob.length}개 markdown 템플릿 렌더링 완료`);
-
-// scss 파일은 css 로 전환하고, /asset 폴더에 있는 모든 스태틱 파일을 복사
-const css = sass.compile(`${$_src}/asset/main.scss`, {style: "compressed"});
-fs.outputFileSync(`${$_site}/main.css`, css.css);
-
-fs.copySync(`${$_src}/asset`, `${$_site}/`, {filter: (src, _) => !src.includes("main.scss")});
-
-console.log(`==> 필요한 스태틱 파일들 복사 완료`);
-console.log(`==> 전체 사이트 빌드가 완료되었습니다.`);
+console.log(pagesMap)
