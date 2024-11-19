@@ -25,15 +25,34 @@ SPA 방식으로 작동, 요청한 주소에 매칭되는 웹페이지를 js 가
 index.js            # 빌드 시작 js 파일
 ```
 
-/_layout 폴더에 base.liquid, page.liquid 배치, page 는 로딩이 되는 웹페이지에 대한 html 골격을, base 는 page 부분까지 받아서 전체 index.html 골격을 완성시켜주는 템플릿 (템플릿 간 전달은 layout 체이닝 사용)
+/_layout 폴더에 base.liquid, page.liquid, dirpage.liquid, sitemap.liquid 배치
+
+base 는 index.html 을, page 는 로딩 웹페이지 html 완성을, dirpage 는 카테고리 페이지 html 을, sitemap 은 sitemap.xml 을 위한 템플릿
+
+필요한경우 layout 체이닝을 통해 템플릿 렌더링 후 다른 템플릿으로 전체 정보 전달
 
 /_page 내부의 markdown 들은 하위 폴더로 카테고리 구분 (즉 /_page/dev 폴더 안의 markdown 들은 /dev 라는 카테고리로 묶임)
 
 또한 markdown 파일명은 [라벨]파일명.md 형태, html 로 렌더링 된 뒤에는 /_site/page/카테고리/파일명.html 로 저장 (즉 대괄호에 둘러쌓인 라벨은 삭제), 라벨은 동일한 카테고리 내 파일들 간의 순서를 정할 때 용이
 
-/_page 에 카테고리를 지정하지 않는 index.md, 404.md, [라벨]카테고리.md 파일 필요, html 렌더링 된 뒤에는 /_site/page 폴더에 저장
+/_page 에 카테고리를 지정하지 않는 index.md, 404.md, [라벨]카테고리.md, sitemap.md 파일 필요, html 렌더링 된 뒤에는 /_site/page 폴더에 저장
 
 ## 빌드 순서
 
 - 빌드 순서
-> - 
+> - 전체 markdown 템플릿 순회
+> - 파일경로으로 디폴트 변수 liquid 렌더링
+> - 디폴트 변수로 markdown 프론트매터 렌더링
+> - 프론트매터를 변수로 markdown 콘텐츠 렌더링
+> - 렌더링 결과(html)을 pagesMap 오브젝트에 저장
+> - pagesMap 오브젝트 순회
+> - maarkdown 렌더링 결과에 있던 layout 정보를 변수로 다음 liquid 템플릿 연결
+> - 렌더링 결과 콘텐츠 부분을 제외하고 pagesMap 정보 업데이트
+> - pagesMap 및 디폴트를 변수로 base.liquid 렌더링하여 index.html 생성
+> - index.html 을 404.html 에 그대로 복사
+> - scss 파일을 css 로 전환
+> - /_asset 폴더 내용을 /_site 폴더로 복사
+
+## 향후 계획
+
+게시판 기능, 서치 기능, 페이지네아션...
