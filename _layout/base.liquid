@@ -1,5 +1,19 @@
 ---
+basemsg: "안녕들하시오!"
 ---
 
 <h1>base.liquid</h1>
+<!-- {{ basemsg }} -->
 {{ content }}
+
+
+<!-- 아래는 pagesMap 정보 -->
+{% for map in pagesMap %}
+  {% assign dir = map[0] %}
+  {% assign pages = map[1] %}
+  <ul id="{{ dir }}">
+    {% for page in pages %}
+      <li><a href="{{ page.permalink }}">{{ page.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endfor %}
