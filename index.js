@@ -11,11 +11,14 @@ const $_site = "./_site"
 const $_asset = "./_asset"
 const $global = {
   site: {
-    title: "어즐 블로그",
+    title: "EHzl blog",
+    footer: {
+      msg: "<div>Designed by EHzL,</div><div>built with Node.js,</div><div>and deployed on Github.</div>",
+    },
   },
   layout: "page",
   permalink: "/page/{{ name | remove_label }}/",
-  filepath: `${$_site}/{{ name | remove_label }}.html`, 
+  filepath: `${$_site}/page/{{ name | remove_label }}.html`, 
   content: "",
 }
 
@@ -45,7 +48,7 @@ console.log(`==> SPA 웹사이트 빌드 시작`)
  */
 {
   // 전체 markdown 템플릿 순회
-  const mdGlob = fg.globSync(`${$_page}/*.md`)
+  const mdGlob = fg.globSync(`${$_page}/**/*.md`)
   for (let mdFile of mdGlob) {
     let vars = {}
 

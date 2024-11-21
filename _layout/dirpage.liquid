@@ -1,6 +1,17 @@
 ---
 title: "{{ title }} 카테고리"
 description: "카테고리에 속한 포스팅들 리스트, Ctrl + F 로 검색하세요."
-updated: "{{ '' | today_to_string }}"
-permalink: "/cat/{{ name | remove_label }}"
 ---
+
+<ul>
+  {% for map in pagesMap %}
+    {% assign dir = map[0] %}
+    {% assign pages = map[1] %}
+    {% if reverse %}
+      {% assign pages = pages | reverse %}
+    {% endif %}
+    {% for page in pages %}
+      <li><a href="{{ page.permalink }}">{{ page.title }}</a>, Last updated: {{ page.updated }}</li>
+    {% endfor %}
+  {% endfor %}
+</ul>
