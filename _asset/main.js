@@ -30,14 +30,17 @@ $switchTheme.onclick = () => {
 }
 
 const $article = document.querySelector("article")
+
 let $permalinksMap = {}
-;(async () => {
+const getPermalinks = async () => {
   $permalinksMap = await (await fetch("/permalinksMap.json")).json()
-})()
+}
+getPermalinks()
 
 // 콘텐츠 fetch 함수
 const fetch_content = async () => {
   let permalink = window.location.pathname
+  if (!$permalinksMap || $permalinksMap == {}) await getPermalinks()
   let filepath = $permalinksMap[permalink] ?? $permalinksMap[permalink + "/"] ?? "/page/404.html"
   let res = await (await fetch(filepath)).text()
   console.log(filepath);
