@@ -29,6 +29,7 @@ $switchTheme.onclick = () => {
   toggleTheme(isOn)
 }
 
+// 웹사이트 오픈 시, $permalinksMap 로드
 const $article = document.querySelector("article")
 
 let $permalinksMap = {}
@@ -40,11 +41,11 @@ getPermalinks()
 // 콘텐츠 fetch 함수
 const fetch_content = async () => {
   let permalink = window.location.pathname
-  if (!$permalinksMap || $permalinksMap == {}) await getPermalinks()
-  let filepath = $permalinksMap[permalink] ?? $permalinksMap[permalink + "/"] ?? "/page/404.html"
-  let res = await (await fetch(filepath)).text()
+  if (JSON.stringify($permalinksMap) === "{}") await getPermalinks()
+  let filepath = $permalinksMap[permalink] ?? $permalinksMap[permalink + "/"] ?? "/page/404.json"
+  let res = await (await fetch(filepath)).json()
   console.log(filepath);
-  $article.innerHTML = res
+  $article.innerHTML = res.content
 }
 
 // 주소 직접 입력했을 경우

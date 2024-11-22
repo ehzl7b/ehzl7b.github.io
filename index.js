@@ -18,7 +18,7 @@ const $global = {
   },
   layout: "page",
   permalink: "/page/{{ name | remove_label }}/",
-  filepath: `${$_site}/page/{{ name | remove_label }}.html`, 
+  filepath: `${$_site}/page/{{ name | remove_label }}.json`, 
   content: "",
 }
 
@@ -76,6 +76,7 @@ console.log(`==> SPA 웹사이트 빌드 시작`)
   }
   
   console.log(`==> 전체 ${mdGlob.length} 개 웹페이지 소스 확인, markdown 렌더링 완료`)
+  // console.log(pagesMap)
 }
 
 
@@ -84,9 +85,9 @@ console.log(`==> SPA 웹사이트 빌드 시작`)
  * Step 2) 각 웹페이지 빌드 및 저장
  * 
  * pagesMap 오브젝트를 순회, pagesMap 오브젝트 정보 활용, layout 체이닝 통해
- * html 페이지 빌드하고 저장
+ * json 페이지 빌드하고 저장
  * 
- * 웹사이트가 permalink 에 따라, 매칭이 되는 html 페이지를 로드할 수 있도록
+ * 웹사이트가 permalink 에 따라, 매칭이 되는 json 페이지를 로드할 수 있도록
  * 매칭테이블에 해당하는 permalinksMap 오브젝트 생성하고 json 형식으로 저장
  * 
  * permalinksMap = {
@@ -119,7 +120,7 @@ console.log(`==> SPA 웹사이트 빌드 시작`)
           page = vars
         } else {
           // 현재까지 렌더링 결과 저장, permalinksMap 업데이트
-          fs.outputFileSync(vars.filepath, vars.content)
+          fs.outputJsonSync(vars.filepath, {content: vars.content})
           permalinksMap[vars.permalink] = vars.filepath.replace($_site, "")
 
           // layout 체이닝 종료
@@ -130,14 +131,14 @@ console.log(`==> SPA 웹사이트 빌드 시작`)
   }
 
   // permalinksMap 오브젝트, JSON 으로 변환 후 저장
-  fs.outputJSONSync(`${$_site}/permalinksMap.json`, permalinksMap)
+  fs.outputJsonSync(`${$_site}/permalinksMap.json`, permalinksMap)
 
   console.log(`==> 웹페이지별 html 빌드 완료`)
 }
 
 /**
  * 
- * Step 3) Index.html / 404.html 빌드, 기타 리소스 복사
+ * Step 3) Index.html / 404.html / sitemap.xml 빌드, 기타 리소스 복사
  * 
  * 메인 css, js 파일 이름은 main.css(main.scss 를 변환), main.js 로 고정,
  * 
@@ -149,12 +150,21 @@ console.log(`==> SPA 웹사이트 빌드 시작`)
   content = renderer.liquid(content, {...vars, pagesMap})
   fs.outputFileSync(`${$_site}/index.html`, content)
   fs.copySync(`${$_site}/index.html`, `${$_site}/404.html`)
-
+}
+{
+  // sitemap.liquid 렌더링 -> sitemap.xml 빌드
+  let {frontmatter, content} = renderer.separate(fs.readFileSync(`${$_layout}/sitemap.liquid`, "utf-8").trim())
+  let vars = renderer.yaml(renderer.liquid(frontmatter, $global))
+  content = renderer.liquid(content, {...vars, pagesMap})
+  fs.outputFileSync(`${$_site}/sitemap.xml`, content)
+}
+{
   // scss -> css 변환
   fs.ensureFileSync(`${$_asset}/main.scss`)
   const css = sass.compile(`${$_asset}/main.scss`, {style: "compressed"});
   fs.outputFileSync(`${$_site}/main.css`, css.css);
-
+}
+{
   // 나머지 파일들 복사
   fs.copySync(`${$_asset}/`, `${$_site}/`, {filter: (src, _) => !src.includes("main.scss")});
 
