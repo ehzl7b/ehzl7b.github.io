@@ -1,7 +1,7 @@
-import markdownIt from "markdown-it";
-import hljs from "highlight.js";
-import { Liquid } from "liquidjs";
-import yaml from "js-yaml";
+import markdownIt from "npm:markdown-it";
+import hljs from "npm:highlight.js";
+import { Liquid } from "npm:liquidjs";
+import yaml from "npm:js-yaml";
 
 hljs.registerLanguage("pseudo", (hljs) => {
   return {
