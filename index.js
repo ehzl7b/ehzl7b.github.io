@@ -3,6 +3,7 @@ import fs from "npm:fs-extra"
 import path from "node:path"
 import { renderer } from "./_lib/renderer.js"
 
+const $_layout = "./_layout"
 const $_page = "./_page"
 const global = {
   site: {
@@ -40,10 +41,11 @@ console.log(`==> 웹사이트 빌드 시작`)
 
     let {dir, name} = path.parse(file)
     dir = dir.replace($_page, "") || "/"
-    Object.assign(vars, JSON.parse(renderer.liquid(JSON.stringify(global), {dir, name})))
+    Object.assign(vars, {dir, name})
+    Object.assign(vars, JSON.parse(renderer.liquid(JSON.stringify(global), vars)))
 
     let {frontmatter, content} = renderer.separate(fs.readFileSync(file, "utf-8").trim())
-    Object.assign(vars, renderer.yaml(frontmatter))
+    Object.assign(vars, renderer.yaml(renderer.liquid(frontmatter, vars)))
     Object.assign(vars, {content: renderer.md(content)})
 
     pagesMap[dir] ??= []
@@ -55,10 +57,20 @@ console.log(`==> 웹사이트 빌드 시작`)
 
 /**
  * 
- * Step 2) pagesMap 순회 -> layout 체이닝에 따라 렌더링 -> content 제외 pagesMap 업데이트
+ * Step 2) pagesMap 순회 -> layout 체이닝에 따라 liquid 렌더링 -> pagesMap 업데이트
  */
 {
-  for (let [dir, pages] of Object.entries(pagesMap)) {
-    console.log(dir)
-  }
+  // for (let [dir, pages] of Object.entries(pagesMap)) {
+  //   for (let page of pages) {
+  //     while (layout !== undefined) {
+  //       let {layout, ...vars} = pages
+
+  //       let {frontmatter, content} = renderer.separate(fs.readFileSync(`${$_layout}/${layout}.liquid`, "utf-8").trim())
+  //       Object.assign(vars, renderer.yaml(renderer.liquid(frontmatter, vars)))
+  //       Object.assign(vars, {content: renderer.liquid(content, vars)})
+  //     }
+  //   }
+  // }
 }
+
+console.log(pagesMap["/_dir"][0])
