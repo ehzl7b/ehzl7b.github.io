@@ -19,7 +19,7 @@
             <div class="items">
               <h1 class="site-title">{{ site.title }}</h1>
               <div class="item"><a href="/">🏠Home</a></div>
-              {% for dir in pagesMap["/_dir"] %}
+              {% for dir in pagesMap["/_dir/"] %}
                 <div class="item"><a href="{{ dir.permalink }}">{{ dir.icon }}{{ dir.title }}</a></div>
               {% endfor %}
             </div>

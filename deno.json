@@ -3,6 +3,12 @@
     "dev": "deno run --watch main.ts"
   },
   "imports": {
-    "@std/assert": "jsr:@std/assert@1"
+    "@std/assert": "jsr:@std/assert@1",
+    "markdown-it": "npm:markdown-it",
+    "highlight.js": "npm:highlight.js",
+    "liquidjs": "npm:liquidjs",
+    "js-yaml": "npm:js-yaml",
+    "fs-extra": "npm:fs-extra",
+    "fast-glob": "npm:fast-glob"
   }
 }

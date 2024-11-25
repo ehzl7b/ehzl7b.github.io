@@ -177,7 +177,13 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@std/assert@1"
+      "jsr:@std/assert@1",
+      "npm:fast-glob@*",
+      "npm:fs-extra@*",
+      "npm:highlight.js@*",
+      "npm:js-yaml@*",
+      "npm:liquidjs@*",
+      "npm:markdown-it@*"
     ]
   }
 }
