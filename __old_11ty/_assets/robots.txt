@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://ehzl7b.github.io/sitemap.xml

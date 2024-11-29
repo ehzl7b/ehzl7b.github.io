@@ -1,1 +1,0 @@
-export default "/page/{{ page.fileSlug | my_filter }}/";
