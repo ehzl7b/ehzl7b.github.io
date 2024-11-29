@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "denoland.vscode-deno",
+    "shopify.theme-check-vscode",
+    "ritwickdey.liveserver",
+    "ms-ceintl.vscode-language-pack-ko"
+  ]
+}
