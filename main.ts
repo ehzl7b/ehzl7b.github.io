@@ -18,7 +18,11 @@ const vars = {
   permalink: "/page/{{ name | remove_label }}",
   content: "",
 }
-const pagesMap = {}
+
+type PagesMap = {
+  [key: string]: object[]
+}
+const pagesMap: PagesMap = {}
 
 console.log(`==> 빌드 시작`)
 /**
@@ -37,6 +41,11 @@ console.log(`==> 빌드 시작`)
   for (let f of mdFiles) {
     const {dir, name} = path.parse(f)
     Object.assign(vars, renderer.yaml(renderer.liquid(JSON.stringify(vars), {dir, name})))
+
+    const {frontmatter, content} = renderer.separate(fs.readFileSync(f, "utf-8"))
+    Object.assign(vars, renderer.yaml(renderer.liquid(frontmatter, vars).trim()))
+    Object.assign(vars, {content: renderer.md(content).trim()})
+    // Object.assign(vars, {content: renderer.liquid(renderer.md(content), vars).trim()})
 
     pagesMap[dir] ??= []
     pagesMap[dir].push(vars)

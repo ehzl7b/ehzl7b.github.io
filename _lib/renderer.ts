@@ -13,6 +13,8 @@ const md = new MarkdownIt({
     const language = hljs.getLanguage(lang) ? lang : "plaintext"
 
     const h = new Map()
+    console.log(code)
+    console.log(code.split("\n"))
     code = code.split("\n").map((x, i) => {
       if (x.match(/\s*\/[+=-]$/)) {
         h.set(i, x.at(-1))
@@ -21,6 +23,8 @@ const md = new MarkdownIt({
         return x
       }
     }).join("\n")
+
+    // code = "{% raw %}" + code + "{% endraw %}"
 
     return hljs.highlight(code, {language}).value.split("\n").map((x, i) => {
       return `<span class="line ${h.has(i) ? h.get(i) : ""}">${x}</span>`
