@@ -13,9 +13,7 @@ const md = new MarkdownIt({
     const language = hljs.getLanguage(lang) ? lang : "plaintext"
 
     const h = new Map()
-    console.log(code)
-    console.log(code.split("\n"))
-    code = code.split("\n").map((x, i) => {
+    code = code.trim().split("\n").map((x, i) => {
       if (x.match(/\s*\/[+=-]$/)) {
         h.set(i, x.at(-1))
         return x.replace(/\s*\/[+=-]$/, "")
@@ -24,11 +22,10 @@ const md = new MarkdownIt({
       }
     }).join("\n")
 
-    // code = "{% raw %}" + code + "{% endraw %}"
-
-    return hljs.highlight(code, {language}).value.split("\n").map((x, i) => {
+    // pre 태그에서는 liquid 가 파싱안하도록 함 (있을지 모르는 더블 중괄호로 인한 에러 방지)
+    return "{% raw %}" + hljs.highlight(code, {language}).value.split("\n").map((x, i) => {
       return `<span class="line ${h.has(i) ? h.get(i) : ""}">${x}</span>`
-    }).join("\n")
+    }).join("\n") + "{% endraw %}"
   },
 })
 
