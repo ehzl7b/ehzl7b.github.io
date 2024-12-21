@@ -4,7 +4,7 @@ title: "{{ title }} 카테고리"
 description: "{{ title }} 카테고리에 속한 페이지들입니다. <code>ctfl + F</code> 로 검색하세요."
 ---
 
-{% assign pages = pagesMap[cat] %}
+{% assign pages = pagesMap[dir] %}
 {% if reverse %} {% assign pages = pages | reverse %} {% endif %}
 <ul>
   {% for page in pages %}

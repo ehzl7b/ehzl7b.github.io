@@ -72,22 +72,21 @@ console.log(`==> 빌드 시작`);
       site,
       pagesMap,   // 렌더링 된 $_page md 정보
       layout: "dir",
-      cat: "{{ name | remove_label }}",
-      permalink: "/cat/{{ name | remove_label }}",
-      filepath: `${$_site}/cat/{{ name | remove_label }}.json`,
+      dir: "{{ name | remove_label }}",
+      permalink: "/dir/{{ name | remove_label }}",
+      filepath: `${$_site}/dir/{{ name | remove_label }}.json`,
       content: "",
     };
 
     let {name} = path.parse(f);
-    let dir = "_dir";
-    Object.assign(vars, renderer.yaml(renderer.liquid(JSON.stringify(vars), {dir, name})));
+    Object.assign(vars, renderer.yaml(renderer.liquid(JSON.stringify(vars), {name})));
 
     const {frontmatter, content} = renderer.separate(fs.readFileSync(f, "utf-8"));
     Object.assign(vars, renderer.yaml(renderer.liquid(frontmatter, vars).trim()));
     // Object.assign(vars, {content: renderer.md(content).trim()});    // $_dir md 는 content 부분 무시
 
-    pagesMap[dir] ??= [];
-    pagesMap[dir].push(vars);
+    pagesMap["_dir"] ??= [];
+    pagesMap["_dir"].push(vars);
   }
 
   console.log(`==> ${mdFiles.length}개 카테고리 페이지 렌더링 완료`);
@@ -140,9 +139,20 @@ console.log(`==> 빌드 시작`);
 
   // 404.html 생성
   fs.copySync(vars.filepath, vars.filepath_404);
+}
+{
+  let vars = {
+    site,
+    pagesMap,   // 렌더링 된 $_page, $_dir md 정보
+    layout: "sitemap",
+    filepath: `${$_site}/sitemap.xml`,
+    content: "",
+  };
 
   // sitemap.xml 생성
-  Object.assign(vars, {layout: "sitemap", content: "", filepath: `${$_site}/sitemap.xml`});
+  const {frontmatter, content} = renderer.separate(fs.readFileSync(`${$_layout}/${vars.layout}.liquid`, "utf-8"));
+  Object.assign(vars, renderer.yaml(renderer.liquid(frontmatter, vars).trim()));
+  Object.assign(vars, {content: renderer.liquid(content, vars).trim()});
   fs.outputFileSync(vars.filepath, vars.content);
 
   console.log("==> 블로그 외형 html 파일 및 사이트맵 생성 완료");
