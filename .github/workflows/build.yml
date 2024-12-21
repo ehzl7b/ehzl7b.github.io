@@ -1,0 +1,29 @@
+name: build
+# on: workflow_dispatch
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout build library in main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: '.'
+      - uses: actions/setup-deno@v2
+        with:
+          node-version: v2.x
+      - run: deno run -A main.js
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: './_site'
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
+        
