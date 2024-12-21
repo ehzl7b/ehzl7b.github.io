@@ -1,6 +1,57 @@
 ---
-title: "Base.liquid"
 ---
 
-<h1>{{ title }} 템플릿</h1>
-{{ content }}
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" class="preload">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}::{{ site.title }}</title>
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/d2coding@1.3.2/d2coding-full.min.css"> {% endcomment %}
+    <link rel="stylesheet" href="/main.css">
+    <script src="/main.js" defer></script>
+  </head>
+  <body>
+    <div class="layout">
+      <div class="header-wrap">
+        <div class="container">
+          <header>
+            <div class="items">
+              <h1 class="site-title">{{ site.title }} ::</h1>
+              <div class="item"><a href="/">🏠Home</a></div>
+              {% for dir in pagesMap["_dir"] %}
+                <div class="item"><a href="{{ dir.permalink }}">{{ dir.icon }}{{ dir.title }}</a></div>
+              {% endfor %}
+            </div>
+            <div class="switches">
+              <label class="switch-theme">
+                <div class="left">🌞</div>
+                <div class="center">
+                  <div class="bar">
+                    <div class="btn"></div>
+                  </div>
+                </div>
+                <div class="right">🌚</div>
+              </label>
+            </div>
+          </header>
+        </div>
+      </div>
+      <div class="article-wrap">
+        <div class="container">
+          <article>
+            {{ content }}
+          </article>
+        </div>
+      </div>
+      <div class="footer-wrap">
+        <div class="container">
+          <footer>
+            <div class="msg">{{ site.footer.msg }}</div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

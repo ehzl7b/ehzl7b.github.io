@@ -1,0 +1,15 @@
+{
+  "tasks": {
+    "dev": "deno run --watch main.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "fs-extra": "npm:fs-extra",
+    "fast-glob": "npm:fast-glob",
+    "sass": "npm:sass",
+    "markdown-it": "npm:markdown-it",
+    "highlight.js": "npm:highlight.js",
+    "js-yaml": "npm:js-yaml",
+    "liquidjs": "npm:liquidjs"
+  }
+}

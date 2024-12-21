@@ -2,5 +2,7 @@
   "editor.tabSize": 2,
   "editor.fontFamily": "D2Coding, Consolas, 'Courier New', monospace",
   "workbench.colorTheme": "Default Dark Modern",
-  "workbench.preferredDarkColorTheme": "Default Dark Modern"
+  "workbench.preferredDarkColorTheme": "Default Dark Modern",
+  "liveServer.settings.root": "/_site",
+  "liveServer.settings.file": "404.html"
 }
