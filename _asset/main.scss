@@ -88,10 +88,10 @@ b, strong {
   display: flex; align-items: center; justify-content: space-between;
   
   .items {
-    display: flex; gap: 1rem; flex-wrap: wrap;
+    display: flex; column-gap: 1rem; flex-wrap: wrap;
   }
   .switches {
-    display: flex; gap: 1rem; flex-wrap: wrap;
+    display: flex; column-gap: 1rem; flex-wrap: wrap;
   }
 }
 
