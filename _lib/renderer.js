@@ -21,6 +21,8 @@ const md = new MarkdownIt({
         return x;
       }
     }).join("\n");
+
+    return code;
   },
 });
 

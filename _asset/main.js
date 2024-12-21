@@ -1,5 +1,6 @@
 const $html = document.documentElement;
 const $switchTheme = document.querySelector("label.switch-theme");
+const $article = document.querySelector("article");
 
 // 페이지 오픈 직후, 자동 애니메이션/트랜지션 방지
 window.onload = () => {
@@ -27,4 +28,41 @@ toggleTheme(isOn);
 $switchTheme.onclick = () => {
   isOn = !isOn;
   toggleTheme(isOn);
+};
+
+// SPA 코드
+async function fetch_content() {
+  let cur_pathname = window.location.pathname;
+  if (cur_pathname === "/") cur_pathname = "/page/index";
+  let tar_pathname = cur_pathname + ".json";
+
+  let res;
+  try {
+    res = await (await fetch(tar_pathname)).json();
+  } catch(e) {
+    res = await (await fetch("/page/404.json")).json();
+  }
+
+  $article.innerHTML = res.content;
+}
+
+// 주소 직접입력
+fetch_content();
+
+// 브라우저 전/후 이동버튼 클릭
+window.onpopstate = () => fetch_content();
+
+// 링크 클릭
+document.body.onclick = (e) => {
+  // SPA 작동 조건
+  let t = e.target;
+  if (t.matches("a") && t.href.startsWith(window.location.origin) && !t.href.match(/[.#]/)) {
+    e.preventDefault();
+
+    // 현재의 주소와 동일하지 않을때 작동
+    if (t.href !== window.location.href) {
+      history.pushState(null, null, t.href);
+      fetch_content();
+    }
+  }
 };
