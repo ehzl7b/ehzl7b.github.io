@@ -22,6 +22,10 @@ const md = new MarkdownIt({
       }
     }).join("\n");
 
+    code = hljs.highlight(code, {language}).value.split("\n").map((x, i) => {
+      return `<span class="line${h.has(i) ? " "+h.get(i) : ""}">${x}</span>`;
+    }).join("\n");
+
     return code;
   },
 });

@@ -21,13 +21,16 @@ $container-max-width: 900px;
 :root {
   --fg-main: var(--neutral-900); --fg-sub: var(--neutral-600); --fg-a: var(--blue-600); --fg-b: var(--red-600);
   --bg-main: var(--neutral-100); --bg-sub: var(--neutral-200); --bg-box: var(--neutral-200); --bg-box-border: var(--neutral-400);
+  --bg-equal: var(--cyan-200); --bg-plus: var(--green-200); --bg-minus: var(--red-200);
   
   &[data-theme="dark"] {
     --fg-main: var(--neutral-100); --fg-sub: var(--neutral-200); --fg-a: var(--blue-300); --fg-b: var(--red-300);
     --bg-main: var(--neutral-900); --bg-sub: var(--neutral-600); --bg-box: var(--neutral-600); --bg-box-border: var(--neutral-400);
+    --bg-equal: var(--cyan-900); --bg-plus: var(--green-900); --bg-minus: var(--red-900);
   }
-    .hljs-leadline, .hljs-keyword, .hljs-built_in {font-weight: 700; color: var(--fg-a);}
-    .hljs-comment {color: var(--fg-sub);}
+
+  .hljs-leadline, .hljs-keyword, .hljs-built_in {font-weight: 700; color: var(--fg-a);}
+  .hljs-comment {color: var(--fg-sub);}
 }
 
 // globals
@@ -140,46 +143,75 @@ label.switch-theme {
     }
   }
   h2 {
-      margin: 3rem 0 1.5rem 0;
-      font-size: 2rem;
-      
-      &:before {
-          content: "🟧"; font-size: 0.8rem; height: 2rem; width: 2rem; vertical-align: middle; display: inline-flex; align-items: center; justify-content: center;
-      }
+    margin: 3rem 0 1.5rem 0;
+    font-size: 2rem;
+    
+    &:before {
+        content: "🟧"; font-size: 0.8rem; height: 2rem; width: 2rem; vertical-align: middle; display: inline-flex; align-items: center; justify-content: center;
+    }
   }
   p, ul {
-      margin: 1.5rem 0;
+    margin: 1.5rem 0;
   }
   & > ul {
-      margin-bottom: -1.5rem;
-      
-      li {
-          margin-left: 1rem;
+    margin-bottom: -1.5rem;
+    
+    li {
+      margin-left: 1rem;
 
-          &:before {
-              content: "🟣"; font-size: 0.4rem; height: 1rem; width: 1rem; margin-left: -1rem; vertical-align: middle; display: inline-flex; align-items: center; justify-content: center;
-          }
+      &:before {
+          content: "🟣"; font-size: 0.4rem; height: 1rem; width: 1rem; margin-left: -1rem; vertical-align: middle; display: inline-flex; align-items: center; justify-content: center;
       }
+    }
   }
   & > blockquote, & > pre {
-      position: relative; padding: 0.5rem; margin: 1.5rem 0;
-      font-size: 0.9rem;
-      background: var(--bg-box); border-radius: 0.25rem; box-shadow: 3px 3px 3px var(--bg-box-border);
+    position: relative; padding: 0.5rem; margin: 1.5rem 0;
+    font-size: 0.9rem;
+    background: var(--bg-box); border-radius: 0.25rem; box-shadow: 3px 3px 3px var(--bg-box-border);
+    
+    & > p, & > ul {
+      display: block; margin: 0; padding: 0;
       
-      & > p, & > ul, & > code {
-          display: block; margin: 0; padding: 0;
-          
-          li {
-              margin-left: 0.8rem;
+      li {
+        margin-left: 0.8rem;
 
-              &:before {
-                  content: "🟣"; font-size: 0.3rem; height: 0.8rem; width: 0.8rem; margin-left: -0.8rem; vertical-align: middle; display: inline-flex; align-items: center; justify-content: center;
-              }
-          }
+        &:before {
+            content: "🟣"; font-size: 0.3rem; height: 0.8rem; width: 0.8rem; margin-left: -0.8rem; vertical-align: middle; display: inline-flex; align-items: center; justify-content: center;
+        }
       }
+    }
   }
   pre {
-      overflow-x: auto;
+    overflow-x: auto;
+    & > code {
+      display: block; margin: 0; padding: 0; width: fit-content; min-width: 100%;
+      & > span.line {
+        position: relative; display: inline-block; width: 100%;
+      }
+      .\=, .\+, .\- {
+        &:before {
+          position: absolute; left: -0.5rem; width: 0.5rem; display: inline-block;
+        }
+        &:after {
+          position: absolute; right: -0.5rem; width: 0.5rem; display: inline-block;
+        }
+      }
+      span.\= {
+        background: var(--bg-equal);
+        &:before { content: " "; background: var(--bg-equal); }
+        &:after { content: " "; background: var(--bg-equal); }
+      }
+      span.\+ {
+        background: var(--bg-plus);
+        &:before { content: "+"; background: var(--bg-plus); }
+        &:after { content: " "; background: var(--bg-plus); }
+      }
+      span.\- {
+        background: var(--bg-minus);
+        &:before { content: "-"; background: var(--bg-minus); }
+        &:after { content: " "; background: var(--bg-minus); }
+      }
+    }
   }
   em {
       margin-top: -1.2rem;
@@ -197,6 +229,6 @@ label.switch-theme {
   position: relative; padding: 1rem 0.5rem;
   
   .msg {
-    display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap;
+    display: flex; justify-content: center; column-gap: 0.5rem; flex-wrap: wrap;
   }
 }
