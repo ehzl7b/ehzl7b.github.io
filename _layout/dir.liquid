@@ -1,9 +1,12 @@
 ---
-layout: "page"
 title: "{{ title }} 카테고리"
-description: "{{ title }} 카테고리에 속한 페이지들입니다. <code>ctfl + F</code> 로 검색하세요."
+description: "{{ title }} 카테고리에 속한 페이지들, <code>ctfl + F</code> 로 검색"
+updated: "{{ "" | today }}"
 ---
 
+<h1 class="page-title">{{ title }}</h1>
+<div class="meta description">{{ description }}</div>
+<div class="meta updated">Last updated: {{ updated }}</div>
 {% assign pages = pagesMap[dir] %}
 {% if reverse %} {% assign pages = pages | reverse %} {% endif %}
 <ul>
