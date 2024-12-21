@@ -10,9 +10,9 @@ updated: "2024-12-21"
 
 허접하지만 [Deno](https://deno.com/) 를 사용하여, [SPA](https://ko.wikipedia.org/wiki/%EC%8B%B1%EA%B8%80_%ED%8E%98%EC%9D%B4%EC%A7%80_%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98) 로 작동하는 사이트를 제작하는 빌더를 만들어서 블로그를 구축했다.
 
-## About Me
+## About 어즐
 
-40대 게이른 배불뚝이 아재... 모 그룹 기획부서에서 일하고 있다. 제법 잘 버티는중(?) 이라 생각한다. 목표는 정년 !
+어즐이는 40대 게이른 배불뚝이 아재... 모 그룹 기획부서에서 일하고 있다. 제법 잘 버티는중(?) 이라 생각한다. 목표는 정년!
 
 ## About 블로그
 
@@ -24,8 +24,7 @@ updated: "2024-12-21"
 
 - welcome.js
 ```js
-function greeting(name) {
-  // 주석입니다. /=
+function welcome(name) {
   console.log(`안녕? ${name}, 이제 블로그를 시작해볼게`); /-
   console.log(`안녕하세요 ${name}님, 이제 블로그를 시작합니다.`); /+
 }

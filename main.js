@@ -23,9 +23,9 @@ const $_dir = "./_dir";
 const pagesMap = {};
 
 const site = {
-  title: "EHzL 블로그",
+  title: "어즐 블로그",
   footer: {
-    msg: "<div>Designed by EHzL,</div><div>Built with Deno,</div><div>Deployed on Github.</div>",
+    msg: "<div>Designed by 어즐,</div><div>Built with Deno,</div><div>Deployed on Github.</div>",
   },
 };
 
