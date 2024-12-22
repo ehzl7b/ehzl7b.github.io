@@ -37,10 +37,8 @@ n = 1 일 때, 계단을 오르는 방법 개수는 1 개 뿐이다. n = 2 이�
 ```rust
 impl Solution {
     pub fn climb_stairs(n: i32) -> i32 {
-        let mut a = Vec::<i32>::new();
         let t = if n < 3 { 3 } else { (n + 1) as usize };
-        a.resize(t, 0);
-
+        let mut a = vec![0; t];
         a[1] = 1;
         a[2] = 2;
 
