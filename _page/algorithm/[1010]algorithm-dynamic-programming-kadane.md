@@ -20,7 +20,7 @@ updated: "2024-12-22"
 
 인덱스 n-1 까지의 최대 부분합이 f(n-1) 이므로, 여기에 A[n] 을 더한 값이 최대부분합인지, 아니면 A[n] 단독만으로 최대부분합이 되는지를 판별하는 셈이다.
 
-## leetcode:
+## leetcode: 53. Maximum Subarray
 
 [https://leetcode.com/problems/maximum-subarray/](https://leetcode.com/problems/maximum-subarray/)
 
