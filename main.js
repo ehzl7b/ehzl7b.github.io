@@ -37,7 +37,7 @@ console.log(`==> 빌드 시작`);
  * Step 1) $_page md -> html, pagesMap 오브젝트 생성
  */
 {
-  const mdFiles = fg.globSync(`${$_page}/**/*.md`);
+  const mdFiles = fg.globSync(`${$_page}/**/*.md`).sort();
   for (const f of mdFiles) {
     let vars = {
       site,
@@ -66,7 +66,7 @@ console.log(`==> 빌드 시작`);
  * Step 2) $_dir md -> html, pagesMap 오브젝트 업데이트
  */
 {
-  const mdFiles = fg.globSync(`${$_dir}/**/*.md`);
+  const mdFiles = fg.globSync(`${$_dir}/**/*.md`).sort();
   for (const f of mdFiles) {
     let vars = {
       site,
