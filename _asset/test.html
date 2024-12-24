@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+    <head>
+        <meta chrset='utf-8'/>
+        <title>카카오 맵 아이콘 마킹</title>
+    </head>
+    <body>
+        <div id='desc'></div>
+        <div id='control'></div>
+        <div id='map' style='width:1200px;height:900px;'></div>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+        <script src='https://dapi.kakao.com/v2/maps/sdk.js?appkey=89cf61a1e587854ed6a36c62e754a725'></script>
+        <script>
+
+'use strict';
+
+var items = [
+///////////////////////////////////////////////////////////
+
+[ 'FO일산\n월매출: 0', 37.6931897222796, 126.813434594604, 'FO센터', 0 ],
+[ 'FO동서울\n월매출: 0', 37.7245486776568, 127.203837868357, 'FO센터', 0 ],
+[ 'FO양주\n월매출: 0', 37.8745458698723, 127.010045364117, 'FO센터', 0 ],
+[ 'FO강남\n월매출: 0', 37.3366947773704, 127.100191418641, 'FO센터', 0 ],
+[ 'FO춘천\n월매출: 0', 37.8477029216148, 127.731534694592, 'FO센터', 0 ],
+[ 'FO하남\n월매출: 0', 37.5172355733243, 127.173226784727, 'FO센터', 0 ],
+[ 'FO판교\n월매출: 0', 37.4339581912179, 127.124185790589, 'FO센터', 0 ],
+[ 'FO원주\n월매출: 0', 37.3083368975482, 127.952805085859, 'FO센터', 0 ],
+[ 'FO평택\n월매출: 0', 37.0701501994115, 127.019856778481, 'FO센터', 0 ],
+[ 'FO남서울\n월매출: 0', 37.4085681921033, 126.891226071967, 'FO센터', 0 ],
+[ 'FO중부\n월매출: 0', 36.4310642519549, 127.388237486741, 'FO센터', 0 ],
+
+///////////////////////////////////////////////////////////
+];
+// global setting
+$('#desc').html('카카오 지도 아이콘 마킹 툴')
+const icon100 = 8; const icon500 = 13; const icon9999 = 18;             // 아이콘 크기
+const icon_size_multiple = 3;
+
+// 엑셀 구분자에서 설정한 tag(구분자)들과 tag별 지정색상 (투명도는 50%)
+const colors = {
+  '경기광주-오프라인(17.6억)': 'rgba(192,0,0,0.5)',
+  '경기광주-온라인직배송(11.5억)': 'rgba(0,192,0,0.5)',
+  '경인-오프라인(3.1억)': 'rgba(192,0,0,0.5)',
+  '경인-온라인직배송(13.2억)': 'rgba(0,192,0,0.5)',
+  '남양주-오프라인(3.7억)': 'rgba(192,0,0,0.5)',
+  '남양주-온라인직배송(12.3억)': 'rgba(0,192,0,0.5)',
+  '대전-오프라인(11.2억)': 'rgba(192,0,0,0.5)',
+}
+
+// tag에 따라 마커 이미지 생성하는 함수
+function marker_image(tag) {
+  let color = colors[tag] || 'rgba(0,0,0,0.5)';
+  return 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='16' height='16'><ellipse ry='50' rx='50' cy='50' cx='50' stroke-width='0' stroke='#000' fill='` + color + `'/></svg>`);
+}
+
+// Controler
+let html = ''
+for (let tag of Object.keys(colors)) {
+  html += `<label style='margin-right: 64px;'><input type='checkbox' id='${tag}' checked />`
+  html += `<img src="${marker_image(tag)}" /> ${tag}</label>`
+}
+$('#control').html(html)
+
+// 지도 object 생성
+const map = new kakao.maps.Map($('#map')[0], {
+  center: new kakao.maps.LatLng(items[0][1], items[0][2]),
+  level: 10,
+})
+
+// 지도 흐리게 만들기 (흐린 타일셋 덧씌우기)
+kakao.maps.Tileset.add('TILE', new kakao.maps.Tileset({
+  width: 1200,
+  height: 900,
+  getTile: function(x, y, z) {
+    let div = document.createElement('div')
+    div.innerHTML = ''
+    div.style.backgroundColor = 'rgba(255,255,255,0.3)'
+    return div
+  }
+}))
+map.addOverlayMapTypeId(kakao.maps.MapTypeId.TILE)
+
+// markers object 생성, tag 별로 저장
+const markers = {}
+for (let [title, lat, lng, tag, size] of items) {
+  if (markers[tag] === undefined) {
+    markers [tag] = []
+  }
+
+  let icon_size = (size < 1) ? icon100 : ((size < 5) ? icon500 : icon9999)
+  markers[tag].push(
+    new kakao.maps.Marker({
+      map: map,
+      title: title,
+      position: new kakao.maps.LatLng(lat, lng),
+      image: new kakao.maps.MarkerImage(marker_image(tag), new kakao.maps.Size(icon_size, icon_size)),
+    })
+  )
+}
+console.log (markers)
+
+// marker 토글 이벤트
+$('label >input').click(e => {
+  let tag = e.target.getAttribute('id')
+  for (let x of markers[tag]) {
+    x.setMap((e.target.checked) ? map : null)
+  }
+})
+
+        </script>
+    </body>
+</html>
+
