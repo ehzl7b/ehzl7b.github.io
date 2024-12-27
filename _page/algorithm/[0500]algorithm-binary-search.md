@@ -32,22 +32,20 @@ updated: "2024-12-21"
 
 이진 탐색을 이용하여, target 의 위치를 찾을 수 있다.
 
-- rust
-```rust
-impl Solution {
-    pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
-        let mut i = 0_usize;
-        let mut j = nums.len();
+- javascript
+```js
+let searchInsert = (nums, target) => {
+  let [i, j] = [0, nums.length];
 
-        while i < j {
-            let m = i + (j-i) / 2;
-            match nums[m] < target {
-                true => { i = m + 1; },
-                false => { j = m; },
-            }
-        }
-
-        return i as i32;
+  while (i < j) {
+    let m = i + (j-i)/2 | 0;
+    if (nums[m] < target) {
+      i = m+1;
+    } else {
+      j = m;
     }
-}
+  }
+
+  return i;
+};
 ```

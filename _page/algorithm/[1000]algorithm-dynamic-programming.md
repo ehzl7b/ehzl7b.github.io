@@ -33,77 +33,65 @@ n = 1 일 때, 계단을 오르는 방법 개수는 1 개 뿐이다. n = 2 이�
 
 그럼 일반항은? n 개의 계단을 오른다고 하면, n - 2 개의 계단을 오른 뒤 마지막 두계단을 한번에 오르는 방법과, n - 1 개의 계단을 오른 뒤 마지막 한계단을 오르는 방법이 있다. 즉 f(n) = f(n-2) + f(n-1) 인 셈이다.
 
-- rust, iterative DP
-```rust
-impl Solution {
-    pub fn climb_stairs(n: i32) -> i32 {
-        let t = if n < 3 { 3 } else { (n + 1) as usize };
-        let mut a = vec![0; t];
-        a[1] = 1;
-        a[2] = 2;
+- javascript, iterative DP
+```js
+let climbStairs = (n) => {
+  let a = Array((n < 3) ? 3 : n+1).fill(0);
+  a[1] = 1;
+  a[2] = 2;
 
-        for i in 3..=(n as usize) {
-            a[i] = a[i-2] + a[i-1];
-        }
+  for (let i = 3; i <= n; i++) {
+    a[i] = a[i-2] + a[i-1];
+  }
 
-        return a[n as usize];
-    }
-}
+  return a[n];
+};
 ```
 
-최소 인덱스 2 이상 가능한 a 벡터를 생성하고, a 벡터에 초기값을 지정한 뒤, 반복을 통해 a[n] 을 계산하는 방식이다.
+최소 인덱스 2 이상 가능한 a 배열을 생성하고, a 배열에 초기값을 지정한 뒤, 반복을 통해 a[n] 을 계산하는 방식이다.
 
-- rust, interative DP 2
-```rust
-impl Solution {
-    pub fn climb_stairs(n: i32) -> i32 {
-        let (mut a, mut b) = (1, 2);
+- javascript, iterative DP 2
+```js
+let climbStairs = (n) => {
+  let [a, b] = [1, 2];
 
-        for _ in 2..=n {
-            (a, b) = (b, a+b);
-        }
+  for (let i = 2; i <= n; i++) {
+    [a, b] = [b, a+b];
+  }
 
-        return a;
-    }
-}
+  return a;
+};
 ```
 
-굳이 a 저장소를 크게 만들 필요가 없이, 일반항 반복 계산의 최종 결과만 리턴하면 되므로, a, b 변수 두개만 사용한 방법이다.
+일반항 반복 계산의 최종 결과만 리턴하면 되므로, 굳이 저장소를 크게 확보할 필요가 없이 a, b 변수 두개만 사용한 방법이다.
 
-- rust, recursive
-```rust
-fn f(n: i32) -> i32 {
-    return if n < 3 { n } else { f(n-2) + f(n-1) };
-}
+- javascript, recursive DP
+```js
+let f = (n) => (n < 3) ? n : f(n-2) + f(n-1);
 
-impl Solution {
-    pub fn climb_stairs(n: i32) -> i32 {
-        return f(n);
-    }
-}
+let climbStairs = (n) => f(n);
 ```
 
 위 방법은 Time Limit 초과로 문제를 통과할 수 없다. 예를들어 f(45) 를 구한다고하면 f(43) + f(44) 를 구하게 된다, f(43) 을 먼저 구했다고 해보자. 이제 f(44) 를 구해야 하는데, f(44) 는 f(42) + f(43) 이므로, 이미 앞에서 구한 f(43) 을 또 구해야 한다. O(2^n) 이라는 어마어마한 시간복잡도를 가진다.
 
 아래와 같이 한번 구한 값을 저장해두고, 이를 활용하는 방식으로 해결 할 수 있다. 이른바 memoization 기법이다.
 
-- rust, recursive with memoization
-```rust
-use std::collections::HashMap;
+- javascript, recursive DP with memoization
+```js
+let f = (n) => (n < 3) ? n : f(n-2) + f(n-1);
 
-fn f(n: i32, h: &mut HashMap<i32, i32>) -> i32 {
-    if !h.contains_key(&n) {
-        let t = if n < 3 { n } else { f(n-2, h) + f(n-1, h) };
-        h.insert(n, t);
-    }
-    return *h.get(&n).unwrap();
-}
+let memoize = (f) => {
+  let h = new Map();
+  return (n) => {
+    if (!h.has(n)) h.set(n, f(n));
+    return h.get(n);
+  };
+};
 
-impl Solution {
-    pub fn climb_stairs(n: i32) -> i32 {
-        return f(n, &mut HashMap::new());
-    }
-}
+let climbStairs = (n) => {
+  f = memoize(f);
+  return f(n);
+};
 ```
 
-저장소 h 를 준비하고, 재귀호출 할 때 저장소 레퍼런스를 같이 넘긴다. 재귀함수 안에서는 저장소에서 f(n) 값이 먼저 있는지를 살펴서, 없다면 값을 구해서 저장소에 저장하는 구조다.
+memoize 함수는, f 함수를 받아서 저장소 h 를 우선 검색하여, 없다면 값을 재귀호출로 계산하고, 있다면 그 결과를 리턴하는 구조로 되어있다.

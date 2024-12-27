@@ -16,27 +16,21 @@ updated: "2024-12-22"
 
 주어진 nums 배열에서, 연속된 요소들로 이뤄진 부분합들 중 최대 부분합을 구하는 문제다.
 
-- rust
-```rust
-use std::cmp::max;
+- javascript
+```js
+let dac = (nums) => {
+  if (nums.length === 1) return [nums[0], nums[0], nums[0], nums[0]];
 
-fn dac(ns: &[i32]) -> (i32, i32, i32, i32) {
-    if ns.len() == 1 {
-        return (ns[0], ns[0], ns[0], ns[0]);
-    }
+  let m = nums.length / 2 | 0;
+  let [al, am, ar, at] = dac(nums.slice(0, m));
+  let [bl, bm, br, bt] = dac(nums.slice(m));
 
-    let m = ns.len() / 2;
-    let (al, am, ar, at) = dac(&ns[..m]);
-    let (bl, bm, br, bt) = dac(&ns[m..]);
+  return [Math.max(al, at+bl), Math.max(am, ar+bl, bm), Math.max(ar+bt, br), at+bt];
+}; 
 
-    return (max(al, at+bl), max(max(am, bm), ar+bl), max(ar+bt, br), at+bt);
-}
-
-impl Solution {
-    pub fn max_sub_array(nums: Vec<i32>) -> i32 {
-        return dac(&nums).1;
-    }
-}
+let maxSubArray = (nums) => {
+  return dac(nums)[1];
+};
 ```
 
 dac 는 재귀함수인데, 위에서 언급한 것처럼 세부분이 모두 코딩되어 있다.

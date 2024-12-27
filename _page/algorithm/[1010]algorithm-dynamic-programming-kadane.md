@@ -26,24 +26,20 @@ updated: "2024-12-22"
 
 주어진 nums 배열에서, 연속된 요소들로 이뤄진 부분합들 중 최대 부분합을 구하는 문제다.
 
-- rust, iterative DP (Kadane algorithm)
-```rust
-use std::cmp::max;
+- javascript, iterative DP (Kadane algorithm)
+```js
+let maxSubArray = (nums) => {
+  let a = Array(nums.length).fill(0);
+  a[0] = nums[0];
 
-impl Solution {
-    pub fn max_sub_array(nums: Vec<i32>) -> i32 {
-        let mut a = vec![0; nums.len()];
-        a[0] = nums[0];
+  for (let [i, x] of nums.slice(1).map((x, i) => [i+1, x])) {
+    a[i] = Math.max(a[i-1] + x, x);
+  }
 
-        for (i, &x) in (1..).zip(&nums[1..]) {
-            a[i] = max(a[i-1] + x, x);
-        }
-
-        return *a.iter().max().unwrap();
-    }
-}
+  return Math.max(...a);
+};
 ```
 
-인덱스 0 ~ n 까지의 최대 부분합을 저장하기 위한 저장소로 a 벡터를 상정했다. 초기값을 주고, 일반항을 이용해 반복하면 된다.
+인덱스 0 ~ n 까지의 최대 부분합을 저장하기 위한 저장소로 a 배열을 상정했다. 초기값을 주고, 일반항을 이용해 반복하면 된다.
 
 사실 이 문제는 "분할 정복" 이라는 알고리즘으로도 풀어낼 수 있는데, 다른 포스팅을 참고해보기 바란다.

@@ -16,44 +16,29 @@ updated: "2024-12-23"
 
 주어지는 nums 배열을 정렬하는 문제다.
 
-- rust, divide and conquer, merge sort
-```rust
-fn merge_sort (a: &mut [i32]) {
-    if a.len() == 1 {
-        return;
-    }
+- javascript, divide and conquer, merge sort
+```js
+let sort = (nums) => {
+  if (nums.length === 1) return nums;
 
-    let m = a.len() / 2;
-    merge_sort(&mut a[..m]);
-    merge_sort(&mut a[m..]);
-    
-    let mut l = (&a[..m]).to_vec().into_iter().peekable();
-    let mut r = (&a[m..]).to_vec().into_iter().peekable();
+  let m = nums.length / 2 | 0;
+  let left = sort(nums.slice(0, m));
+  let right = sort(nums.slice(m));
 
-    for i in 0..a.len() {
-        match (l.peek(), r.peek()) {
-            (Some(x), Some(y)) => {
-                a[i] = if x <= y { l.next().unwrap() } else { r.next().unwrap() };
-            },
-            (Some(x), None) => {
-                a[i] = l.next().unwrap();
-            },
-            (None, Some(y)) => {
-                a[i] = r.next().unwrap();
-            },
-            (_, _) => {
-                unreachable!();
-            },
-        }
+  for (let l = 0, r = 0, i = 0; i < nums.length; i++) {
+    if (l < left.length && r < right.length) {
+      nums[i] = (left[l] < right[r]) ? left[l++] : right[r++];
+    } else if (l < left.length) {
+      nums[i] = left[l++];
+    } else {
+      nums[i] = right[r++];
     }
-}
+  }
 
-impl Solution {
-    pub fn sort_array(mut nums: Vec<i32>) -> Vec<i32> {
-        merge_sort(&mut nums);
-        return nums;
-    }
-}
+  return nums;
+};
+
+let sortArray = (nums) => sort(nums);
 ```
 
 배열을 잘게 나눈 뒤, 잘게 나눠진 배열끼리 정렬하여 조립하는 방식이다.
