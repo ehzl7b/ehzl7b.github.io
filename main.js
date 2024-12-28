@@ -80,7 +80,7 @@ console.log(`==> 빌드 시작`);
 
     let {name} = path.parse(f);
     Object.assign(vars, renderer.yaml(renderer.liquid(JSON.stringify(vars), {name})));
-
+    
     const {frontmatter, content} = renderer.separate(fs.readFileSync(f, "utf-8"));
     Object.assign(vars, renderer.yaml(renderer.liquid(frontmatter, vars).trim()));
     // Object.assign(vars, {content: renderer.md(content).trim()});    // $_dir md 는 content 부분 무시

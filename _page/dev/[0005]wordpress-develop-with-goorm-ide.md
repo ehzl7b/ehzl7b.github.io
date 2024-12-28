@@ -1,7 +1,7 @@
 ---
-layout: page
-title: 구름 IDE에 워드프레스 설치하고 사용하기
-description: 국산 무료 온라인 IDE 를 제공하는 구름IDE 로 워드프레스 개발을 위한 세팅
+layout: "page"
+title: "구름 IDE에 워드프레스 설치하고 사용하기"
+description: "국산 무료 온라인 IDE 를 제공하는 구름IDE 로 워드프레스 개발을 위한 세팅"
 updated: "2022-01-03"
 ---
 

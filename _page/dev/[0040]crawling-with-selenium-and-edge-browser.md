@@ -1,7 +1,7 @@
 ---
-layout: page
-title: Python 코딩과 Selenium, Edge 브라우저로 크롤링 하기
-description: 특정 웹페이지가 Javascript 까지 풀로딩 된 이후 크롤링하기 위한 방법
+layout: "page"
+title: "Python 코딩과 Selenium, Edge 브라우저로 크롤링 하기"
+description: "특정 웹페이지가 Javascript 까지 풀로딩 된 이후 크롤링하기 위한 방법"
 updated: "2023-10-05"
 ---
 

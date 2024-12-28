@@ -1,7 +1,7 @@
 ---
-layout: page
-title: 블로그 다크 테마 및 토글 스위치 구현하기
-description: 시스템 설정에 맞춰, Light 또는 Dark 테마를 자동으로 선택하고, 선택한 테마에 따라 쉽게 CSS 변환하는 방법
+layout: "page"
+title: "블로그 다크 테마 및 토글 스위치 구현하기"
+description: "시스템 설정에 맞춰, Light 또는 Dark 테마를 자동으로 선택하고, 선택한 테마에 따라 쉽게 CSS 변환하는 방법"
 updated: "2024-04-15"
 ---
 

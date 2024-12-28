@@ -1,7 +1,7 @@
 ---
-layout: page
-title: 블로그 SPA(Single Page Application) 구현하기
-description: SPA 구현을 위해 고려해야 할 사항들과 실제 구현해본 코드 예시
+layout: "page"
+title: "블로그 SPA(Single Page Application) 구현하기"
+description: "SPA 구현을 위해 고려해야 할 사항들과 실제 구현해본 코드 예시"
 updated: "2024-04-11"
 ---
 

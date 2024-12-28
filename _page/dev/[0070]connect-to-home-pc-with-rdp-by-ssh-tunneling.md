@@ -1,7 +1,7 @@
 ---
-layout: page
-title: SSH 터널링을 사용하여 외부 PC 에 원격 접속하기
-description: 윈도우즈 PC 에서 외부 윈도우즈 PC 에 RDP 원격 접속을 하고자 할 때, SSH 터널링을 통해 방화벽 등 우회하는 방법
+layout: "page"
+title: "SSH 터널링을 사용하여 외부 PC 에 원격 접속하기"
+description: "윈도우즈 PC 에서 외부 윈도우즈 PC 에 RDP 원격 접속을 하고자 할 때, SSH 터널링을 통해 방화벽 등 우회하는 방법"
 updated: "2024-07-02"
 ---
 

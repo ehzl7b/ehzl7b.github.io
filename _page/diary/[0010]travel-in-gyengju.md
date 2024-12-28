@@ -1,7 +1,7 @@
 ---
-layout: page
-title: 24년 4월 4~6일 경주 여행
-description: 2박 3일 경주 여행 다녀간 곳들을 기록
+layout: "page"
+title: "24년 4월 4~6일 경주 여행"
+description: "2박 3일 경주 여행 다녀간 곳들을 기록"
 updated: "2024-04-07"
 ---
 

@@ -1,9 +1,9 @@
 ---
-layout: page
-title: 안쓰는 안드로이드 폰/태블릿을 리눅스 서버로 구축 (feat. Termux)
-description: 스마트폰으로 집에서 간단하게 서버를 구축하는 방법 소개
+layout: "page"
+title: "안쓰는 안드로이드 폰/태블릿을 리눅스 서버로 구축 (feat. Termux)"
+description: "스마트폰으로 집에서 간단하게 서버를 구축하는 방법 소개"
 updated: "2023-08-15"
-tags: dev
+tags: "dev"
 ---
 
 ## 2024-06-30 Updated

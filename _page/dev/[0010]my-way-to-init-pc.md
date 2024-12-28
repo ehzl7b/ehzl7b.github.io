@@ -1,7 +1,7 @@
 ---
-layout: page
-title: 나만의 PC 초기화 순서/방법
-description: PC 포맷부터 이런저런 프로그램까지 설치 순서/방법들 기록, 계속 업데이트 예정
+layout: "page"
+title: "나만의 PC 초기화 순서/방법"
+description: "PC 포맷부터 이런저런 프로그램까지 설치 순서/방법들 기록, 계속 업데이트 예정"
 updated: "2024-04-16"
 ---
 

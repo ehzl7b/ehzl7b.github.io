@@ -1,7 +1,7 @@
 ---
-layout: page
-title: Python으로 국세청 휴폐업 조회 API 사용
-description: Python 코드로 국세청에서 제공하는 사업자등록번호 기반 휴폐업 조회 시스템 API 사용 
+layout: "page"
+title: "Python으로 국세청 휴폐업 조회 API 사용"
+description: "Python 코드로 국세청에서 제공하는 사업자등록번호 기반 휴폐업 조회 시스템 API 사용" 
 updated: "2023-08-15"
 ---
 
@@ -39,7 +39,7 @@ params = (('serviceKey', auth),)
 for i in range(len(no)//100+1):
     sleep(1)
     print('진행단계: {}'.format(i))
-    data = '{{ "b_no": [{}] }}'.format(','.join('"{}"'.format(str(x)) for x in no[i*100:(i+1)*100]))
+    data = '{ { "b_no": [{}] } }'.format(','.join('"{}"'.format(str(x)) for x in no[i*100:(i+1)*100]))
     res = requests.post('https://api.odcloud.kr/api/nts-businessman/v1/status', headers=headers, params=params, data=data)
 
     dict = pd.read_json(res.text)
