@@ -70,4 +70,4 @@ updated: "2024-07-02"
 
 👏👏👏 다행이 잘 실행되었다.
 
-참고로 본인은 이 [포스팅](/post/install-domestic-server-with-smarphone-or-tablet)에 있는 내용을 참고하여, iptime 공유기를 가지고 [리모트 PC 원격 주소]를 xxxx.iptime.org 와 같은 형태로 만들었다. iptime 공유기로 와이파이 통해 리모트 PC 를 사용하는 사람은 참고해봐도 좋을 것이다.
+참고로 본인은 이 [포스팅](/page/install-domestic-server-with-smarphone-or-tablet)에 있는 내용을 참고하여, iptime 공유기를 가지고 [리모트 PC 원격 주소]를 xxxx.iptime.org 와 같은 형태로 만들었다. iptime 공유기로 와이파이 통해 리모트 PC 를 사용하는 사람은 참고해봐도 좋을 것이다.
